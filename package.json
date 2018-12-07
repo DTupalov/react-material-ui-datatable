@@ -1,0 +1,32 @@
+{
+  "name": "react-material-ui-datatable",
+  "version": "1.0.0",
+  "description": "Controlled and Uncontrolled React Material UI Datatable ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
+  },
+  "keywords": [
+    "react",
+    "material",
+    "datatable",
+    "grid"
+  ],
+  "author": "Dmitriy Tupalov",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.2.0",
+    "@material-ui/core": "^3.6.1",
+    "@material-ui/icons": "^3.0.1",
+    "@storybook/addon-actions": "^4.0.12",
+    "@storybook/addon-links": "^4.0.12",
+    "@storybook/addons": "^4.0.12",
+    "@storybook/react": "^4.0.12",
+    "babel-loader": "^8.0.4",
+    "react": "^16.6.3",
+    "react-dom": "^16.6.3"
+  }
+}
