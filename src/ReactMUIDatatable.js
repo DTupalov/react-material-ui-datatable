@@ -2,6 +2,7 @@ import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import React from 'react';
 import ReactMUIDatatableBody from './ReactMUIDatatableBody';
+import ReactMUIDatatableFooter from './ReactMUIDatatableFooter';
 import ReactMUIDatatableHeader from './ReactMUIDatatableHeader';
 import ReactMUIDatatableToolbar from './ReactMUIDatatableToolbar';
 import ReactMUIDatatableToolbarFilterValues from './ReactMUIDatatableToolbarFilterValues';
@@ -15,6 +16,7 @@ const ReactMUIDatatable = props => {
       <Table>
         <ReactMUIDatatableHeader />
         <ReactMUIDatatableBody />
+        <ReactMUIDatatableFooter />
       </Table>
     </Paper>
   );

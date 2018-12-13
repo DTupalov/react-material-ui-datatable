@@ -23,6 +23,9 @@ export const filter = ({ values }) => data =>
     )
   );
 
+export const paginate = ({ page, perPage }) => data =>
+  data.slice(page * perPage, page * perPage + perPage);
+
 export const convertDataToFilterLists = ({ data, columns }) =>
   columns.reduce((filter, column) => {
     filter[column.name] = {

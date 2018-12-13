@@ -48,6 +48,156 @@ const data = [
     lastName: 'Dan',
     age: '21',
   },
+  {
+    firstName: 'Dima',
+    lastName: 'Tupalov',
+    age: '31',
+  },
+  {
+    firstName: 'Pasha',
+    lastName: 'Antonov',
+    age: '27',
+  },
+  {
+    firstName: 'Ivan',
+    lastName: 'Popov',
+    age: '21',
+  },
+  {
+    firstName: 'Petea',
+    lastName: 'Petrov',
+    age: '26',
+  },
+  {
+    firstName: 'Milana',
+    lastName: 'Starovoitova',
+    age: '17',
+  },
+  {
+    firstName: 'Alex',
+    lastName: 'Dan',
+    age: '21',
+  },
+  {
+    firstName: 'Dima',
+    lastName: 'Tupalov',
+    age: '31',
+  },
+  {
+    firstName: 'Pasha',
+    lastName: 'Antonov',
+    age: '27',
+  },
+  {
+    firstName: 'Ivan',
+    lastName: 'Popov',
+    age: '21',
+  },
+  {
+    firstName: 'Petea',
+    lastName: 'Petrov',
+    age: '26',
+  },
+  {
+    firstName: 'Milana',
+    lastName: 'Starovoitova',
+    age: '17',
+  },
+  {
+    firstName: 'Alex',
+    lastName: 'Dan',
+    age: '21',
+  },
+  {
+    firstName: 'Dima',
+    lastName: 'Tupalov',
+    age: '31',
+  },
+  {
+    firstName: 'Pasha',
+    lastName: 'Antonov',
+    age: '27',
+  },
+  {
+    firstName: 'Ivan',
+    lastName: 'Popov',
+    age: '21',
+  },
+  {
+    firstName: 'Petea',
+    lastName: 'Petrov',
+    age: '26',
+  },
+  {
+    firstName: 'Milana',
+    lastName: 'Starovoitova',
+    age: '17',
+  },
+  {
+    firstName: 'Alex',
+    lastName: 'Dan',
+    age: '21',
+  },
+  {
+    firstName: 'Dima',
+    lastName: 'Tupalov',
+    age: '31',
+  },
+  {
+    firstName: 'Pasha',
+    lastName: 'Antonov',
+    age: '27',
+  },
+  {
+    firstName: 'Ivan',
+    lastName: 'Popov',
+    age: '21',
+  },
+  {
+    firstName: 'Petea',
+    lastName: 'Petrov',
+    age: '26',
+  },
+  {
+    firstName: 'Milana',
+    lastName: 'Starovoitova',
+    age: '17',
+  },
+  {
+    firstName: 'Alex',
+    lastName: 'Dan',
+    age: '21',
+  },
+  {
+    firstName: 'Dima',
+    lastName: 'Tupalov',
+    age: '31',
+  },
+  {
+    firstName: 'Pasha',
+    lastName: 'Antonov',
+    age: '27',
+  },
+  {
+    firstName: 'Ivan',
+    lastName: 'Popov',
+    age: '21',
+  },
+  {
+    firstName: 'Petea',
+    lastName: 'Petrov',
+    age: '26',
+  },
+  {
+    firstName: 'Milana',
+    lastName: 'Starovoitova',
+    age: '17',
+  },
+  {
+    firstName: 'Alex',
+    lastName: 'Dan',
+    age: '21',
+  },
 ];
 
 storiesOf('ReactMUIDatatable', module).add('basic', () => (

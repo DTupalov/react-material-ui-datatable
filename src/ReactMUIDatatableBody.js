@@ -6,11 +6,11 @@ import { ReactMUIDatatableConsumer } from './ReactMUIDatatableProvider';
 const ReactDatatableBody = props => {
   return (
     <TableBody>
-      {props.data.map((row, rowIndex) => (
+      {props.diplayData.map((row, rowIndex) => (
         <TableRow key={rowIndex}>
           {props.columns.map((column, cellIndex) => (
             <TableCell key={cellIndex}>
-              {props.data[rowIndex][column.name]}
+              {props.diplayData[rowIndex][column.name]}
             </TableCell>
           ))}
         </TableRow>
@@ -22,7 +22,7 @@ const ReactDatatableBody = props => {
 export default fromRenderProps(
   ReactMUIDatatableConsumer,
   ({ ...datatableProps }) => ({
-    data: datatableProps.data,
+    diplayData: datatableProps.diplayData,
     columns: datatableProps.columns,
   })
 )(ReactDatatableBody);

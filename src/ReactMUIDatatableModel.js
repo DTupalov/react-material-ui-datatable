@@ -4,6 +4,7 @@ import {
   convertColumnsToFilterValues,
   convertDataToFilterLists,
   filter,
+  paginate,
   pipe,
   search,
   sort,
@@ -27,6 +28,9 @@ export default compose(
         columns: props.columns,
       }),
       filterValues: convertColumnsToFilterValues({ columns: props.columns }),
+      page: 0,
+      perPage: 5,
+      perPageOption: [5, 10, 15],
     }),
     {
       toggleSearchBar: state => () => ({
@@ -61,6 +65,8 @@ export default compose(
           columns: props.columns,
         }),
       }),
+      changePage: () => (_, page) => ({ page }),
+      changePerPage: () => event => ({ perPage: Number(event.target.value) }),
     }
   ),
   withProps(props => ({
@@ -75,5 +81,8 @@ export default compose(
       data: props.data,
       columns: props.columns,
     }),
+    diplayData: paginate({ page: props.page, perPage: props.perPage })(
+      props.data
+    ),
   }))
 )(ReactMUIDatatableProvider);
