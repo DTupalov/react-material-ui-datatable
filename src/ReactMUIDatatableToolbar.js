@@ -1,5 +1,7 @@
 import { Grid, Toolbar } from '@material-ui/core';
 import React from 'react';
+import { fromRenderProps } from 'recompose';
+import { ReactMUIDatatableConsumer } from './ReactMUIDatatableProvider';
 import ReactMUIDatatableToolbarActions from './ReactMUIDatatableToolbarActions';
 import ReactMUIDatatableToolbarSearchBar from './ReactMUIDatatableToolbarSearchBar';
 import ReactMUIDatatableToolbarTitle from './ReactMUIDatatableToolbarTitle';
@@ -8,26 +10,20 @@ const ReactMUIDatatableToolbar = props => {
   return (
     <Toolbar>
       <Grid container>
-        {props.search.showSearchBar ? (
-          <ReactMUIDatatableToolbarSearchBar
-            value={props.search.value}
-            handleSearchValue={props.handleSearchValue}
-            toggleSearchBar={props.toggleSearchBar}
-          />
+        {props.showSearchBar ? (
+          <ReactMUIDatatableToolbarSearchBar />
         ) : (
-          <ReactMUIDatatableToolbarTitle title={props.title} />
+          <ReactMUIDatatableToolbarTitle />
         )}
-        <ReactMUIDatatableToolbarActions
-          toggleSearchBar={props.toggleSearchBar}
-          filterLists={props.filterLists}
-          filterValues={props.filterValues}
-          addFilter={props.addFilter}
-          resetFilter={props.resetFilter}
-          columns={props.columns}
-        />
+        <ReactMUIDatatableToolbarActions />
       </Grid>
     </Toolbar>
   );
 };
 
-export default ReactMUIDatatableToolbar;
+export default fromRenderProps(
+  ReactMUIDatatableConsumer,
+  ({ ...datatableProps }) => ({
+    showSearchBar: datatableProps.search.showSearchBar,
+  })
+)(ReactMUIDatatableToolbar);

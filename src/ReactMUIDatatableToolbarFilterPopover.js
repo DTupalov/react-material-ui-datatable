@@ -8,6 +8,8 @@ import {
   withStyles,
 } from '@material-ui/core';
 import React from 'react';
+import { compose, fromRenderProps } from 'recompose';
+import { ReactMUIDatatableConsumer } from './ReactMUIDatatableProvider';
 
 const ReactMUIDatatableToolbarFilterPopover = props => {
   return (
@@ -60,6 +62,15 @@ const ReactMUIDatatableToolbarFilterPopover = props => {
   );
 };
 
-export default withStyles(theme => ({
-  root: { padding: theme.spacing.unit * 2 },
-}))(ReactMUIDatatableToolbarFilterPopover);
+export default compose(
+  fromRenderProps(ReactMUIDatatableConsumer, ({ ...datatableProps }) => ({
+    filterLists: datatableProps.filterLists,
+    filterValues: datatableProps.filterValues,
+    addFilter: datatableProps.addFilter,
+    resetFilter: datatableProps.resetFilter,
+    columns: datatableProps.columns,
+  })),
+  withStyles(theme => ({
+    root: { padding: theme.spacing.unit * 2 },
+  }))
+)(ReactMUIDatatableToolbarFilterPopover);

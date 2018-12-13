@@ -1,5 +1,7 @@
 import { Grid, Typography } from '@material-ui/core';
 import React from 'react';
+import { fromRenderProps } from 'recompose';
+import { ReactMUIDatatableConsumer } from './ReactMUIDatatableProvider';
 
 const ReactMUIDatatableToolbarTitle = props => {
   return (
@@ -12,4 +14,9 @@ const ReactMUIDatatableToolbarTitle = props => {
   );
 };
 
-export default ReactMUIDatatableToolbarTitle;
+export default fromRenderProps(
+  ReactMUIDatatableConsumer,
+  ({ ...datatableProps }) => ({
+    title: datatableProps.title,
+  })
+)(ReactMUIDatatableToolbarTitle);

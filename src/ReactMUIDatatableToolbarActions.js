@@ -1,6 +1,8 @@
 import { Grid, IconButton, Tooltip } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import React from 'react';
+import { fromRenderProps } from 'recompose';
+import { ReactMUIDatatableConsumer } from './ReactMUIDatatableProvider';
 import ReactMUIDatatableToolbarActionsFilterAction from './ReactMUIDatatableToolbarActionsFilterAction';
 
 const ReactMUIDatatableToolbarActions = props => {
@@ -11,15 +13,14 @@ const ReactMUIDatatableToolbarActions = props => {
           <SearchIcon />
         </IconButton>
       </Tooltip>
-      <ReactMUIDatatableToolbarActionsFilterAction
-        filterLists={props.filterLists}
-        filterValues={props.filterValues}
-        addFilter={props.addFilter}
-        resetFilter={props.resetFilter}
-        columns={props.columns}
-      />
+      <ReactMUIDatatableToolbarActionsFilterAction />
     </Grid>
   );
 };
 
-export default ReactMUIDatatableToolbarActions;
+export default fromRenderProps(
+  ReactMUIDatatableConsumer,
+  ({ ...datatableProps }) => ({
+    toggleSearchBar: datatableProps.toggleSearchBar,
+  })
+)(ReactMUIDatatableToolbarActions);
