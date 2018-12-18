@@ -2,6 +2,7 @@ import { Checkbox, TableBody, TableCell, TableRow } from '@material-ui/core';
 import React from 'react';
 import { fromRenderProps } from 'recompose';
 import { ReactMUIDatatableConsumer } from './ReactMUIDatatableProvider';
+import { metaSymbol } from './utils';
 
 const ReactDatatableBody = props => {
   return (
@@ -11,8 +12,8 @@ const ReactDatatableBody = props => {
           {props.selectable && (
             <TableCell padding="checkbox">
               <Checkbox
-                checked={props.selectedRows.includes(row.meta.rawIndex)}
-                onChange={() => props.toggleSelectRow(row.meta.rawIndex)}
+                checked={props.selectedRows.includes(row[metaSymbol].rawIndex)}
+                onChange={() => props.toggleSelectRow(row[metaSymbol].rawIndex)}
               />
             </TableCell>
           )}

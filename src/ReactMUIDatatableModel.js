@@ -11,6 +11,7 @@ import {
   convertColumnsToFilterValues,
   convertDataToFilterLists,
   filter,
+  metaSymbol,
   paginate,
   pipe,
   search,
@@ -115,7 +116,7 @@ export default compose(
     handleSelectAll: props => () => {
       let nextSelectedRows = [];
       if (!props.selectedRows.length) {
-        nextSelectedRows = props.data.map(row => row.meta.rawIndex);
+        nextSelectedRows = props.data.map(row => row[metaSymbol].rawIndex);
       }
 
       props.handleSelect(nextSelectedRows);

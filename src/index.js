@@ -1,3 +1,5 @@
 import ReactMUIDatatable from './ReactMUIDatatable';
+import ReactMUIDatatableModel from './ReactMUIDatatableModel';
+import { metaSymbol } from './utils';
 
-export { ReactMUIDatatable };
+export { ReactMUIDatatable, ReactMUIDatatableModel, metaSymbol };

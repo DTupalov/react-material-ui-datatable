@@ -50,15 +50,14 @@ export const convertColumnsToFilterValues = ({ columns }) =>
     return filterValues;
   }, {});
 
+export const metaSymbol = Symbol.for('meta');
+
 export const addMetaRawIndexToData = data =>
   data.map((row, rawIndex) => {
-    /** need to exclude `meta` property from loop data */
-    if (!row.meta) {
-      Object.defineProperty(row, 'meta', {
-        value: {
-          rawIndex,
-        },
-      });
-    }
+    /** add uniq property to data array */
+    row[metaSymbol] = {
+      rawIndex,
+    };
+
     return row;
   });
