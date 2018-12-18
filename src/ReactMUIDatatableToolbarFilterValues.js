@@ -1,6 +1,9 @@
-import { Chip, Grid, withStyles } from '@material-ui/core';
+import Chip from '@material-ui/core/Chip';
+import Grid from '@material-ui/core/Grid';
+import withStyles from '@material-ui/core/styles/withStyles';
 import React from 'react';
-import { compose, fromRenderProps } from 'recompose';
+import compose from 'recompose/compose';
+import fromRenderProps from 'recompose/fromRenderProps';
 import { ReactMUIDatatableConsumer } from './ReactMUIDatatableProvider';
 
 const ReactMUIDatatableToolbarFilterValues = props => {

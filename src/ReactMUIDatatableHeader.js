@@ -1,12 +1,10 @@
-import {
-  Checkbox,
-  TableCell,
-  TableHead,
-  TableRow,
-  TableSortLabel,
-} from '@material-ui/core';
+import Checkbox from '@material-ui/core/Checkbox';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import TableSortLabel from '@material-ui/core/TableSortLabel';
 import React from 'react';
-import { fromRenderProps } from 'recompose';
+import fromRenderProps from 'recompose/fromRenderProps';
 import { ReactMUIDatatableConsumer } from './ReactMUIDatatableProvider';
 
 const ReactMUIDatatableHeader = props => {

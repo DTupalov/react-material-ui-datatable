@@ -1,14 +1,13 @@
-import {
-  Button,
-  Grid,
-  MenuItem,
-  Popover,
-  TextField,
-  Typography,
-  withStyles,
-} from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import MenuItem from '@material-ui/core/MenuItem';
+import Popover from '@material-ui/core/Popover';
+import withStyles from '@material-ui/core/styles/withStyles';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
 import React from 'react';
-import { compose, fromRenderProps } from 'recompose';
+import compose from 'recompose/compose';
+import fromRenderProps from 'recompose/fromRenderProps';
 import { ReactMUIDatatableConsumer } from './ReactMUIDatatableProvider';
 
 const ReactMUIDatatableToolbarFilterPopover = props => {

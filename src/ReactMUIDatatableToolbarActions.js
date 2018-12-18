@@ -1,7 +1,9 @@
-import { Grid, IconButton, Tooltip } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
 import SearchIcon from '@material-ui/icons/Search';
 import React from 'react';
-import { fromRenderProps } from 'recompose';
+import fromRenderProps from 'recompose/fromRenderProps';
 import { ReactMUIDatatableConsumer } from './ReactMUIDatatableProvider';
 import ReactMUIDatatableToolbarActionsFilterAction from './ReactMUIDatatableToolbarActionsFilterAction';
 

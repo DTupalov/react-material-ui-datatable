@@ -1,10 +1,8 @@
-import {
-  compose,
-  defaultProps,
-  withHandlers,
-  withProps,
-  withStateHandlers,
-} from 'recompose';
+import compose from 'recompose/compose';
+import defaultProps from 'recompose/defaultProps';
+import withHandlers from 'recompose/withHandlers';
+import withProps from 'recompose/withProps';
+import withStateHandlers from 'recompose/withStateHandlers';
 import { ReactMUIDatatableProvider } from './ReactMUIDatatableProvider';
 import {
   addMetaRawIndexToData,

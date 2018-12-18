@@ -1,6 +1,7 @@
-import { Grid, Toolbar } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import Toolbar from '@material-ui/core/Toolbar';
 import React from 'react';
-import { fromRenderProps } from 'recompose';
+import fromRenderProps from 'recompose/fromRenderProps';
 import { ReactMUIDatatableConsumer } from './ReactMUIDatatableProvider';
 import ReactMUIDatatableToolbarActions from './ReactMUIDatatableToolbarActions';
 import ReactMUIDatatableToolbarSearchBar from './ReactMUIDatatableToolbarSearchBar';

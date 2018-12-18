@@ -1,7 +1,10 @@
-import { IconButton, Tooltip } from '@material-ui/core';
+import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import React from 'react';
-import { fromRenderProps, toRenderProps, withState } from 'recompose';
+import fromRenderProps from 'recompose/fromRenderProps';
+import toRenderProps from 'recompose/toRenderProps';
+import withState from 'recompose/withState';
 import ReactMUIDatatableToolbarFilterPopover from './ReactMUIDatatableToolbarFilterPopover';
 
 const PopoverModel = toRenderProps(

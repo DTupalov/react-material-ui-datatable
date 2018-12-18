@@ -1,6 +1,7 @@
-import { Grid, Typography } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 import React from 'react';
-import { fromRenderProps } from 'recompose';
+import fromRenderProps from 'recompose/fromRenderProps';
 import { ReactMUIDatatableConsumer } from './ReactMUIDatatableProvider';
 
 const ReactMUIDatatableToolbarTitle = props => {

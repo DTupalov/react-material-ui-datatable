@@ -1,7 +1,11 @@
-import { Grid, Toolbar, Typography, withStyles } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
+import withStyles from '@material-ui/core/styles/withStyles';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 import React from 'react';
-import { compose, fromRenderProps } from 'recompose';
+import compose from 'recompose/compose';
+import fromRenderProps from 'recompose/fromRenderProps';
 import { ReactMUIDatatableConsumer } from './ReactMUIDatatableProvider';
 
 /**

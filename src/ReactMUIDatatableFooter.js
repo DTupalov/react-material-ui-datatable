@@ -1,7 +1,9 @@
-import { TableFooter, TablePagination, TableRow } from '@material-ui/core';
+import TableFooter from '@material-ui/core/TableFooter';
+import TablePagination from '@material-ui/core/TablePagination';
 import TablePaginationActions from '@material-ui/core/TablePagination/TablePaginationActions';
+import TableRow from '@material-ui/core/TableRow';
 import React from 'react';
-import { fromRenderProps } from 'recompose';
+import fromRenderProps from 'recompose/fromRenderProps';
 import { ReactMUIDatatableConsumer } from './ReactMUIDatatableProvider';
 
 const ReactMUIDatatableFooter = props => {
