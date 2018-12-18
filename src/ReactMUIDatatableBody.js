@@ -18,7 +18,12 @@ const ReactDatatableBody = props => {
           )}
           {props.columns.map((column, cellIndex) => (
             <TableCell key={cellIndex}>
-              {props.diplayData[rowIndex][column.name]}
+              {column.customCell
+                ? column.customCell({
+                    value: props.diplayData[rowIndex][column.name],
+                    row,
+                  })
+                : props.diplayData[rowIndex][column.name]}
             </TableCell>
           ))}
         </TableRow>
