@@ -13,7 +13,7 @@ export const sort = ({ column, direction }) => data =>
 
 export const search = ({ value }) => data =>
   data.filter(row =>
-    Object.keys(row).some(column => row[column].includes(value))
+    Object.keys(row).some(column => row[column].toString().includes(value))
   );
 
 export const filter = ({ values }) => data =>
@@ -49,3 +49,16 @@ export const convertColumnsToFilterValues = ({ columns }) =>
     filterValues[column.name] = '';
     return filterValues;
   }, {});
+
+export const addMetaRawIndexToData = data =>
+  data.map((row, rawIndex) => {
+    /** need to exclude `meta` property from loop data */
+    if (!row.meta) {
+      Object.defineProperty(row, 'meta', {
+        value: {
+          rawIndex,
+        },
+      });
+    }
+    return row;
+  });

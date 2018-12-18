@@ -10,7 +10,7 @@ const ReactMUIDatatableFooter = props => {
       <TableRow>
         <TablePagination
           rowsPerPageOptions={props.perPageOption}
-          colSpan={props.columns.length}
+          colSpan={props.columns.length + (props.selectable ? 1 : 0)}
           count={props.data.length}
           rowsPerPage={props.perPage}
           page={props.page}
@@ -36,5 +36,6 @@ export default fromRenderProps(
     changePage: datatableProps.changePage,
     changePerPage: datatableProps.changePerPage,
     columns: datatableProps.columns,
+    selectable: datatableProps.selectable,
   })
 )(ReactMUIDatatableFooter);

@@ -6,7 +6,7 @@ import { ReactMUIDatatableConsumer } from './ReactMUIDatatableProvider';
 const ReactMUIDatatableToolbarTitle = props => {
   return (
     <React.Fragment>
-      <Grid item>
+      <Grid item style={{ alignSelf: 'center' }}>
         <Typography variant="h6">{props.title}</Typography>
       </Grid>
       <Grid item xs={true} />

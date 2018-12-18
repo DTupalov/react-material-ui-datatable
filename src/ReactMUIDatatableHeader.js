@@ -1,4 +1,5 @@
 import {
+  Checkbox,
   TableCell,
   TableHead,
   TableRow,
@@ -12,6 +13,18 @@ const ReactMUIDatatableHeader = props => {
   return (
     <TableHead>
       <TableRow>
+        {props.selectable && (
+          <TableCell padding="checkbox">
+            <Checkbox
+              indeterminate={
+                props.selectedRows.length !== 0 &&
+                props.selectedRows.length < props.data.length
+              }
+              checked={props.selectedRows.length === props.data.length}
+              onChange={props.handleSelectAll}
+            />
+          </TableCell>
+        )}
         {props.columns.map((column, index) => (
           <TableCell
             key={index}
@@ -46,5 +59,9 @@ export default fromRenderProps(
     columns: datatableProps.columns,
     sort: datatableProps.sort,
     handleSort: datatableProps.handleSort,
+    selectable: datatableProps.selectable,
+    selectedRows: datatableProps.selectedRows,
+    data: datatableProps.data,
+    handleSelectAll: datatableProps.handleSelectAll,
   })
 )(ReactMUIDatatableHeader);

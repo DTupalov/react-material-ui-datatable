@@ -1,6 +1,10 @@
+import { IconButton } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
+import { action } from '@storybook/addon-actions';
 import { storiesOf } from '@storybook/react';
 import React from 'react';
 import { ReactMUIDatatable } from '../src/';
+import users from '../stubs/users.json';
 
 const columns = [
   {
@@ -17,189 +21,26 @@ const columns = [
   },
 ];
 
-const data = [
-  {
-    firstName: 'Dima',
-    lastName: 'Tupalov',
-    age: '31',
-  },
-  {
-    firstName: 'Pasha',
-    lastName: 'Antonov',
-    age: '27',
-  },
-  {
-    firstName: 'Ivan',
-    lastName: 'Popov',
-    age: '21',
-  },
-  {
-    firstName: 'Petea',
-    lastName: 'Petrov',
-    age: '26',
-  },
-  {
-    firstName: 'Milana',
-    lastName: 'Starovoitova',
-    age: '17',
-  },
-  {
-    firstName: 'Alex',
-    lastName: 'Dan',
-    age: '21',
-  },
-  {
-    firstName: 'Dima',
-    lastName: 'Tupalov',
-    age: '31',
-  },
-  {
-    firstName: 'Pasha',
-    lastName: 'Antonov',
-    age: '27',
-  },
-  {
-    firstName: 'Ivan',
-    lastName: 'Popov',
-    age: '21',
-  },
-  {
-    firstName: 'Petea',
-    lastName: 'Petrov',
-    age: '26',
-  },
-  {
-    firstName: 'Milana',
-    lastName: 'Starovoitova',
-    age: '17',
-  },
-  {
-    firstName: 'Alex',
-    lastName: 'Dan',
-    age: '21',
-  },
-  {
-    firstName: 'Dima',
-    lastName: 'Tupalov',
-    age: '31',
-  },
-  {
-    firstName: 'Pasha',
-    lastName: 'Antonov',
-    age: '27',
-  },
-  {
-    firstName: 'Ivan',
-    lastName: 'Popov',
-    age: '21',
-  },
-  {
-    firstName: 'Petea',
-    lastName: 'Petrov',
-    age: '26',
-  },
-  {
-    firstName: 'Milana',
-    lastName: 'Starovoitova',
-    age: '17',
-  },
-  {
-    firstName: 'Alex',
-    lastName: 'Dan',
-    age: '21',
-  },
-  {
-    firstName: 'Dima',
-    lastName: 'Tupalov',
-    age: '31',
-  },
-  {
-    firstName: 'Pasha',
-    lastName: 'Antonov',
-    age: '27',
-  },
-  {
-    firstName: 'Ivan',
-    lastName: 'Popov',
-    age: '21',
-  },
-  {
-    firstName: 'Petea',
-    lastName: 'Petrov',
-    age: '26',
-  },
-  {
-    firstName: 'Milana',
-    lastName: 'Starovoitova',
-    age: '17',
-  },
-  {
-    firstName: 'Alex',
-    lastName: 'Dan',
-    age: '21',
-  },
-  {
-    firstName: 'Dima',
-    lastName: 'Tupalov',
-    age: '31',
-  },
-  {
-    firstName: 'Pasha',
-    lastName: 'Antonov',
-    age: '27',
-  },
-  {
-    firstName: 'Ivan',
-    lastName: 'Popov',
-    age: '21',
-  },
-  {
-    firstName: 'Petea',
-    lastName: 'Petrov',
-    age: '26',
-  },
-  {
-    firstName: 'Milana',
-    lastName: 'Starovoitova',
-    age: '17',
-  },
-  {
-    firstName: 'Alex',
-    lastName: 'Dan',
-    age: '21',
-  },
-  {
-    firstName: 'Dima',
-    lastName: 'Tupalov',
-    age: '31',
-  },
-  {
-    firstName: 'Pasha',
-    lastName: 'Antonov',
-    age: '27',
-  },
-  {
-    firstName: 'Ivan',
-    lastName: 'Popov',
-    age: '21',
-  },
-  {
-    firstName: 'Petea',
-    lastName: 'Petrov',
-    age: '26',
-  },
-  {
-    firstName: 'Milana',
-    lastName: 'Starovoitova',
-    age: '17',
-  },
-  {
-    firstName: 'Alex',
-    lastName: 'Dan',
-    age: '21',
-  },
-];
+const data = users;
 
-storiesOf('ReactMUIDatatable', module).add('basic', () => (
-  <ReactMUIDatatable columns={columns} data={data} title={'Крутой список'} />
-));
+storiesOf('ReactMUIDatatable', module)
+  .add('basic', () => (
+    <ReactMUIDatatable columns={columns} data={data} title={'Крутой список'} />
+  ))
+  .add('selectable', () => (
+    <ReactMUIDatatable
+      columns={columns}
+      data={data}
+      title={'Крутой список'}
+      selectable={true}
+      toolbarSelectActions={({ data, selectedRows }) => {
+        return (
+          <IconButton
+            onClick={() => action('Delete selected rows')(data, selectedRows)}
+          >
+            <DeleteIcon />
+          </IconButton>
+        );
+      }}
+    />
+  ));

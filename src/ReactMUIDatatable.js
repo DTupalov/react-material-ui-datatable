@@ -6,12 +6,17 @@ import ReactMUIDatatableFooter from './ReactMUIDatatableFooter';
 import ReactMUIDatatableHeader from './ReactMUIDatatableHeader';
 import ReactMUIDatatableToolbar from './ReactMUIDatatableToolbar';
 import ReactMUIDatatableToolbarFilterValues from './ReactMUIDatatableToolbarFilterValues';
+import ReactMUIDatatableToolbarSelect from './ReactMUIDatatableToolbarSelect';
 import withReactMUIDatatable from './withReactMUIDatatable';
 
 const ReactMUIDatatable = props => {
   return (
     <Paper>
-      <ReactMUIDatatableToolbar />
+      {props.selectedRows.length ? (
+        <ReactMUIDatatableToolbarSelect />
+      ) : (
+        <ReactMUIDatatableToolbar />
+      )}
       <ReactMUIDatatableToolbarFilterValues />
       <Table>
         <ReactMUIDatatableHeader />

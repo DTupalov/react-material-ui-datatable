@@ -1,6 +1,13 @@
-import { compose, defaultProps, withProps, withStateHandlers } from 'recompose';
+import {
+  compose,
+  defaultProps,
+  withHandlers,
+  withProps,
+  withStateHandlers,
+} from 'recompose';
 import { ReactMUIDatatableProvider } from './ReactMUIDatatableProvider';
 import {
+  addMetaRawIndexToData,
   convertColumnsToFilterValues,
   convertDataToFilterLists,
   filter,
@@ -14,10 +21,12 @@ export default compose(
   defaultProps({
     data: [],
     columns: [],
+    toolbarSelectActions: () => null,
+    selectable: false,
   }),
   withStateHandlers(
     props => ({
-      data: props.data,
+      data: addMetaRawIndexToData(props.data),
       search: {
         showSearchBar: false,
         value: '',
@@ -31,6 +40,9 @@ export default compose(
       page: 0,
       perPage: 5,
       perPageOption: [5, 10, 15],
+      selectable: props.selectable,
+      selectedRows: [],
+      toolbarSelectActions: props.toolbarSelectActions,
     }),
     {
       toggleSearchBar: state => () => ({
@@ -67,6 +79,7 @@ export default compose(
       }),
       changePage: () => (_, page) => ({ page }),
       changePerPage: () => event => ({ perPage: Number(event.target.value) }),
+      handleSelect: state => selectedRows => ({ selectedRows }),
     }
   ),
   withProps(props => ({
@@ -84,5 +97,28 @@ export default compose(
     diplayData: paginate({ page: props.page, perPage: props.perPage })(
       props.data
     ),
-  }))
+    //TODO: selectedRows need to be recalculate, if we be available to filter list during there is selectedRows
+  })),
+  withHandlers({
+    toggleSelectRow: props => rawIndex => {
+      const nextSelectedRows = [...props.selectedRows];
+      const indexOfRow = nextSelectedRows.indexOf(rawIndex);
+
+      if (indexOfRow !== -1) {
+        nextSelectedRows.splice(indexOfRow, 1);
+      } else {
+        nextSelectedRows.push(rawIndex);
+      }
+
+      props.handleSelect(nextSelectedRows);
+    },
+    handleSelectAll: props => () => {
+      let nextSelectedRows = [];
+      if (!props.selectedRows.length) {
+        nextSelectedRows = props.data.map(row => row.meta.rawIndex);
+      }
+
+      props.handleSelect(nextSelectedRows);
+    },
+  })
 )(ReactMUIDatatableProvider);
