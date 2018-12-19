@@ -1,13 +1,18 @@
 {
   "name": "react-material-ui-datatable",
   "version": "1.0.0",
-  "description": "Controlled and Uncontrolled React Material UI Datatable ",
+  "description": "Material UI Datatable in React way",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "cross-env NODE_ENV=production && rollup -c",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook -o ./docs"
+    "build-storybook": "build-storybook -o ./docs",
+    "release": "standard-version"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DTupalov/react-material-ui-datatable"
   },
   "keywords": [
     "react",
