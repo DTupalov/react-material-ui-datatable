@@ -1,6 +1,6 @@
 {
   "name": "react-material-ui-datatable",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Material UI Datatable in React way",
   "main": "dist/index.js",
   "files": [
