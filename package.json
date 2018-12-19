@@ -2,13 +2,17 @@
   "name": "react-material-ui-datatable",
   "version": "1.0.0",
   "description": "Material UI Datatable in React way",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "cross-env NODE_ENV=production && rollup -c",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook -o ./docs",
-    "release": "standard-version"
+    "release": "standard-version",
+    "publish": "npm run build && npm run release && git push --follow-tags origin master && npm publish"
   },
   "repository": {
     "type": "git",
