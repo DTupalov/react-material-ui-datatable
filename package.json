@@ -44,6 +44,7 @@
     "@material-ui/icons": "^3.0.1",
     "@storybook/addon-actions": "^4.1.2",
     "@storybook/addon-links": "^4.1.2",
+    "@storybook/addon-storysource": "^4.1.2",
     "@storybook/addons": "^4.1.2",
     "@storybook/react": "^4.1.2",
     "babel-loader": "^8.0.4",

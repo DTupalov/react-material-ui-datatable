@@ -3,7 +3,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { action } from '@storybook/addon-actions';
 import { storiesOf } from '@storybook/react';
 import React from 'react';
-import { ReactMUIDatatable } from '../src/';
+import { metaSymbol, ReactMUIDatatable } from '../src/';
 import users from '../stubs/users.json';
 
 const columns = [
@@ -59,7 +59,14 @@ storiesOf('ReactMUIDatatable', module)
       toolbarSelectActions={({ data, selectedRows }) => {
         return (
           <IconButton
-            onClick={() => action('Delete selected rows')(data, selectedRows)}
+            onClick={() => {
+              action('Received data and selectedRows')(data, selectedRows);
+              action('Delete selected rows')(
+                data.filter(row =>
+                  selectedRows.includes(row[metaSymbol].rawIndex)
+                )
+              );
+            }}
           >
             <DeleteIcon />
           </IconButton>

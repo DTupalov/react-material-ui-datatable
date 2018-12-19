@@ -40,8 +40,9 @@ export default compose(
   })),
   withStyles(theme => ({
     root: {
-      borderRadiusTopLeft: theme.shape.borderRadius,
-      borderRadiusTopRight: theme.shape.borderRadius,
+      borderRadius: `${theme.shape.borderRadius}px ${
+        theme.shape.borderRadius
+      }px 0 0`,
     },
     highlight: {
       backgroundColor: lighten(theme.palette.secondary.light, 0.85),
