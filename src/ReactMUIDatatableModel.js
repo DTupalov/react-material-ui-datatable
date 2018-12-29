@@ -1,3 +1,4 @@
+import memoize from 'lodash/memoize';
 import compose from 'recompose/compose';
 import defaultProps from 'recompose/defaultProps';
 import withHandlers from 'recompose/withHandlers';
@@ -81,23 +82,50 @@ export default compose(
       handleSelect: state => selectedRows => ({ selectedRows }),
     }
   ),
-  withProps(props => ({
-    data: pipe(
-      sort({ column: props.sort.column, direction: props.sort.direction }),
-      search({ value: props.search.value }),
-      filter({ values: props.filterValues })
-    )(props.data),
-  })),
-  withProps(props => ({
-    filterLists: convertDataToFilterLists({
-      data: props.data,
-      columns: props.columns,
-    }),
-    diplayData: paginate({ page: props.page, perPage: props.perPage })(
-      props.data
-    ),
-    //TODO: selectedRows need to be recalculate, if we be available to filter list during there is selectedRows
-  })),
+  withProps(
+    memoize(
+      props => ({
+        data: pipe(
+          sort({
+            column: props.sort.column,
+            direction: props.sort.direction,
+          }),
+          search({ value: props.search.value }),
+          filter({ values: props.filterValues })
+        )(props.data),
+      }),
+      props =>
+        JSON.stringify([
+          props.sort.column,
+          props.sort.direction,
+          props.search.value,
+          props.filterValues,
+        ])
+    )
+  ),
+  withProps(
+    memoize(
+      props => ({
+        filterLists: convertDataToFilterLists({
+          data: props.data,
+          columns: props.columns,
+        }),
+        diplayData: paginate({ page: props.page, perPage: props.perPage })(
+          props.data
+        ),
+        //TODO: selectedRows need to be recalculate, if we be available to filter list during there is selectedRows
+      }),
+      props =>
+        JSON.stringify([
+          props.sort.column,
+          props.sort.direction,
+          props.search.value,
+          props.filterValues,
+          props.page,
+          props.perPage,
+        ])
+    )
+  ),
   withHandlers({
     toggleSelectRow: props => rawIndex => {
       const nextSelectedRows = [...props.selectedRows];
