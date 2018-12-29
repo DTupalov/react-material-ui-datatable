@@ -2,6 +2,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
+import get from 'lodash/get';
 import React from 'react';
 import fromRenderProps from 'recompose/fromRenderProps';
 import { ReactMUIDatatableConsumer } from './ReactMUIDatatableProvider';
@@ -24,10 +25,10 @@ const ReactDatatableBody = props => {
             <TableCell key={cellIndex}>
               {column.customCell
                 ? column.customCell({
-                    value: props.diplayData[rowIndex][column.name],
+                    value: get(props.diplayData[rowIndex], column.name),
                     row,
                   })
-                : props.diplayData[rowIndex][column.name]}
+                : get(props.diplayData[rowIndex], column.name)}
             </TableCell>
           ))}
         </TableRow>

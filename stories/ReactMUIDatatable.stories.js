@@ -5,6 +5,7 @@ import { storiesOf } from '@storybook/react';
 import React from 'react';
 import { metaSymbol, ReactMUIDatatable } from '../src/';
 import users from '../stubs/users.json';
+import usersWithCars from '../stubs/usersWithCars.json';
 
 const columns = [
   {
@@ -73,4 +74,55 @@ storiesOf('ReactMUIDatatable', module)
         );
       }}
     />
-  ));
+  ))
+  .add('column dot name', () => {
+    const columns = [
+      {
+        name: 'firstName',
+        label: 'First Name',
+      },
+      {
+        name: 'lastName',
+        label: 'Last Name',
+      },
+      {
+        name: 'age',
+        label: 'Age',
+      },
+      {
+        name: 'car.model',
+        label: 'Car model',
+      },
+      {
+        name: 'car.year',
+        label: 'Car year',
+      },
+    ];
+
+    const data = usersWithCars;
+
+    return (
+      <ReactMUIDatatable
+        columns={columns}
+        data={data}
+        title={title}
+        selectable={true}
+        toolbarSelectActions={({ data, selectedRows }) => {
+          return (
+            <IconButton
+              onClick={() => {
+                action('Received data and selectedRows')(data, selectedRows);
+                action('Delete selected rows')(
+                  data.filter(row =>
+                    selectedRows.includes(row[metaSymbol].rawIndex)
+                  )
+                );
+              }}
+            >
+              <DeleteIcon />
+            </IconButton>
+          );
+        }}
+      />
+    );
+  });

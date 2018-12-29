@@ -1,25 +1,33 @@
+import get from 'lodash/get';
+
 export const pipe = (...fns) => x => fns.reduce((v, f) => f(v), x);
 
 export const sort = ({ columnName, direction }) => data =>
   data.sort((a, b) => {
-    if (a[columnName] > b[columnName]) {
+    if (get(a, columnName) > get(b, columnName)) {
       return direction === 'ASC' ? 1 : -1;
     }
-    if (a[columnName] < b[columnName]) {
+    if (get(a, columnName) < get(b, columnName)) {
       return direction === 'DESC' ? 1 : -1;
     }
     return 0;
   });
 
-export const search = ({ value }) => data =>
+export const search = ({ value, columns }) => data =>
   data.filter(row =>
-    Object.keys(row).some(column => row[column].toString().includes(value))
+    columns.some(column =>
+      get(row, column.name)
+        .toString()
+        .includes(value)
+    )
   );
 
-export const filter = ({ values }) => data =>
+export const filter = ({ values, columns }) => data =>
   data.filter(row =>
-    Object.keys(values).every(column =>
-      values[column] === '' ? true : row[column] === values[column]
+    columns.every(column =>
+      values[column.name] === ''
+        ? true
+        : get(row, column.name) === values[column.name]
     )
   );
 
@@ -35,8 +43,8 @@ export const convertDataToFilterLists = ({ data, columns }) =>
 
     data.forEach(
       row =>
-        !filter[column.name].list.includes(row[column.name]) &&
-        filter[column.name].list.push(row[column.name])
+        !filter[column.name].list.includes(get(row, column.name)) &&
+        filter[column.name].list.push(get(row, column.name))
     );
 
     filter[column.name].list.sort();

@@ -90,8 +90,8 @@ export default compose(
             columnName: props.sort.columnName,
             direction: props.sort.direction,
           }),
-          search({ value: props.search.value }),
-          filter({ values: props.filterValues })
+          search({ value: props.search.value, columns: props.columns }),
+          filter({ values: props.filterValues, columns: props.columns })
         )(props.data),
       }),
       props =>
