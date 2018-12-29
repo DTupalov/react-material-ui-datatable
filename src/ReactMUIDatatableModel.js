@@ -84,37 +84,32 @@ export default compose(
   ),
   withProps(
     memoize(
-      props => ({
-        data: pipe(
+      props => {
+        const data = pipe(
           sort({
             columnName: props.sort.columnName,
             direction: props.sort.direction,
           }),
           search({ value: props.search.value, columns: props.columns }),
           filter({ values: props.filterValues, columns: props.columns })
-        )(props.data),
-      }),
-      props =>
-        JSON.stringify([
-          props.sort.columnName,
-          props.sort.direction,
-          props.search.value,
-          props.filterValues,
-        ])
-    )
-  ),
-  withProps(
-    memoize(
-      props => ({
-        filterLists: convertDataToFilterLists({
-          data: props.data,
+        )(props.data);
+
+        const filterLists = convertDataToFilterLists({
+          data: data,
           columns: props.columns,
-        }),
-        diplayData: paginate({ page: props.page, perPage: props.perPage })(
-          props.data
-        ),
-        //TODO: selectedRows need to be recalculate, if we be available to filter list during there is selectedRows
-      }),
+        });
+
+        const diplayData = paginate({
+          page: props.page,
+          perPage: props.perPage,
+        })(data);
+
+        return {
+          data,
+          filterLists,
+          diplayData,
+        };
+      },
       props =>
         JSON.stringify([
           props.sort.columnName,
