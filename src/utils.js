@@ -1,11 +1,11 @@
 export const pipe = (...fns) => x => fns.reduce((v, f) => f(v), x);
 
-export const sort = ({ column, direction }) => data =>
+export const sort = ({ columnName, direction }) => data =>
   data.sort((a, b) => {
-    if (a[column] > b[column]) {
+    if (a[columnName] > b[columnName]) {
       return direction === 'ASC' ? 1 : -1;
     }
-    if (a[column] < b[column]) {
+    if (a[columnName] < b[columnName]) {
       return direction === 'DESC' ? 1 : -1;
     }
     return 0;

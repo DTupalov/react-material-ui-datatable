@@ -31,7 +31,7 @@ export default compose(
         showSearchBar: false,
         value: '',
       },
-      sort: { column: null, direction: 'ASC' },
+      sort: { columnName: null, direction: 'ASC' },
       filterLists: convertDataToFilterLists({
         data: props.data,
         columns: props.columns,
@@ -57,8 +57,8 @@ export default compose(
           value: e.target.value,
         },
       }),
-      handleSort: state => ({ column, direction = 'ASC' }) => ({
-        sort: { column, direction },
+      handleSort: state => ({ columnName, direction = 'ASC' }) => ({
+        sort: { columnName, direction },
       }),
       addFilter: state => ({ column, value }) => ({
         filterValues: {
@@ -87,7 +87,7 @@ export default compose(
       props => ({
         data: pipe(
           sort({
-            column: props.sort.column,
+            columnName: props.sort.columnName,
             direction: props.sort.direction,
           }),
           search({ value: props.search.value }),
@@ -96,7 +96,7 @@ export default compose(
       }),
       props =>
         JSON.stringify([
-          props.sort.column,
+          props.sort.columnName,
           props.sort.direction,
           props.search.value,
           props.filterValues,
@@ -117,7 +117,7 @@ export default compose(
       }),
       props =>
         JSON.stringify([
-          props.sort.column,
+          props.sort.columnName,
           props.sort.direction,
           props.search.value,
           props.filterValues,
