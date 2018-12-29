@@ -50,7 +50,7 @@ export const convertColumnsToFilterValues = ({ columns }) =>
     return filterValues;
   }, {});
 
-export const metaSymbol = Symbol.for('meta');
+export const metaSymbol = Symbol('meta');
 
 export const addMetaRawIndexToData = data =>
   data.map((row, rawIndex) => {
