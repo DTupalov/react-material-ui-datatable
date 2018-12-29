@@ -30,6 +30,9 @@ export default compose(
     removeFilter: datatableProps.removeFilter,
   })),
   withStyles(theme => ({
-    root: { paddingLeft: theme.spacing.unit * 2 },
+    root: {
+      paddingLeft: theme.spacing.unit * 2,
+      paddingTop: theme.spacing.unit * 2,
+    },
   }))
 )(ReactMUIDatatableToolbarFilterValues);

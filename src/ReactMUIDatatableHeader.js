@@ -1,9 +1,11 @@
 import Checkbox from '@material-ui/core/Checkbox';
+import withStyles from '@material-ui/core/styles/withStyles';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import React from 'react';
+import compose from 'recompose/compose';
 import fromRenderProps from 'recompose/fromRenderProps';
 import { ReactMUIDatatableConsumer } from './ReactMUIDatatableProvider';
 
@@ -26,6 +28,7 @@ const ReactMUIDatatableHeader = props => {
         {props.columns.map((column, index) => (
           <TableCell
             key={index}
+            className={props.classes.head}
             onClick={() =>
               props.handleSort({
                 column: column.name,
@@ -51,9 +54,8 @@ const ReactMUIDatatableHeader = props => {
   );
 };
 
-export default fromRenderProps(
-  ReactMUIDatatableConsumer,
-  ({ ...datatableProps }) => ({
+export default compose(
+  fromRenderProps(ReactMUIDatatableConsumer, ({ ...datatableProps }) => ({
     columns: datatableProps.columns,
     sort: datatableProps.sort,
     handleSort: datatableProps.handleSort,
@@ -61,5 +63,10 @@ export default fromRenderProps(
     selectedRows: datatableProps.selectedRows,
     data: datatableProps.data,
     handleSelectAll: datatableProps.handleSelectAll,
-  })
+  })),
+  withStyles(() => ({
+    head: {
+      cursor: 'pointer',
+    },
+  }))
 )(ReactMUIDatatableHeader);
