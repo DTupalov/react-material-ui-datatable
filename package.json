@@ -11,7 +11,7 @@
     "build": "cross-env NODE_ENV=production && rollup -c",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook -o ./docs",
-    "release": "standard-version"
+    "release": "npm run build && standard-version"
   },
   "repository": {
     "type": "git",
