@@ -90,12 +90,74 @@ storiesOf('ReactMUIDatatable', module)
         label: 'Age',
       },
       {
+        name: 'car.make',
+        label: 'Car make',
+      },
+      {
         name: 'car.model',
         label: 'Car model',
       },
       {
         name: 'car.year',
         label: 'Car year',
+      },
+    ];
+
+    const data = usersWithCars;
+
+    return (
+      <ReactMUIDatatable
+        columns={columns}
+        data={data}
+        title={title}
+        selectable={true}
+        toolbarSelectActions={({ data, selectedRows }) => {
+          return (
+            <IconButton
+              onClick={() => {
+                action('Received data and selectedRows')(data, selectedRows);
+                action('Delete selected rows')(
+                  data.filter(row =>
+                    selectedRows.includes(row[metaSymbol].rawIndex)
+                  )
+                );
+              }}
+            >
+              <DeleteIcon />
+            </IconButton>
+          );
+        }}
+      />
+    );
+  })
+  .add('column options', () => {
+    const columns = [
+      {
+        name: 'firstName',
+        label: 'First Name (no search)',
+        searchable: false,
+      },
+      {
+        name: 'lastName',
+        label: 'Last Name',
+      },
+      {
+        name: 'age',
+        label: 'Age',
+      },
+      {
+        name: 'car.make',
+        label: 'Car make',
+      },
+      {
+        name: 'car.model',
+        label: 'Car model (no sort)',
+        sortable: false,
+      },
+      {
+        name: 'car.year',
+        label: 'Car year (no filter)',
+        filterable: false,
       },
     ];
 

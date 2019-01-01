@@ -16,18 +16,22 @@ export const sort = ({ columnName, direction }) => data =>
 export const search = ({ value, columns }) => data =>
   data.filter(row =>
     columns.some(column =>
-      get(row, column.name)
-        .toString()
-        .includes(value)
+      column.searchable
+        ? get(row, column.name)
+            .toString()
+            .includes(value)
+        : false
     )
   );
 
 export const filter = ({ values, columns }) => data =>
   data.filter(row =>
     columns.every(column =>
-      values[column.name] === ''
-        ? true
-        : get(row, column.name) === values[column.name]
+      column.filterable
+        ? values[column.name] === ''
+          ? true
+          : get(row, column.name) === values[column.name]
+        : true
     )
   );
 
@@ -36,6 +40,8 @@ export const paginate = ({ page, perPage }) => data =>
 
 export const convertDataToFilterLists = ({ data, columns }) =>
   columns.reduce((filter, column) => {
+    if (!column.filterable) return filter;
+
     filter[column.name] = {
       list: [],
       label: column.label,
@@ -69,3 +75,11 @@ export const addMetaRawIndexToData = data =>
 
     return row;
   });
+
+export const completeColumnsWithOptions = columns =>
+  columns.map(column => ({
+    sortable: true,
+    filterable: true,
+    searchable: true,
+    ...column,
+  }));

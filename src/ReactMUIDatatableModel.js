@@ -7,6 +7,7 @@ import withStateHandlers from 'recompose/withStateHandlers';
 import { ReactMUIDatatableProvider } from './ReactMUIDatatableProvider';
 import {
   addMetaRawIndexToData,
+  completeColumnsWithOptions,
   convertColumnsToFilterValues,
   convertDataToFilterLists,
   filter,
@@ -27,6 +28,7 @@ export default compose(
   withStateHandlers(
     props => ({
       data: addMetaRawIndexToData(props.data),
+      columns: completeColumnsWithOptions(props.columns),
       search: {
         showSearchBar: false,
         value: '',

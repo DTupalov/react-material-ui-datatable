@@ -30,6 +30,7 @@ const ReactMUIDatatableHeader = props => {
             key={index}
             className={props.classes.head}
             onClick={() =>
+              column.sortable &&
               props.handleSort({
                 columnName: column.name,
                 direction:
@@ -41,11 +42,13 @@ const ReactMUIDatatableHeader = props => {
               })
             }
           >
-            <TableSortLabel
-              active={column.name === props.sort.columnName}
-              hideSortIcon={column.name !== props.sort.columnName}
-              direction={props.sort.direction.toLowerCase()}
-            />
+            {column.sortable && (
+              <TableSortLabel
+                active={column.name === props.sort.columnName}
+                hideSortIcon={column.name !== props.sort.columnName}
+                direction={props.sort.direction.toLowerCase()}
+              />
+            )}
             {column.label}
           </TableCell>
         ))}
