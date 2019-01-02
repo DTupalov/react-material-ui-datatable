@@ -1,5 +1,6 @@
 import { IconButton } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
+import SwapHorizIcon from '@material-ui/icons/SwapHoriz';
 import { action } from '@storybook/addon-actions';
 import { storiesOf } from '@storybook/react';
 import React from 'react';
@@ -57,20 +58,41 @@ storiesOf('ReactMUIDatatable', module)
       data={data}
       title={title}
       selectable={true}
-      toolbarSelectActions={({ data, selectedRows }) => {
+      toolbarSelectActions={({ data, selectedRows, updateSelectedRows }) => {
         return (
-          <IconButton
-            onClick={() => {
-              action('Received data and selectedRows')(data, selectedRows);
-              action('Delete selected rows')(
-                data.filter(row =>
-                  selectedRows.includes(row[metaSymbol].rawIndex)
-                )
-              );
-            }}
-          >
-            <DeleteIcon />
-          </IconButton>
+          <React.Fragment>
+            <IconButton
+              onClick={() => {
+                action('Invert selected rows')(data, selectedRows);
+                const nextSelectedRows = data.reduce(
+                  (nextSelectedRows, row) => {
+                    if (!selectedRows.includes(row[metaSymbol].rawIndex)) {
+                      nextSelectedRows.push(row[metaSymbol].rawIndex);
+                    }
+
+                    return nextSelectedRows;
+                  },
+                  []
+                );
+
+                updateSelectedRows(nextSelectedRows);
+              }}
+            >
+              <SwapHorizIcon />
+            </IconButton>
+            <IconButton
+              onClick={() => {
+                action('Received data and selectedRows')(data, selectedRows);
+                action('Delete selected rows')(
+                  data.filter(row =>
+                    selectedRows.includes(row[metaSymbol].rawIndex)
+                  )
+                );
+              }}
+            >
+              <DeleteIcon />
+            </IconButton>
+          </React.Fragment>
         );
       }}
     />
