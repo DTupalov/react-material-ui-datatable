@@ -58,7 +58,12 @@ storiesOf('ReactMUIDatatable', module)
       data={data}
       title={title}
       selectable={true}
-      toolbarSelectActions={({ data, selectedRows, updateSelectedRows }) => {
+      toolbarSelectActions={({
+        data,
+        selectedRows,
+        updateSelectedRows,
+        handleDelete,
+      }) => {
         return (
           <React.Fragment>
             <IconButton
@@ -88,6 +93,7 @@ storiesOf('ReactMUIDatatable', module)
                     selectedRows.includes(row[metaSymbol].rawIndex)
                   )
                 );
+                handleDelete(selectedRows);
               }}
             >
               <DeleteIcon />
@@ -127,30 +133,7 @@ storiesOf('ReactMUIDatatable', module)
 
     const data = usersWithCars;
 
-    return (
-      <ReactMUIDatatable
-        columns={columns}
-        data={data}
-        title={title}
-        selectable={true}
-        toolbarSelectActions={({ data, selectedRows }) => {
-          return (
-            <IconButton
-              onClick={() => {
-                action('Received data and selectedRows')(data, selectedRows);
-                action('Delete selected rows')(
-                  data.filter(row =>
-                    selectedRows.includes(row[metaSymbol].rawIndex)
-                  )
-                );
-              }}
-            >
-              <DeleteIcon />
-            </IconButton>
-          );
-        }}
-      />
-    );
+    return <ReactMUIDatatable columns={columns} data={data} title={title} />;
   })
   .add('column options', () => {
     const columns = [
@@ -185,28 +168,5 @@ storiesOf('ReactMUIDatatable', module)
 
     const data = usersWithCars;
 
-    return (
-      <ReactMUIDatatable
-        columns={columns}
-        data={data}
-        title={title}
-        selectable={true}
-        toolbarSelectActions={({ data, selectedRows }) => {
-          return (
-            <IconButton
-              onClick={() => {
-                action('Received data and selectedRows')(data, selectedRows);
-                action('Delete selected rows')(
-                  data.filter(row =>
-                    selectedRows.includes(row[metaSymbol].rawIndex)
-                  )
-                );
-              }}
-            >
-              <DeleteIcon />
-            </IconButton>
-          );
-        }}
-      />
-    );
+    return <ReactMUIDatatable columns={columns} data={data} title={title} />;
   });

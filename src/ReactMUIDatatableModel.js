@@ -47,6 +47,7 @@ export default compose(
       toolbarSelectActions: props.toolbarSelectActions,
     }),
     {
+      setData: () => data => ({ data }),
       setSearch: () => search => ({ search }),
       setSort: () => sort => ({ sort }),
       setFilterValues: () => filterValues => ({ filterValues }),
@@ -85,6 +86,7 @@ export default compose(
       },
       props =>
         JSON.stringify([
+          props.data,
           props.sort.columnName,
           props.sort.direction,
           props.search.value,
@@ -147,5 +149,13 @@ export default compose(
     changePerPage: props => event =>
       props.setPerPage(Number(event.target.value)),
     handleSelect: props => selectedRows => props.setSelectedRows(selectedRows),
+    handleDelete: props => selectedRows => {
+      const nextData = props.data.filter(
+        row => !selectedRows.includes(row[metaSymbol].rawIndex)
+      );
+
+      props.setData(nextData);
+      props.setSelectedRows([]);
+    },
   })
 )(ReactMUIDatatableProvider);

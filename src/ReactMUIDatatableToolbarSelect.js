@@ -26,6 +26,7 @@ const ReactMUIDatatableToolbarSelect = props => {
             data: props.data,
             selectedRows: props.selectedRows,
             updateSelectedRows: props.handleSelect,
+            handleDelete: props.handleDelete,
           })}
         </Grid>
       </Grid>
@@ -36,6 +37,7 @@ const ReactMUIDatatableToolbarSelect = props => {
 export default compose(
   fromRenderProps(ReactMUIDatatableConsumer, ({ ...datatableProps }) => ({
     handleSelect: datatableProps.handleSelect,
+    handleDelete: datatableProps.handleDelete,
     selectedRows: datatableProps.selectedRows,
     toolbarSelectActions: datatableProps.toolbarSelectActions,
     data: datatableProps.data,
