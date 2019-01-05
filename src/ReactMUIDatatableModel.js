@@ -47,41 +47,12 @@ export default compose(
       toolbarSelectActions: props.toolbarSelectActions,
     }),
     {
-      toggleSearchBar: state => () => ({
-        search: {
-          showSearchBar: !state.search.showSearchBar,
-          value: '',
-        },
-      }),
-      handleSearchValue: state => e => ({
-        search: {
-          showSearchBar: state.search.showSearchBar,
-          value: e.target.value,
-        },
-      }),
-      handleSort: state => ({ columnName, direction = 'ASC' }) => ({
-        sort: { columnName, direction },
-      }),
-      addFilter: state => ({ column, value }) => ({
-        filterValues: {
-          ...state.filterValues,
-          [column]: value,
-        },
-      }),
-      removeFilter: state => ({ column }) => ({
-        filterValues: {
-          ...state.filterValues,
-          [column]: '',
-        },
-      }),
-      resetFilter: (state, props) => () => ({
-        filterValues: convertColumnsToFilterValues({
-          columns: props.columns,
-        }),
-      }),
-      changePage: () => (_, page) => ({ page }),
-      changePerPage: () => event => ({ perPage: Number(event.target.value) }),
-      handleSelect: state => selectedRows => ({ selectedRows }),
+      setSearch: () => search => ({ search }),
+      setSort: () => sort => ({ sort }),
+      setFilterValues: () => filterValues => ({ filterValues }),
+      setPage: () => page => ({ page }),
+      setPerPage: () => perPage => ({ perPage }),
+      setSelectedRows: () => selectedRows => ({ selectedRows }),
     }
   ),
   withProps(
@@ -134,7 +105,7 @@ export default compose(
         nextSelectedRows.push(rawIndex);
       }
 
-      props.handleSelect(nextSelectedRows);
+      props.setSelectedRows(nextSelectedRows);
     },
     handleSelectAll: props => () => {
       let nextSelectedRows = [];
@@ -142,7 +113,39 @@ export default compose(
         nextSelectedRows = props.data.map(row => row[metaSymbol].rawIndex);
       }
 
-      props.handleSelect(nextSelectedRows);
+      props.setSelectedRows(nextSelectedRows);
     },
+    toggleSearchBar: props => () =>
+      props.setSearch({
+        showSearchBar: !props.search.showSearchBar,
+        value: '',
+      }),
+    handleSearchValue: props => event =>
+      props.setSearch({
+        showSearchBar: props.search.showSearchBar,
+        value: event.target.value,
+      }),
+    handleSort: props => ({ columnName, direction = 'ASC' }) =>
+      props.setSort({ columnName, direction }),
+    addFilter: props => ({ column, value }) =>
+      props.setFilterValues({
+        ...props.filterValues,
+        [column]: value,
+      }),
+    removeFilter: props => ({ column }) =>
+      props.setFilterValues({
+        ...props.filterValues,
+        [column]: '',
+      }),
+    resetFilter: props => () =>
+      props.setFilterValues(
+        convertColumnsToFilterValues({
+          columns: props.columns,
+        })
+      ),
+    changePage: props => (_, page) => props.setPage(page),
+    changePerPage: props => event =>
+      props.setPerPage(Number(event.target.value)),
+    handleSelect: props => selectedRows => props.setSelectedRows(selectedRows),
   })
 )(ReactMUIDatatableProvider);
