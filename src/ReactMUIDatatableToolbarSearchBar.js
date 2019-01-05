@@ -18,8 +18,11 @@ const ReactMUIDatatableToolbarSearchBar = props => {
         />
       </Grid>
       <Grid item>
-        <Tooltip title="Close search">
-          <IconButton aria-label="Close search" onClick={props.toggleSearchBar}>
+        <Tooltip title={props.labels.closeSearch}>
+          <IconButton
+            aria-label={props.labels.closeSearch}
+            onClick={props.toggleSearchBar}
+          >
             <CloseIcon />
           </IconButton>
         </Tooltip>
@@ -34,5 +37,6 @@ export default fromRenderProps(
     value: datatableProps.search.value,
     handleSearchValue: datatableProps.handleSearchValue,
     toggleSearchBar: datatableProps.toggleSearchBar,
+    labels: datatableProps.localization.toolbar,
   })
 )(ReactMUIDatatableToolbarSearchBar);

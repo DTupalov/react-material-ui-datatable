@@ -29,7 +29,7 @@ const ReactMUIDatatableToolbarFilterPopover = props => {
     >
       <Grid container spacing={24} className={props.classes.root}>
         <Grid item xs={12}>
-          <Typography variant={'h6'}>Filter</Typography>
+          <Typography variant={'h6'}>{props.labels.title}</Typography>
         </Grid>
         {Object.keys(props.filterLists).map((column, columnIndex) => (
           <Grid item xs={6} key={columnIndex}>
@@ -42,7 +42,7 @@ const ReactMUIDatatableToolbarFilterPopover = props => {
               onChange={e => props.addFilter({ column, value: e.target.value })}
               fullWidth
             >
-              <MenuItem value={''}>All</MenuItem>
+              <MenuItem value={''}>{props.labels.allOption}</MenuItem>
               {props.filterLists[column].list.map((value, valueIndex) => (
                 <MenuItem value={value} key={valueIndex}>
                   {value}
@@ -53,7 +53,7 @@ const ReactMUIDatatableToolbarFilterPopover = props => {
         ))}
         <Grid item xs={12}>
           <Button color={'primary'} onClick={props.resetFilter} fullWidth>
-            <Typography variant={'subheading'}>Reset</Typography>
+            <Typography variant={'subheading'}>{props.labels.reset}</Typography>
           </Button>
         </Grid>
       </Grid>
@@ -68,6 +68,7 @@ export default compose(
     addFilter: datatableProps.addFilter,
     resetFilter: datatableProps.resetFilter,
     columns: datatableProps.columns,
+    labels: datatableProps.localization.filterLists,
   })),
   withStyles(theme => ({
     root: { padding: theme.spacing.unit * 2 },

@@ -18,7 +18,7 @@ const ReactMUIDatatableToolbarSelect = props => {
       <Grid container justify={'space-between'}>
         <Grid item className={props.classes.selected}>
           <Typography color="inherit" variant="subtitle1">
-            {props.selectedRows.length} row(s) selected
+            {props.labels.selectedRows(props.selectedRows.length)}
           </Typography>
         </Grid>
         <Grid item>
@@ -41,6 +41,7 @@ export default compose(
     selectedRows: datatableProps.selectedRows,
     toolbarSelectActions: datatableProps.toolbarSelectActions,
     data: datatableProps.data,
+    labels: datatableProps.localization.toolbarSelect,
   })),
   withStyles(theme => ({
     root: {

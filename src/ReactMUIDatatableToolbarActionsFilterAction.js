@@ -2,9 +2,11 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import React from 'react';
+import { compose } from 'recompose';
 import fromRenderProps from 'recompose/fromRenderProps';
 import toRenderProps from 'recompose/toRenderProps';
 import withState from 'recompose/withState';
+import { ReactMUIDatatableConsumer } from './ReactMUIDatatableProvider';
 import ReactMUIDatatableToolbarFilterPopover from './ReactMUIDatatableToolbarFilterPopover';
 
 const PopoverModel = toRenderProps(
@@ -14,9 +16,9 @@ const PopoverModel = toRenderProps(
 const ReactMUIDatatableToolbarActionsFilterAction = props => {
   return (
     <React.Fragment>
-      <Tooltip title="Filter list">
+      <Tooltip title={props.labels.filterAction}>
         <IconButton
-          aria-label="Filter list"
+          aria-label={props.labels.filterAction}
           onClick={event => props.updateAnchorEl(event.currentTarget)}
         >
           <FilterListIcon />
@@ -31,6 +33,11 @@ const ReactMUIDatatableToolbarActionsFilterAction = props => {
   );
 };
 
-export default fromRenderProps(PopoverModel, ({ ...popoverProps }) => ({
-  ...popoverProps,
-}))(ReactMUIDatatableToolbarActionsFilterAction);
+export default compose(
+  fromRenderProps(ReactMUIDatatableConsumer, ({ ...datatableProps }) => ({
+    labels: datatableProps.localization.toolbar,
+  })),
+  fromRenderProps(PopoverModel, ({ ...popoverProps }) => ({
+    ...popoverProps,
+  }))
+)(ReactMUIDatatableToolbarActionsFilterAction);

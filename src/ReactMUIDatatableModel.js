@@ -45,6 +45,25 @@ export default compose(
       selectable: props.selectable,
       selectedRows: [],
       toolbarSelectActions: props.toolbarSelectActions,
+      localization: {
+        toolbar: {
+          searchAction: 'Search',
+          filterAction: 'Filters',
+          closeSearch: 'Close search',
+        },
+        filterLists: {
+          title: 'Filter',
+          allOption: 'All',
+          reset: 'Reset',
+        },
+        toolbarSelect: {
+          selectedRows: count => `${count} row(s) selected`,
+        },
+        pagination: {
+          rowsPerPage: 'Rows per page',
+          displayedRows: ({ from, to, count }) => `${from}-${to} of ${count}`,
+        },
+      },
     }),
     {
       setData: () => data => ({ data }),
