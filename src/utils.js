@@ -58,7 +58,7 @@ export const convertDataToFilterLists = ({ data, columns }) =>
     return filter;
   }, {});
 
-export const convertColumnsToFilterValues = ({ columns }) =>
+export const convertColumnsToFilterValues = columns =>
   columns.reduce((filterValues, column) => {
     filterValues[column.name] = '';
     return filterValues;

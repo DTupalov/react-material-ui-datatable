@@ -4,7 +4,6 @@ import defaultProps from 'recompose/defaultProps';
 import withHandlers from 'recompose/withHandlers';
 import withProps from 'recompose/withProps';
 import withStateHandlers from 'recompose/withStateHandlers';
-import { ReactMUIDatatableProvider } from './ReactMUIDatatableProvider';
 import {
   addMetaRawIndexToData,
   completeColumnsWithOptions,
@@ -18,52 +17,95 @@ import {
   sort,
 } from './utils';
 
+export const mapDatatableProps = props => ({
+  title: props.title,
+  columns: props.columns,
+  search: props.search,
+  sort: props.sort,
+  filterValues: props.filterValues,
+  page: props.page,
+  perPage: props.perPage,
+  selectedRows: props.selectedRows,
+  toolbarSelectActions: props.toolbarSelectActions,
+  page: props.page,
+  perPage: props.perPage,
+  perPageOption: props.perPageOption,
+  selectedRows: props.selectedRows,
+  selectable: props.selectable,
+  localization: props.localization,
+});
+
+export const mapDatatableCalculatedProps = props => ({
+  data: props.data,
+  filterLists: props.filterLists,
+  diplayData: props.diplayData,
+});
+
+export const mapDatatableHandlers = props => ({
+  toggleSelectRow: props.toggleSelectRow,
+  handleSelectAll: props.handleSelectAll,
+  toggleSearchBar: props.toggleSearchBar,
+  handleSearchValue: props.handleSearchValue,
+  handleSort: props.handleSort,
+  addFilter: props.addFilter,
+  removeFilter: props.removeFilter,
+  resetFilter: props.resetFilter,
+  changePage: props.changePage,
+  changePerPage: props.changePerPage,
+  handleSelect: props.handleSelect,
+  handleDelete: props.handleDelete,
+});
+
 export default compose(
   defaultProps({
     data: [],
     columns: [],
+    title: '',
+    search: {
+      showSearchBar: false,
+      value: '',
+    },
+    sort: { columnName: null, direction: 'ASC' },
     toolbarSelectActions: () => null,
+    page: 0,
+    perPage: 5,
+    perPageOption: [5, 10, 15],
+    selectedRows: [],
     selectable: false,
+    localization: {
+      toolbar: {
+        searchAction: 'Search',
+        filterAction: 'Filters',
+        closeSearch: 'Close search',
+      },
+      filterLists: {
+        title: 'Filter',
+        allOption: 'All',
+        reset: 'Reset',
+      },
+      toolbarSelect: {
+        selectedRows: count => `${count} row(s) selected`,
+      },
+      pagination: {
+        rowsPerPage: 'Rows per page',
+        displayedRows: ({ from, to, count }) => `${from}-${to} of ${count}`,
+      },
+    },
   }),
+  withProps(props => ({
+    data: addMetaRawIndexToData(props.data),
+    columns: completeColumnsWithOptions(props.columns),
+    filterValues: convertColumnsToFilterValues(props.columns),
+  })),
   withStateHandlers(
     props => ({
-      data: addMetaRawIndexToData(props.data),
-      columns: completeColumnsWithOptions(props.columns),
-      search: {
-        showSearchBar: false,
-        value: '',
-      },
-      sort: { columnName: null, direction: 'ASC' },
-      filterLists: convertDataToFilterLists({
-        data: props.data,
-        columns: props.columns,
-      }),
-      filterValues: convertColumnsToFilterValues({ columns: props.columns }),
-      page: 0,
-      perPage: 5,
-      perPageOption: [5, 10, 15],
-      selectable: props.selectable,
-      selectedRows: [],
-      toolbarSelectActions: props.toolbarSelectActions,
-      localization: {
-        toolbar: {
-          searchAction: 'Search',
-          filterAction: 'Filters',
-          closeSearch: 'Close search',
-        },
-        filterLists: {
-          title: 'Filter',
-          allOption: 'All',
-          reset: 'Reset',
-        },
-        toolbarSelect: {
-          selectedRows: count => `${count} row(s) selected`,
-        },
-        pagination: {
-          rowsPerPage: 'Rows per page',
-          displayedRows: ({ from, to, count }) => `${from}-${to} of ${count}`,
-        },
-      },
+      data: props.data,
+      search: props.search,
+      sort: props.sort,
+      filterValues: props.filterValues,
+      page: props.page,
+      perPage: props.perPage,
+      selectedRows: props.selectedRows,
     }),
     {
       setData: () => data => ({ data }),
@@ -177,4 +219,4 @@ export default compose(
       props.setSelectedRows([]);
     },
   })
-)(ReactMUIDatatableProvider);
+);
