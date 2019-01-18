@@ -11,7 +11,7 @@ import { metaSymbol } from './utils';
 const ReactDatatableBody = props => {
   return (
     <TableBody>
-      {props.diplayData.map((row, rowIndex) => (
+      {props.displayData.map((row, rowIndex) => (
         <TableRow key={rowIndex}>
           {props.selectable && (
             <TableCell padding="checkbox">
@@ -25,10 +25,10 @@ const ReactDatatableBody = props => {
             <TableCell key={cellIndex}>
               {column.customCell
                 ? column.customCell({
-                    value: get(props.diplayData[rowIndex], column.name),
+                    value: get(props.displayData[rowIndex], column.name),
                     row,
                   })
-                : get(props.diplayData[rowIndex], column.name)}
+                : get(props.displayData[rowIndex], column.name)}
             </TableCell>
           ))}
         </TableRow>
@@ -40,7 +40,7 @@ const ReactDatatableBody = props => {
 export default fromRenderProps(
   ReactMUIDatatableConsumer,
   ({ ...datatableProps }) => ({
-    diplayData: datatableProps.diplayData,
+    displayData: datatableProps.displayData,
     columns: datatableProps.columns,
     selectable: datatableProps.selectable,
     toggleSelectRow: datatableProps.toggleSelectRow,

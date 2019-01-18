@@ -13,7 +13,7 @@ const ReactMUIDatatableToolbarSearchBar = props => {
       <Grid item xs={true}>
         <TextField
           value={props.value}
-          onChange={props.handleSearchValue}
+          onChange={event => props.handleSearchValue(event.target.value)}
           fullWidth
         />
       </Grid>

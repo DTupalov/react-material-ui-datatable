@@ -10,12 +10,12 @@ const ReactMUIDatatableToolbarFilterValues = props => {
   return (
     <Grid container className={props.classes.root} spacing={8}>
       {Object.keys(props.filterValues).map(
-        (column, index) =>
-          props.filterValues[column] && (
+        (columnName, index) =>
+          props.filterValues[columnName] && (
             <Grid item key={index}>
               <Chip
-                label={props.filterValues[column]}
-                onDelete={() => props.removeFilter({ column })}
+                label={props.filterValues[columnName]}
+                onDelete={() => props.removeFilter({ columnName })}
               />
             </Grid>
           )

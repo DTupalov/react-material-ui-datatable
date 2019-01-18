@@ -19,8 +19,10 @@ const ReactMUIDatatableFooter = props => {
           SelectProps={{
             native: true,
           }}
-          onChangePage={props.changePage}
-          onChangeRowsPerPage={props.changePerPage}
+          onChangePage={(_, page) => props.changePage(page)}
+          onChangeRowsPerPage={event =>
+            props.changePerPage(Number(event.target.value))
+          }
           ActionsComponent={TablePaginationActions}
           labelDisplayedRows={props.labels.displayedRows}
           labelRowsPerPage={props.labels.rowsPerPage}

@@ -31,19 +31,21 @@ const ReactMUIDatatableToolbarFilterPopover = props => {
         <Grid item xs={12}>
           <Typography variant={'h6'}>{props.labels.title}</Typography>
         </Grid>
-        {Object.keys(props.filterLists).map((column, columnIndex) => (
+        {Object.keys(props.filterLists).map((columnName, columnIndex) => (
           <Grid item xs={6} key={columnIndex}>
             <TextField
               select
               SelectProps={{ displayEmpty: true }}
               InputLabelProps={{ shrink: true }}
-              value={props.filterValues[column]}
-              label={props.filterLists[column].label}
-              onChange={e => props.addFilter({ column, value: e.target.value })}
+              value={props.filterValues[columnName]}
+              label={props.filterLists[columnName].label}
+              onChange={e =>
+                props.addFilter({ columnName, value: e.target.value })
+              }
               fullWidth
             >
               <MenuItem value={''}>{props.labels.allOption}</MenuItem>
-              {props.filterLists[column].list.map((value, valueIndex) => (
+              {props.filterLists[columnName].list.map((value, valueIndex) => (
                 <MenuItem value={value} key={valueIndex}>
                   {value}
                 </MenuItem>

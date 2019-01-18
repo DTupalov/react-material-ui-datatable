@@ -38,12 +38,12 @@ export const mapDatatableProps = props => ({
 export const mapDatatableCalculatedProps = props => ({
   data: props.data,
   filterLists: props.filterLists,
-  diplayData: props.diplayData,
+  displayData: props.displayData,
 });
 
 export const mapDatatableHandlers = props => ({
   toggleSelectRow: props.toggleSelectRow,
-  handleSelectAll: props.handleSelectAll,
+  toggleSelectAll: props.toggleSelectAll,
   toggleSearchBar: props.toggleSearchBar,
   handleSearchValue: props.handleSearchValue,
   handleSort: props.handleSort,
@@ -134,7 +134,7 @@ export default compose(
           columns: props.columns,
         });
 
-        const diplayData = paginate({
+        const displayData = paginate({
           page: props.page,
           perPage: props.perPage,
         })(data);
@@ -142,12 +142,13 @@ export default compose(
         return {
           data,
           filterLists,
-          diplayData,
+          displayData,
         };
       },
       props =>
         JSON.stringify([
           props.data,
+          props.columns,
           props.sort.columnName,
           props.sort.direction,
           props.search.value,
@@ -170,7 +171,7 @@ export default compose(
 
       props.setSelectedRows(nextSelectedRows);
     },
-    handleSelectAll: props => () => {
+    toggleSelectAll: props => () => {
       let nextSelectedRows = [];
       if (!props.selectedRows.length) {
         nextSelectedRows = props.data.map(row => row[metaSymbol].rawIndex);
@@ -183,32 +184,27 @@ export default compose(
         showSearchBar: !props.search.showSearchBar,
         value: '',
       }),
-    handleSearchValue: props => event =>
+    handleSearchValue: props => value =>
       props.setSearch({
         showSearchBar: props.search.showSearchBar,
-        value: event.target.value,
+        value,
       }),
     handleSort: props => ({ columnName, direction = 'ASC' }) =>
       props.setSort({ columnName, direction }),
-    addFilter: props => ({ column, value }) =>
+    addFilter: props => ({ columnName, value }) =>
       props.setFilterValues({
         ...props.filterValues,
-        [column]: value,
+        [columnName]: value,
       }),
-    removeFilter: props => ({ column }) =>
+    removeFilter: props => ({ columnName }) =>
       props.setFilterValues({
         ...props.filterValues,
-        [column]: '',
+        [columnName]: '',
       }),
     resetFilter: props => () =>
-      props.setFilterValues(
-        convertColumnsToFilterValues({
-          columns: props.columns,
-        })
-      ),
-    changePage: props => (_, page) => props.setPage(page),
-    changePerPage: props => event =>
-      props.setPerPage(Number(event.target.value)),
+      props.setFilterValues(convertColumnsToFilterValues(props.columns)),
+    changePage: props => page => props.setPage(page),
+    changePerPage: props => count => props.setPerPage(count),
     handleSelect: props => selectedRows => props.setSelectedRows(selectedRows),
     handleDelete: props => selectedRows => {
       const nextData = props.data.filter(

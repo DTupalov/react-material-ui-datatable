@@ -69,9 +69,12 @@ export const metaSymbol = Symbol('meta');
 export const addMetaRawIndexToData = data =>
   data.map((row, rawIndex) => {
     /** add uniq property to data array */
-    row[metaSymbol] = {
-      rawIndex,
-    };
+    Object.defineProperty(row, metaSymbol, {
+      enumerable: false,
+      configurable: true,
+      writable: true,
+      value: { rawIndex },
+    });
 
     return row;
   });

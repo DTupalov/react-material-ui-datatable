@@ -21,7 +21,7 @@ const ReactMUIDatatableHeader = props => {
                 props.selectedRows.length < props.data.length
               }
               checked={props.selectedRows.length === props.data.length}
-              onChange={props.handleSelectAll}
+              onChange={props.toggleSelectAll}
             />
           </TableCell>
         )}
@@ -65,7 +65,7 @@ export default compose(
     selectable: datatableProps.selectable,
     selectedRows: datatableProps.selectedRows,
     data: datatableProps.data,
-    handleSelectAll: datatableProps.handleSelectAll,
+    toggleSelectAll: datatableProps.toggleSelectAll,
   })),
   withStyles(() => ({
     head: {
