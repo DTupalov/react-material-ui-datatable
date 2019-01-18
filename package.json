@@ -7,7 +7,7 @@
     "dist"
   ],
   "scripts": {
-    "test": "jest --coverage",
+    "test": "jest",
     "test:watch": "jest --watchAll --coverage",
     "test:coverage": "jest --coverage",
     "build": "cross-env NODE_ENV=production && rollup -c",
