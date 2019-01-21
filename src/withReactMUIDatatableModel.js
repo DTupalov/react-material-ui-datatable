@@ -4,7 +4,7 @@ import defaultProps from 'recompose/defaultProps';
 import withHandlers from 'recompose/withHandlers';
 import withProps from 'recompose/withProps';
 import withStateHandlers from 'recompose/withStateHandlers';
-import defaultToolbarSelectActions from './DefaultToolbarSelectActions';
+import defaultToolbarSelectActions from './defaultToolbarSelectActions';
 import {
   addMetaRawIndexToData,
   completeColumnsWithOptions,
