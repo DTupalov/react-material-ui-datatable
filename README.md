@@ -33,14 +33,18 @@ const columns = [
   {
     name: "age",
     label: "Age"
+  },
+  {
+    name: "car.make",
+    label: "Car make",
   }
 ];
 
 const data = [
-  { firstName: "Kylynn", lastName: "Lathey", age: 19 },
-  { firstName: "Cly", lastName: "Dukelow", age: 46 },
-  { firstName: "Afton", lastName: "Chaffer", age: 34 },
-  { firstName: "Deva", lastName: "Cowope", age: 22 }
+  { firstName: "Kylynn", lastName: "Lathey", age: 19, car: { make: 'Maserati' } },
+  { firstName: "Cly", lastName: "Dukelow", age: 46, car: { make: 'Hyundai' } },
+  { firstName: "Afton", lastName: "Chaffer", age: 34, car: { make: 'Porsche' } },
+  { firstName: "Deva", lastName: "Cowope", age: 22, car: { make: 'Toyota' } }
 ];
 
 <ReactMUIDatatable title={"Awesome list"} data={data} columns={columns} />;
@@ -48,23 +52,10 @@ const data = [
 
 For more details see __[Storybook](https://dtupalov.github.io/react-material-ui-datatable/)__ of this component
 
+## API docs
 
-## API
+[Read them here](./API.md)
 
-#### Props
+## CHANGELOGS
 
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| title | string | "" | Title of your table |
-| columns | Object[] | [] | Options for each column |
-| data | Object[] | [] | Dataset | 
-| selectable | boolean | false | Enable selections |
-| toolbarSelectActions | Function | () => {} | Function that returns a string or React component. Used as display actions in Toolbar selection. `function ({data: Object[], selectedRows: number[]}) => string \| React.Component`. Where `data` is the current dataset in the table (with applying filters and sort), and `selectedRows` with rawIndexes of selected data. To get selected rows, you need to import `metaSymbol` from library, and filter data like `data.filter(row => selectedRows.includes(row[metaSymbol].rawIndex))`. See details in Storybook example [`selectable`](https://dtupalov.github.io/react-material-ui-datatable/?selectedKind=ReactMUIDatatable&selectedStory=selectable&full=0&addons=1&stories=1&panelRight=0&addonPanel=storybook%2Fstories%2Fstories-panel) |
-
-#### Column option
-
-| Name | Type | Default | Description |
-| --- | --- | --- | --- |
-| name | string | | Name associated to your data's object |
-| label | string | | Display column title |
-| customCell | Function | | Function that returns a string or React component. Used as display for body cell. `function (value: string, row: Object) => string \| React.Component`|
+[Read them here](./CHANGELOG.md)
