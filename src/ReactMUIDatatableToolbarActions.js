@@ -10,15 +10,17 @@ import ReactMUIDatatableToolbarActionsFilterAction from './ReactMUIDatatableTool
 const ReactMUIDatatableToolbarActions = props => {
   return (
     <Grid item>
-      <Tooltip title={props.labels.searchAction}>
-        <IconButton
-          aria-label={props.labels.searchAction}
-          onClick={props.toggleSearchBar}
-        >
-          <SearchIcon />
-        </IconButton>
-      </Tooltip>
-      <ReactMUIDatatableToolbarActionsFilterAction />
+      {props.searchable && (
+        <Tooltip title={props.labels.searchAction}>
+          <IconButton
+            aria-label={props.labels.searchAction}
+            onClick={props.toggleSearchBar}
+          >
+            <SearchIcon />
+          </IconButton>
+        </Tooltip>
+      )}
+      {props.filterable && <ReactMUIDatatableToolbarActionsFilterAction />}
     </Grid>
   );
 };
@@ -28,5 +30,7 @@ export default fromRenderProps(
   ({ ...datatableProps }) => ({
     toggleSearchBar: datatableProps.toggleSearchBar,
     labels: datatableProps.localization.toolbar,
+    searchable: datatableProps.searchable,
+    filterable: datatableProps.filterable,
   })
 )(ReactMUIDatatableToolbarActions);

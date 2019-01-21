@@ -479,8 +479,14 @@ describe('withReactMUIDatatableModel', () => {
     expect(RenderedMockedComponent.props.data).toEqual(expectedData);
   });
 
-  it('should return toolbarSelectActions as null if it was not received', () => {
-    expect(RenderedMockedComponent.props.toolbarSelectActions()).toBeNull();
+  it('should return default toolbarSelectActions with delete icon if this prop was not received', () => {
+    const ToolbarSelectActions = RenderedMockedComponent.props.toolbarSelectActions(
+      {}
+    );
+
+    const tree = renderer.create(ToolbarSelectActions);
+
+    expect(tree).toMatchSnapshot();
   });
 
   it('should return string for selectedRows localization', () => {

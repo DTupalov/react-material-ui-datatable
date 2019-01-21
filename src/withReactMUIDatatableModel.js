@@ -4,6 +4,7 @@ import defaultProps from 'recompose/defaultProps';
 import withHandlers from 'recompose/withHandlers';
 import withProps from 'recompose/withProps';
 import withStateHandlers from 'recompose/withStateHandlers';
+import defaultToolbarSelectActions from './DefaultToolbarSelectActions';
 import {
   addMetaRawIndexToData,
   completeColumnsWithOptions,
@@ -32,6 +33,8 @@ export const mapDatatableProps = props => ({
   perPageOption: props.perPageOption,
   selectedRows: props.selectedRows,
   selectable: props.selectable,
+  filterable: props.filterable,
+  searchable: props.searchable,
   localization: props.localization,
 });
 
@@ -66,12 +69,14 @@ export default compose(
       value: '',
     },
     sort: { columnName: null, direction: 'ASC' },
-    toolbarSelectActions: () => null,
+    toolbarSelectActions: defaultToolbarSelectActions,
     page: 0,
     perPage: 5,
     perPageOption: [5, 10, 15],
     selectedRows: [],
     selectable: false,
+    filterable: false,
+    searchable: false,
     localization: {
       toolbar: {
         searchAction: 'Search',
