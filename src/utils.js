@@ -3,7 +3,8 @@ import get from 'lodash/get';
 export const pipe = (...fns) => x => fns.reduce((v, f) => f(v), x);
 
 export const sort = ({ columnName, direction }) => data =>
-  data.sort((a, b) => {
+  // `concat()` for returning a new array
+  data.concat().sort((a, b) => {
     if (get(a, columnName) > get(b, columnName)) {
       return direction === 'ASC' ? 1 : -1;
     }

@@ -125,7 +125,7 @@ describe('withReactMUIDatatableModel', () => {
       },
     ];
 
-    expect(RenderedMockedComponent.props.data).toEqual(expectedData);
+    expect(RenderedMockedComponent.props.computedData).toEqual(expectedData);
   });
 
   it('should sort data by column name with dots in DESC direction', () => {
@@ -179,7 +179,7 @@ describe('withReactMUIDatatableModel', () => {
       },
     ];
 
-    expect(RenderedMockedComponent.props.data).toEqual(expectedData);
+    expect(RenderedMockedComponent.props.computedData).toEqual(expectedData);
   });
 
   it('should filter data by column name with dots', () => {
@@ -198,7 +198,7 @@ describe('withReactMUIDatatableModel', () => {
       value: 'Mitsubishi',
     });
 
-    expect(RenderedMockedComponent.props.data).toEqual(expectedData);
+    expect(RenderedMockedComponent.props.computedData).toEqual(expectedData);
   });
 
   it('should remove filter', () => {
@@ -213,7 +213,7 @@ describe('withReactMUIDatatableModel', () => {
       columnName: 'car.make',
     });
 
-    expect(RenderedMockedComponent.props.data).toEqual(expectedData);
+    expect(RenderedMockedComponent.props.computedData).toEqual(expectedData);
   });
 
   it('should reset all filters', () => {
@@ -231,7 +231,7 @@ describe('withReactMUIDatatableModel', () => {
 
     RenderedMockedComponent.props.resetFilter();
 
-    expect(RenderedMockedComponent.props.data).toEqual(expectedData);
+    expect(RenderedMockedComponent.props.computedData).toEqual(expectedData);
   });
 
   it('should search all columns', () => {
@@ -261,7 +261,7 @@ describe('withReactMUIDatatableModel', () => {
 
     RenderedMockedComponent.props.handleSearchValue('o');
 
-    expect(RenderedMockedComponent.props.data).toEqual(expectedData);
+    expect(RenderedMockedComponent.props.computedData).toEqual(expectedData);
   });
 
   it('should reset search value if search bar was closed', () => {
@@ -271,7 +271,7 @@ describe('withReactMUIDatatableModel', () => {
     RenderedMockedComponent.props.handleSearchValue('o');
     RenderedMockedComponent.props.toggleSearchBar();
 
-    expect(RenderedMockedComponent.props.data).toEqual(expectedData);
+    expect(RenderedMockedComponent.props.computedData).toEqual(expectedData);
   });
 
   it('should display rows by option perPageOption', () => {
@@ -359,7 +359,53 @@ describe('withReactMUIDatatableModel', () => {
 
     RenderedMockedComponent.props.handleDelete([1, 2, 3, 4, 5]);
 
-    expect(RenderedMockedComponent.props.data).toEqual(expectedData);
+    expect(RenderedMockedComponent.props.computedData).toEqual(expectedData);
+  });
+
+  it('should delete from raw data', () => {
+    const expectedData = [
+      {
+        name: 'Dav',
+        age: 69,
+        car: {
+          make: 'Mitsubishi',
+        },
+      },
+      {
+        name: 'Yule',
+        age: 68,
+        car: {
+          make: 'Ford',
+        },
+      },
+      {
+        name: 'Fredra',
+        age: 67,
+        car: {
+          make: 'GMC',
+        },
+      },
+      {
+        name: 'Ursula',
+        age: 80,
+        car: {
+          make: 'BMW',
+        },
+      },
+      {
+        name: 'Ailsun',
+        age: 41,
+        car: {
+          make: 'Honda',
+        },
+      },
+    ];
+
+    RenderedMockedComponent.props.handleSearchValue('a');
+    RenderedMockedComponent.props.handleDelete([0]);
+    RenderedMockedComponent.props.handleSearchValue('');
+
+    expect(RenderedMockedComponent.props.computedData).toEqual(expectedData);
   });
 
   it('should select enumarated rows', () => {
@@ -476,7 +522,7 @@ describe('withReactMUIDatatableModel', () => {
 
     RenderedMockedComponent.props.handleSearchValue('e');
 
-    expect(RenderedMockedComponent.props.data).toEqual(expectedData);
+    expect(RenderedMockedComponent.props.computedData).toEqual(expectedData);
   });
 
   it('should return default toolbarSelectActions with delete icon if this prop was not received', () => {

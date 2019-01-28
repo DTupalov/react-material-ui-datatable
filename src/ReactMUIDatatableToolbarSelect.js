@@ -23,7 +23,7 @@ const ReactMUIDatatableToolbarSelect = props => {
         </Grid>
         <Grid item>
           {props.toolbarSelectActions({
-            data: props.data,
+            data: props.computedData,
             selectedRows: props.selectedRows,
             updateSelectedRows: props.handleSelect,
             handleDelete: props.handleDelete,
@@ -40,7 +40,7 @@ export default compose(
     handleDelete: datatableProps.handleDelete,
     selectedRows: datatableProps.selectedRows,
     toolbarSelectActions: datatableProps.toolbarSelectActions,
-    data: datatableProps.data,
+    computedData: datatableProps.computedData,
     labels: datatableProps.localization.toolbarSelect,
   })),
   withStyles(theme => ({

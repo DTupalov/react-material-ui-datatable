@@ -31,7 +31,6 @@ export const mapDatatableProps = props => ({
   page: props.page,
   perPage: props.perPage,
   perPageOption: props.perPageOption,
-  selectedRows: props.selectedRows,
   selectable: props.selectable,
   filterable: props.filterable,
   searchable: props.searchable,
@@ -39,7 +38,7 @@ export const mapDatatableProps = props => ({
 });
 
 export const mapDatatableCalculatedProps = props => ({
-  data: props.data,
+  computedData: props.computedData,
   filterLists: props.filterLists,
   displayData: props.displayData,
 });
@@ -125,7 +124,7 @@ export default compose(
   withProps(
     memoize(
       props => {
-        const data = pipe(
+        const computedData = pipe(
           sort({
             columnName: props.sort.columnName,
             direction: props.sort.direction,
@@ -135,17 +134,17 @@ export default compose(
         )(props.data);
 
         const filterLists = convertDataToFilterLists({
-          data: data,
+          data: computedData,
           columns: props.columns,
         });
 
         const displayData = paginate({
           page: props.page,
           perPage: props.perPage,
-        })(data);
+        })(computedData);
 
         return {
-          data,
+          computedData,
           filterLists,
           displayData,
         };

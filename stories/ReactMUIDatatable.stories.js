@@ -4,6 +4,7 @@ import SwapHorizIcon from '@material-ui/icons/SwapHoriz';
 import { action } from '@storybook/addon-actions';
 import { storiesOf } from '@storybook/react';
 import React from 'react';
+import { withStateHandlers } from 'recompose';
 import { metaSymbol, ReactMUIDatatable } from '../src/';
 import users from '../stubs/users.json';
 import usersWithCars from '../stubs/usersWithCars.json';
@@ -257,23 +258,35 @@ storiesOf('ReactMUIDatatable/Columns', module)
     );
   })
   .add('custom cell', () => {
-    const columns = [
-      {
-        name: 'firstName',
-        label: 'First Name',
-        customCell: ({ value }) => {
-          return <div style={{ color: 'red' }}>{value.toUpperCase()}</div>;
+    const Datatable = withStateHandlers(
+      { v: 1 },
+      { setV: state => () => ({ v: state.v + 1 }) }
+    )(props => {
+      const columns = [
+        {
+          name: 'firstName',
+          label: 'First Name',
+          customCell: ({ value }) => {
+            return (
+              <div style={{ color: 'red' }}>
+                {value.toUpperCase() + '' + props.v}
+              </div>
+            );
+          },
         },
-      },
-      {
-        name: 'lastName',
-        label: 'Last Name',
-      },
-      {
-        name: 'age',
-        label: 'Age',
-      },
-    ];
+        {
+          name: 'lastName',
+          label: 'Last Name',
+        },
+        {
+          name: 'age',
+          label: 'Age',
+        },
+      ];
 
-    return <ReactMUIDatatable columns={columns} data={data} title={title} />;
+      setTimeout(props.setV, 1000);
+
+      return <ReactMUIDatatable columns={columns} data={data} title={title} />;
+    });
+    return <Datatable />;
   });
