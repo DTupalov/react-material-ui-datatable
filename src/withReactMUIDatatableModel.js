@@ -1,4 +1,3 @@
-import memoize from 'lodash/memoize';
 import compose from 'recompose/compose';
 import defaultProps from 'recompose/defaultProps';
 import withHandlers from 'recompose/withHandlers';
@@ -121,47 +120,23 @@ export default compose(
       setSelectedRows: () => selectedRows => ({ selectedRows }),
     }
   ),
-  withProps(
-    memoize(
-      props => {
-        const computedData = pipe(
-          sort({
-            columnName: props.sort.columnName,
-            direction: props.sort.direction,
-          }),
-          search({ value: props.search.value, columns: props.columns }),
-          filter({ values: props.filterValues, columns: props.columns })
-        )(props.data);
+  withProps(props => {
+    const computedData = pipe(
+      sort(props.sort.columnName, props.sort.direction),
+      search(props.search.value, props.columns),
+      filter(props.filterValues, props.columns)
+    )(props.data);
 
-        const filterLists = convertDataToFilterLists({
-          data: computedData,
-          columns: props.columns,
-        });
+    const filterLists = convertDataToFilterLists(computedData, props.columns);
 
-        const displayData = paginate({
-          page: props.page,
-          perPage: props.perPage,
-        })(computedData);
+    const displayData = paginate(props.page, props.perPage)(computedData);
 
-        return {
-          computedData,
-          filterLists,
-          displayData,
-        };
-      },
-      props =>
-        JSON.stringify([
-          props.data,
-          props.columns,
-          props.sort.columnName,
-          props.sort.direction,
-          props.search.value,
-          props.filterValues,
-          props.page,
-          props.perPage,
-        ])
-    )
-  ),
+    return {
+      computedData,
+      filterLists,
+      displayData,
+    };
+  }),
   withHandlers({
     toggleSelectRow: props => rawIndex => {
       const nextSelectedRows = [...props.selectedRows];
