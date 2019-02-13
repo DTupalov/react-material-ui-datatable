@@ -7,7 +7,6 @@ import defaultToolbarSelectActions from './defaultToolbarSelectActions';
 import {
   addMetaRawIndexToData,
   completeColumnsWithOptions,
-  convertColumnsToFilterValues,
   convertDataToFilterLists,
   filter,
   metaSymbol,
@@ -20,11 +19,10 @@ import {
 export const mapDatatableProps = props => ({
   title: props.title,
   columns: props.columns,
-  search: props.search,
+  showSearchBar: props.showSearchBar,
+  searchValue: props.searchValue,
   sort: props.sort,
   filterValues: props.filterValues,
-  page: props.page,
-  perPage: props.perPage,
   selectedRows: props.selectedRows,
   toolbarSelectActions: props.toolbarSelectActions,
   page: props.page,
@@ -62,19 +60,18 @@ export default compose(
     data: [],
     columns: [],
     title: '',
-    search: {
-      showSearchBar: false,
-      value: '',
-    },
+    showSearchBar: false,
+    searchValue: '',
     sort: { columnName: null, direction: 'ASC' },
     toolbarSelectActions: defaultToolbarSelectActions,
     page: 0,
     perPage: 5,
     perPageOption: [5, 10, 15],
     selectedRows: [],
-    selectable: false,
-    filterable: false,
-    searchable: false,
+    filterValues: {},
+    selectable: true,
+    filterable: true,
+    searchable: true,
     localization: {
       toolbar: {
         searchAction: 'Search',
@@ -98,12 +95,12 @@ export default compose(
   withProps(props => ({
     data: addMetaRawIndexToData(props.data),
     columns: completeColumnsWithOptions(props.columns),
-    filterValues: convertColumnsToFilterValues(props.columns),
   })),
   withStateHandlers(
     props => ({
       data: props.data,
-      search: props.search,
+      searchValue: props.searchValue,
+      showSearchBar: props.showSearchBar,
       sort: props.sort,
       filterValues: props.filterValues,
       page: props.page,
@@ -113,6 +110,8 @@ export default compose(
     {
       setData: () => data => ({ data }),
       setSearch: () => search => ({ search }),
+      setShowSearchBar: () => showSearchBar => ({ showSearchBar }),
+      setSearchValue: () => searchValue => ({ searchValue }),
       setSort: () => sort => ({ sort }),
       setFilterValues: () => filterValues => ({ filterValues }),
       setPage: () => page => ({ page }),
@@ -123,7 +122,7 @@ export default compose(
   withProps(props => {
     const computedData = pipe(
       sort(props.sort.columnName, props.sort.direction),
-      search(props.search.value, props.columns),
+      search(props.searchValue, props.columns),
       filter(props.filterValues, props.columns)
     )(props.data);
 
@@ -158,16 +157,12 @@ export default compose(
 
       props.setSelectedRows(nextSelectedRows);
     },
-    toggleSearchBar: props => () =>
-      props.setSearch({
-        showSearchBar: !props.search.showSearchBar,
-        value: '',
-      }),
-    handleSearchValue: props => value =>
-      props.setSearch({
-        showSearchBar: props.search.showSearchBar,
-        value,
-      }),
+    toggleSearchBar: props => () => {
+      props.setSearchValue('');
+      props.setShowSearchBar(!props.showSearchBar);
+    },
+    handleSearchValue: props => searchValue =>
+      props.setSearchValue(searchValue),
     handleSort: props => ({ columnName, direction = 'ASC' }) =>
       props.setSort({ columnName, direction }),
     addFilter: props => ({ columnName, value }) =>
@@ -176,12 +171,19 @@ export default compose(
         [columnName]: value,
       }),
     removeFilter: props => ({ columnName }) =>
-      props.setFilterValues({
-        ...props.filterValues,
-        [columnName]: '',
-      }),
-    resetFilter: props => () =>
-      props.setFilterValues(convertColumnsToFilterValues(props.columns)),
+      props.setFilterValues(
+        Object.keys(props.filterValues).reduce(
+          (nextFilterValues, prevColumnName) => {
+            if (prevColumnName !== columnName) {
+              nextFilterValues[prevColumnName] =
+                props.filterValues[prevColumnName];
+            }
+            return nextFilterValues;
+          },
+          {}
+        )
+      ),
+    resetFilter: props => () => props.setFilterValues({}),
     changePage: props => page => props.setPage(page),
     changePerPage: props => count => props.setPerPage(count),
     handleSelect: props => selectedRows => props.setSelectedRows(selectedRows),

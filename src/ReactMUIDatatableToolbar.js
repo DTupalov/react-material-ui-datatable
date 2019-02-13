@@ -25,6 +25,6 @@ const ReactMUIDatatableToolbar = props => {
 export default fromRenderProps(
   ReactMUIDatatableConsumer,
   ({ ...datatableProps }) => ({
-    showSearchBar: datatableProps.search.showSearchBar,
+    showSearchBar: datatableProps.showSearchBar,
   })
 )(ReactMUIDatatableToolbar);

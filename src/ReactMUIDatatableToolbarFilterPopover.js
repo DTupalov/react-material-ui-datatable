@@ -37,14 +37,16 @@ const ReactMUIDatatableToolbarFilterPopover = props => {
               select
               SelectProps={{ displayEmpty: true }}
               InputLabelProps={{ shrink: true }}
-              value={props.filterValues[columnName]}
+              value={props.filterValues[columnName] || ''}
               label={props.filterLists[columnName].label}
               onChange={e =>
                 props.addFilter({ columnName, value: e.target.value })
               }
               fullWidth
             >
-              <MenuItem value={''}>{props.labels.allOption}</MenuItem>
+              <MenuItem value={''} defaultChecked>
+                {props.labels.allOption}
+              </MenuItem>
               {props.filterLists[columnName].list.map((value, valueIndex) => (
                 <MenuItem value={value} key={valueIndex}>
                   {value}

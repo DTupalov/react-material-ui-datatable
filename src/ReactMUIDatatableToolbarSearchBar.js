@@ -12,7 +12,7 @@ const ReactMUIDatatableToolbarSearchBar = props => {
     <React.Fragment>
       <Grid item xs={true}>
         <TextField
-          value={props.value}
+          value={props.searchValue}
           onChange={event => props.handleSearchValue(event.target.value)}
           fullWidth
         />
@@ -34,7 +34,7 @@ const ReactMUIDatatableToolbarSearchBar = props => {
 export default fromRenderProps(
   ReactMUIDatatableConsumer,
   ({ ...datatableProps }) => ({
-    value: datatableProps.search.value,
+    searchValue: datatableProps.searchValue,
     handleSearchValue: datatableProps.handleSearchValue,
     toggleSearchBar: datatableProps.toggleSearchBar,
     labels: datatableProps.localization.toolbar,

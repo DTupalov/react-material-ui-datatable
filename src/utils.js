@@ -5,7 +5,7 @@ export const pipe = (...fns) => x => fns.reduce((v, f) => f(v), x);
 
 export const sort = memoizeByArgs((columnName, direction) =>
   memoizeByArgs(data =>
-    // `concat()` for returning a new array
+    // `concat()` for returning new array
     data.concat().sort((a, b) => {
       if (get(a, columnName) > get(b, columnName)) {
         return direction === 'ASC' ? 1 : -1;
@@ -37,9 +37,9 @@ export const filter = memoizeByArgs((values, columns) =>
     data.filter(row =>
       columns.every(column =>
         column.filterable
-          ? values[column.name] === ''
-            ? true
-            : get(row, column.name) === values[column.name]
+          ? values[column.name]
+            ? get(row, column.name) === values[column.name]
+            : true
           : true
       )
     )
@@ -68,13 +68,6 @@ export const convertDataToFilterLists = memoizeByArgs((data, columns) =>
     filter[column.name].list.sort();
 
     return filter;
-  }, {})
-);
-
-export const convertColumnsToFilterValues = memoizeByArgs(columns =>
-  columns.reduce((filterValues, column) => {
-    filterValues[column.name] = '';
-    return filterValues;
   }, {})
 );
 
