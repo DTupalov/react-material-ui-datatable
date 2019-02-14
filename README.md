@@ -89,7 +89,7 @@ For more details see __[Storybook](https://dtupalov.github.io/react-material-ui-
 | Argument | Type | Description |
 | - | - | - |
 | data | Object | Current dataset in the table (with applying filters and sort) | 
-| selectedRows | number[] | Current dataset in the table (with applying filters and sort). To get selected items from data, you need to import `metaSymbol` from library, and filter data like `data.filter(row => selectedRows.includes(row[metaSymbol].rawIndex))` | 
+| selectedRows | number[] | Current selected rows (their indexes). To get selected items from data, you need to import `metaSymbol` from library, and filter data like `data.filter(row => selectedRows.includes(row[metaSymbol].rawIndex))` | 
 | updateSelectedRows | ( number[] ) => void | Function, that apply new selected rows. | 
 | handleDelete | ( number[] ) => void | Function, that delete selected rows. For example, you can call it, when you got successful response from your api | 
 
