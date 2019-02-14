@@ -16,6 +16,10 @@ or
 
     yarn add react-material-ui-datatable
 
+## Demo
+
+[![Edit 9lz52zlylr](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/9lz52zlylr?module=%2Fsrc%2FDemo.js)
+
 ## Usage
 
 ```js
