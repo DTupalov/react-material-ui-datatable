@@ -10,11 +10,11 @@ This library is under the work. At the moment there is only basic functionality
 
 ## Install
        
-    npm install react-material-ui-datatable --save
+    npm install react-material-ui-datatable@^2.0.0-alpha --save
 
 or 
 
-    yarn add react-material-ui-datatable
+    yarn add react-material-ui-datatable@^2.0.0-alpha
 
 ## Demo
 
