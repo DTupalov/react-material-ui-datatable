@@ -220,8 +220,11 @@ export default compose(
 
       props.onSearchValueChanged && props.onSearchValueChanged(searchValue);
     },
-    handleSort: props => ({ columnName, direction = 'ASC' }) =>
-      props.setSort({ columnName, direction }),
+    handleSort: props => ({ columnName, direction = 'ASC' }) => {
+      props.setSort({ columnName, direction });
+
+      props.onSortChanged && props.onSortChanged({ columnName, direction });
+    },
     addFilter: props => ({ columnName, value }) =>
       props.setFilterValues({
         ...props.filterValues,

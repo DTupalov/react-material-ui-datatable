@@ -168,6 +168,14 @@ storiesOf('ReactMUIDatatable/Props', module)
       sort={{ columnName: 'firstName', direction: 'DESC' }}
     />
   ))
+  .add('onSortChanged', () => (
+    <ReactMUIDatatable
+      columns={columns}
+      data={data}
+      title={title}
+      onSortChanged={action('onSortChanged called')}
+    />
+  ))
   .add('filterValues', () => (
     <ReactMUIDatatable
       columns={columns}

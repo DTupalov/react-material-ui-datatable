@@ -79,6 +79,7 @@ For more details see __[Storybook](https://dtupalov.github.io/react-material-ui-
 | searchValue | string | "" | The value by which the search is performed | 
 | onSearchValueChanged | Function | | Function trigger when `searchValue` was changed. Signature ```(searchValue: string) => any``` | 
 | sort | Object | { [columnName]: null, direction: "ASC" } | Set sorting by column name and set direction for sorting. Direction may be: `ASC` and `DESC` |
+| onSortChanged | Function | | Function trigger when `sort` was changed. Signature ```({ columnName: string, direction: 'ASC' | 'DESC' }) => any``` |
 | filterValues | Object | {} | Set filters for columns |
 | localization | Object | [default value](#default-value)  | More details you can read [here](#localization)
 

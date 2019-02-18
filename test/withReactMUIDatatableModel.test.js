@@ -9,6 +9,7 @@ let data;
 let columns;
 let onShowSearchBarChanged;
 let onSearchValueChanged;
+let onSortChanged;
 
 class MockedComponent extends React.Component {
   render() {
@@ -21,6 +22,7 @@ describe('withReactMUIDatatableModel', () => {
   beforeEach(() => {
     onShowSearchBarChanged = jest.fn(showSearchBar => {});
     onSearchValueChanged = jest.fn(searchValue => {});
+    onSortChanged = jest.fn(({ columnName, direction }) => {});
 
     data = [
       {
@@ -84,6 +86,7 @@ describe('withReactMUIDatatableModel', () => {
           columns={columns}
           onShowSearchBarChanged={onShowSearchBarChanged}
           onSearchValueChanged={onSearchValueChanged}
+          onSortChanged={onSortChanged}
         />
       )
       .root.findByType(MockedComponent);
@@ -192,6 +195,17 @@ describe('withReactMUIDatatableModel', () => {
     ];
 
     expect(RenderedMockedComponent.props.computedData).toEqual(expectedData);
+  });
+
+  it('should call onSortChanged if sort was changed', () => {
+    const sort = {
+      columnName: 'car.make',
+      direction: 'DESC',
+    };
+
+    RenderedMockedComponent.props.handleSort(sort);
+
+    expect(onSortChanged).toBeCalledWith(sort);
   });
 
   it('should filter data by column name with dots', () => {
