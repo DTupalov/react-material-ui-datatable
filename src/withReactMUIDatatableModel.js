@@ -193,8 +193,12 @@ export default compose(
       );
 
       props.setData(nextData);
-      //TODO: remove only deleted rows
-      props.setSelectedRows([]);
+
+      const nextSelectedRows = props.selectedRows.filter(
+        rawIndex => !selectedRows.includes(rawIndex)
+      );
+
+      props.setSelectedRows(nextSelectedRows);
     },
   })
 );

@@ -362,6 +362,17 @@ describe('withReactMUIDatatableModel', () => {
     expect(RenderedMockedComponent.props.computedData).toEqual(expectedData);
   });
 
+  it('should remove only deleted rows from selected rows', () => {
+    const expectedSelectedRows = [0, 1];
+
+    RenderedMockedComponent.props.handleSelect([0, 1, 2, 3]);
+    RenderedMockedComponent.props.handleDelete([2, 3]);
+
+    expect(RenderedMockedComponent.props.selectedRows).toEqual(
+      expectedSelectedRows
+    );
+  });
+
   it('should delete from raw data', () => {
     const expectedData = [
       {
