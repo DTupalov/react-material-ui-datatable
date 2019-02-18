@@ -109,7 +109,6 @@ export default compose(
     }),
     {
       setData: () => data => ({ data }),
-      setSearch: () => search => ({ search }),
       setShowSearchBar: () => showSearchBar => ({ showSearchBar }),
       setSearchValue: () => searchValue => ({ searchValue }),
       setSort: () => sort => ({ sort }),
