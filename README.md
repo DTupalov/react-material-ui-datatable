@@ -67,6 +67,7 @@ For more details see __[Storybook](https://dtupalov.github.io/react-material-ui-
 | columns | Object[] | [] | Options for each column. Detailed description see [here](#column-option) |
 | data | Object[] | [] | Your dataset, that you want to display in the table| 
 | page | number | 0 | Current page. Start with 0 |
+| onPageChanged | Function | | Function trigger when `page` was changed. Signature ```(page: number) => any``` |
 | perPage | number | 5 | Quantity of displaying items per page. | 
 | perPageOption | number[] | [5, 10, 15] | Per page option. Displayed on the paging panel |
 | selectedRows | number[] | [] | Indexes of selected rows |

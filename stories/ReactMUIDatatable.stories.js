@@ -59,6 +59,14 @@ storiesOf('ReactMUIDatatable/Props', module)
   .add('page', () => (
     <ReactMUIDatatable columns={columns} data={data} title={title} page={10} />
   ))
+  .add('onPageChanged', () => (
+    <ReactMUIDatatable
+      columns={columns}
+      data={data}
+      title={title}
+      onPageChanged={action('onPageChanged called')}
+    />
+  ))
   .add('perPage', () => (
     <ReactMUIDatatable
       columns={columns}

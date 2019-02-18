@@ -11,6 +11,7 @@ let onShowSearchBarChanged;
 let onSearchValueChanged;
 let onSortChanged;
 let onFilterValuesChanged;
+let onPageChanged;
 
 class MockedComponent extends React.Component {
   render() {
@@ -25,6 +26,7 @@ describe('withReactMUIDatatableModel', () => {
     onSearchValueChanged = jest.fn(searchValue => {});
     onSortChanged = jest.fn(({ columnName, direction }) => {});
     onFilterValuesChanged = jest.fn(filterValues => {});
+    onPageChanged = jest.fn(page => {});
 
     data = [
       {
@@ -90,6 +92,7 @@ describe('withReactMUIDatatableModel', () => {
           onSearchValueChanged={onSearchValueChanged}
           onSortChanged={onSortChanged}
           onFilterValuesChanged={onFilterValuesChanged}
+          onPageChanged={onPageChanged}
         />
       )
       .root.findByType(MockedComponent);
@@ -421,6 +424,14 @@ describe('withReactMUIDatatableModel', () => {
     expect(RenderedMockedComponent.props.displayData).toEqual(
       expectedDisplayDataOnSecondPage
     );
+  });
+
+  it('should call onPageChanged if page was changed', () => {
+    const expectedPage = 1;
+
+    RenderedMockedComponent.props.changePage(1);
+
+    expect(onPageChanged).toBeCalledWith(1);
   });
 
   it('should delete selected rows', () => {
