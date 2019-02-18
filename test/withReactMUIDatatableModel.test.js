@@ -7,6 +7,7 @@ let ReactMUIDatatable;
 let RenderedMockedComponent;
 let data;
 let columns;
+let onShowSearchBarChanged;
 
 class MockedComponent extends React.Component {
   render() {
@@ -17,6 +18,8 @@ class MockedComponent extends React.Component {
 
 describe('withReactMUIDatatableModel', () => {
   beforeEach(() => {
+    onShowSearchBarChanged = jest.fn(showSearchBar => {});
+
     data = [
       {
         name: 'Caz',
@@ -73,7 +76,13 @@ describe('withReactMUIDatatableModel', () => {
     );
 
     RenderedMockedComponent = renderer
-      .create(<ReactMUIDatatable data={data} columns={columns} />)
+      .create(
+        <ReactMUIDatatable
+          data={data}
+          columns={columns}
+          onShowSearchBarChanged={onShowSearchBarChanged}
+        />
+      )
       .root.findByType(MockedComponent);
   });
 
@@ -272,6 +281,13 @@ describe('withReactMUIDatatableModel', () => {
     RenderedMockedComponent.props.toggleSearchBar();
 
     expect(RenderedMockedComponent.props.computedData).toEqual(expectedData);
+  });
+
+  it('should call onShowSearchBarChanged if search bar was changed', () => {
+    RenderedMockedComponent.props.toggleSearchBar();
+
+    expect(onShowSearchBarChanged.mock.calls.length).toBe(1);
+    expect(onShowSearchBarChanged).toBeCalledWith(true);
   });
 
   it('should display rows by option perPageOption', () => {

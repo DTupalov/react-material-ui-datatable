@@ -96,6 +96,13 @@ export default compose(
         displayedRows: PropTypes.func,
       }),
     }),
+    onShowSearchBarChanged: PropTypes.func,
+    onSearchValueChanged: PropTypes.func,
+    onSortChanged: PropTypes.func,
+    onPageChanged: PropTypes.func,
+    onPerPageChanged: PropTypes.func,
+    onSelectedRowsChanged: PropTypes.func,
+    onFilterValuesChanged: PropTypes.func,
   }),
   defaultProps({
     data: [],
@@ -198,8 +205,13 @@ export default compose(
       props.setSelectedRows(nextSelectedRows);
     },
     toggleSearchBar: props => () => {
+      const nextShowSearchBar = !props.showSearchBar;
+
       props.setSearchValue('');
-      props.setShowSearchBar(!props.showSearchBar);
+      props.setShowSearchBar(nextShowSearchBar);
+
+      props.onShowSearchBarChanged &&
+        props.onShowSearchBarChanged(nextShowSearchBar);
     },
     handleSearchValue: props => searchValue =>
       props.setSearchValue(searchValue),

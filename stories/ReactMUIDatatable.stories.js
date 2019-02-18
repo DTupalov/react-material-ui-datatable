@@ -1,6 +1,7 @@
 import { IconButton } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import SwapHorizIcon from '@material-ui/icons/SwapHoriz';
+import { action } from '@storybook/addon-actions';
 import { storiesOf } from '@storybook/react';
 import React from 'react';
 import { metaSymbol, ReactMUIDatatable } from '../src/';
@@ -132,6 +133,14 @@ storiesOf('ReactMUIDatatable/Props', module)
       data={data}
       title={title}
       showSearchBar={true}
+    />
+  ))
+  .add('onShowSearchBarChanged', () => (
+    <ReactMUIDatatable
+      columns={columns}
+      data={data}
+      title={title}
+      onShowSearchBarChanged={action('onShowSearchBarChanged called')}
     />
   ))
   .add('searchValue', () => (
