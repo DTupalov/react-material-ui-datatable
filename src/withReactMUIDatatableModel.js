@@ -206,15 +206,20 @@ export default compose(
     },
     toggleSearchBar: props => () => {
       const nextShowSearchBar = !props.showSearchBar;
+      const nextSearchValue = '';
 
-      props.setSearchValue('');
+      props.setSearchValue(nextSearchValue);
       props.setShowSearchBar(nextShowSearchBar);
 
       props.onShowSearchBarChanged &&
         props.onShowSearchBarChanged(nextShowSearchBar);
+      props.onSearchValueChanged && props.onSearchValueChanged(nextSearchValue);
     },
-    handleSearchValue: props => searchValue =>
-      props.setSearchValue(searchValue),
+    handleSearchValue: props => searchValue => {
+      props.setSearchValue(searchValue);
+
+      props.onSearchValueChanged && props.onSearchValueChanged(searchValue);
+    },
     handleSort: props => ({ columnName, direction = 'ASC' }) =>
       props.setSort({ columnName, direction }),
     addFilter: props => ({ columnName, value }) =>

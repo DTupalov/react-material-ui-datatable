@@ -152,6 +152,14 @@ storiesOf('ReactMUIDatatable/Props', module)
       searchValue={'Jo'}
     />
   ))
+  .add('onSearchValueChanged', () => (
+    <ReactMUIDatatable
+      columns={columns}
+      data={data}
+      title={title}
+      onSearchValueChanged={action('onSearchValueChanged called')}
+    />
+  ))
   .add('sort', () => (
     <ReactMUIDatatable
       columns={columns}
