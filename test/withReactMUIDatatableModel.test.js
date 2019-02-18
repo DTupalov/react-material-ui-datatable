@@ -10,6 +10,7 @@ let columns;
 let onShowSearchBarChanged;
 let onSearchValueChanged;
 let onSortChanged;
+let onFilterValuesChanged;
 
 class MockedComponent extends React.Component {
   render() {
@@ -23,6 +24,7 @@ describe('withReactMUIDatatableModel', () => {
     onShowSearchBarChanged = jest.fn(showSearchBar => {});
     onSearchValueChanged = jest.fn(searchValue => {});
     onSortChanged = jest.fn(({ columnName, direction }) => {});
+    onFilterValuesChanged = jest.fn(filterValues => {});
 
     data = [
       {
@@ -87,6 +89,7 @@ describe('withReactMUIDatatableModel', () => {
           onShowSearchBarChanged={onShowSearchBarChanged}
           onSearchValueChanged={onSearchValueChanged}
           onSortChanged={onSortChanged}
+          onFilterValuesChanged={onFilterValuesChanged}
         />
       )
       .root.findByType(MockedComponent);
@@ -258,6 +261,39 @@ describe('withReactMUIDatatableModel', () => {
     RenderedMockedComponent.props.resetFilter();
 
     expect(RenderedMockedComponent.props.computedData).toEqual(expectedData);
+  });
+
+  it('should call onFilterValuesChanged if filterValues was changed', () => {
+    const expectedFilterValuesOnAdd = {
+      'car.make': 'Mitsubishi',
+      firstName: 'Dav',
+    };
+    const expectedFilterValuesOnRemove = {
+      firstName: 'Dav',
+    };
+    const expectedFilterValuesOnReset = {};
+
+    RenderedMockedComponent.props.addFilter({
+      columnName: 'car.make',
+      value: 'Mitsubishi',
+    });
+
+    RenderedMockedComponent.props.addFilter({
+      columnName: 'firstName',
+      value: 'Dav',
+    });
+
+    expect(onFilterValuesChanged).toBeCalledWith(expectedFilterValuesOnAdd);
+
+    RenderedMockedComponent.props.removeFilter({
+      columnName: 'car.make',
+    });
+
+    expect(onFilterValuesChanged).toBeCalledWith(expectedFilterValuesOnRemove);
+
+    RenderedMockedComponent.props.resetFilter();
+
+    expect(onFilterValuesChanged).toBeCalledWith(expectedFilterValuesOnReset);
   });
 
   it('should search all columns', () => {

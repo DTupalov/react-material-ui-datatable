@@ -225,25 +225,42 @@ export default compose(
 
       props.onSortChanged && props.onSortChanged({ columnName, direction });
     },
-    addFilter: props => ({ columnName, value }) =>
-      props.setFilterValues({
+    addFilter: props => ({ columnName, value }) => {
+      const nextFilterValues = {
         ...props.filterValues,
         [columnName]: value,
-      }),
-    removeFilter: props => ({ columnName }) =>
-      props.setFilterValues(
-        Object.keys(props.filterValues).reduce(
-          (nextFilterValues, prevColumnName) => {
-            if (prevColumnName !== columnName) {
-              nextFilterValues[prevColumnName] =
-                props.filterValues[prevColumnName];
-            }
-            return nextFilterValues;
-          },
-          {}
-        )
-      ),
-    resetFilter: props => () => props.setFilterValues({}),
+      };
+
+      props.setFilterValues(nextFilterValues);
+
+      props.onFilterValuesChanged &&
+        props.onFilterValuesChanged(nextFilterValues);
+    },
+    removeFilter: props => ({ columnName }) => {
+      const nextFilterValues = Object.keys(props.filterValues).reduce(
+        (nextFilterValues, prevColumnName) => {
+          if (prevColumnName !== columnName) {
+            nextFilterValues[prevColumnName] =
+              props.filterValues[prevColumnName];
+          }
+          return nextFilterValues;
+        },
+        {}
+      );
+
+      props.setFilterValues(nextFilterValues);
+
+      props.onFilterValuesChanged &&
+        props.onFilterValuesChanged(nextFilterValues);
+    },
+    resetFilter: props => () => {
+      const nextFilterValues = {};
+
+      props.setFilterValues(nextFilterValues);
+
+      props.onFilterValuesChanged &&
+        props.onFilterValuesChanged(nextFilterValues);
+    },
     changePage: props => page => props.setPage(page),
     changePerPage: props => count => props.setPerPage(count),
     handleSelect: props => selectedRows => props.setSelectedRows(selectedRows),

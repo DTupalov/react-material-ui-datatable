@@ -81,6 +81,7 @@ For more details see __[Storybook](https://dtupalov.github.io/react-material-ui-
 | sort | Object | { [columnName]: null, direction: "ASC" } | Set sorting by column name and set direction for sorting. Direction may be: `ASC` and `DESC` |
 | onSortChanged | Function | | Function trigger when `sort` was changed. Signature ```({ columnName: string, direction: 'ASC' | 'DESC' }) => any``` |
 | filterValues | Object | {} | Set filters for columns |
+| onFilterValuesChanged | Func | | Function trigger when `filterValues` was changed. Signature ```(filterValues: Object) => any``` |
 | localization | Object | [default value](#default-value)  | More details you can read [here](#localization)
 
 #### `toolbarSelectActions`

@@ -184,6 +184,14 @@ storiesOf('ReactMUIDatatable/Props', module)
       filterValues={{ age: 20 }}
     />
   ))
+  .add('onFilterValuesChanged', () => (
+    <ReactMUIDatatable
+      columns={columns}
+      data={data}
+      title={title}
+      onFilterValuesChanged={action('onFilterValuesChanged called')}
+    />
+  ))
   .add('localization', () => (
     <ReactMUIDatatable
       columns={columns}
