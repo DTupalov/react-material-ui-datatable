@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+import { setPropTypes } from 'recompose';
 import compose from 'recompose/compose';
 import defaultProps from 'recompose/defaultProps';
 import withHandlers from 'recompose/withHandlers';
@@ -56,6 +58,45 @@ export const mapDatatableHandlers = props => ({
 });
 
 export default compose(
+  setPropTypes({
+    data: PropTypes.array.isRequired,
+    columns: PropTypes.array.isRequired,
+    title: PropTypes.string.isRequired,
+    showSearchBar: PropTypes.bool,
+    searchValue: PropTypes.string,
+    sort: PropTypes.shape({
+      columnName: PropTypes.string,
+      direction: PropTypes.oneOf[('ASC', 'DESC')],
+    }),
+    toolbarSelectActions: PropTypes.func,
+    page: PropTypes.number,
+    perPage: PropTypes.number,
+    perPageOption: PropTypes.arrayOf(PropTypes.number),
+    selectedRows: PropTypes.arrayOf(PropTypes.number),
+    filterValues: PropTypes.object,
+    selectable: PropTypes.bool,
+    filterable: PropTypes.bool,
+    searchable: PropTypes.bool,
+    localization: PropTypes.shape({
+      toolbar: PropTypes.shape({
+        searchAction: PropTypes.string,
+        filterAction: PropTypes.string,
+        closeSearch: PropTypes.string,
+      }),
+      filterLists: PropTypes.shape({
+        title: PropTypes.string,
+        allOption: PropTypes.string,
+        reset: PropTypes.string,
+      }),
+      toolbarSelect: PropTypes.shape({
+        selectedRows: PropTypes.func,
+      }),
+      pagination: PropTypes.shape({
+        rowsPerPage: PropTypes.string,
+        displayedRows: PropTypes.func,
+      }),
+    }),
+  }),
   defaultProps({
     data: [],
     columns: [],
