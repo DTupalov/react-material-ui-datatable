@@ -266,7 +266,11 @@ export default compose(
 
       props.onPageChanged && props.onPageChanged(page);
     },
-    changePerPage: props => count => props.setPerPage(count),
+    changePerPage: props => count => {
+      props.setPerPage(count);
+
+      props.onPerPageChanged && props.onPerPageChanged(count);
+    },
     handleSelect: props => selectedRows => props.setSelectedRows(selectedRows),
     handleDelete: props => selectedRows => {
       const nextData = props.data.filter(

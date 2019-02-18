@@ -69,6 +69,7 @@ For more details see __[Storybook](https://dtupalov.github.io/react-material-ui-
 | page | number | 0 | Current page. Start with 0 |
 | onPageChanged | Function | | Function trigger when `page` was changed. Signature ```(page: number) => any``` |
 | perPage | number | 5 | Quantity of displaying items per page. | 
+| onPerPageChanged | Function | | Function trigger when `perPage` was changed. Signature ```(perPage: number) => any``` | 
 | perPageOption | number[] | [5, 10, 15] | Per page option. Displayed on the paging panel |
 | selectedRows | number[] | [] | Indexes of selected rows |
 | selectable | boolean | true | Enable selections |

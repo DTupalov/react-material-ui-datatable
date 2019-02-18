@@ -75,6 +75,14 @@ storiesOf('ReactMUIDatatable/Props', module)
       perPage={15}
     />
   ))
+  .add('onPerPageChanged', () => (
+    <ReactMUIDatatable
+      columns={columns}
+      data={data}
+      title={title}
+      onPerPageChanged={action('onPerPageChanged called')}
+    />
+  ))
   .add('perPageOption', () => (
     <ReactMUIDatatable
       columns={columns}

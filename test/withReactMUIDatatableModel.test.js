@@ -12,6 +12,7 @@ let onSearchValueChanged;
 let onSortChanged;
 let onFilterValuesChanged;
 let onPageChanged;
+let onPerPageChanged;
 
 class MockedComponent extends React.Component {
   render() {
@@ -27,6 +28,7 @@ describe('withReactMUIDatatableModel', () => {
     onSortChanged = jest.fn(({ columnName, direction }) => {});
     onFilterValuesChanged = jest.fn(filterValues => {});
     onPageChanged = jest.fn(page => {});
+    onPerPageChanged = jest.fn(perPage => {});
 
     data = [
       {
@@ -93,6 +95,7 @@ describe('withReactMUIDatatableModel', () => {
           onSortChanged={onSortChanged}
           onFilterValuesChanged={onFilterValuesChanged}
           onPageChanged={onPageChanged}
+          onPerPageChanged={onPerPageChanged}
         />
       )
       .root.findByType(MockedComponent);
@@ -406,6 +409,12 @@ describe('withReactMUIDatatableModel', () => {
     expect(RenderedMockedComponent.props.displayData).toEqual(
       expectedDisplayDataOnFirstPage
     );
+  });
+
+  it('should call onPerPageChanged if perPage was changed', () => {
+    RenderedMockedComponent.props.changePerPage(10);
+
+    expect(onPerPageChanged).toBeCalledWith(10);
   });
 
   it('should paginate', () => {
