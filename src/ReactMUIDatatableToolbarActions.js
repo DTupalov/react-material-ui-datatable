@@ -21,6 +21,7 @@ const ReactMUIDatatableToolbarActions = props => {
         </Tooltip>
       )}
       {props.filterable && <ReactMUIDatatableToolbarActionsFilterAction />}
+      {props.toolbarActions && props.toolbarActions()}
     </Grid>
   );
 };
@@ -32,5 +33,6 @@ export default fromRenderProps(
     labels: datatableProps.localization.toolbar,
     searchable: datatableProps.searchable,
     filterable: datatableProps.filterable,
+    toolbarActions: datatableProps.toolbarActions,
   })
 )(ReactMUIDatatableToolbarActions);

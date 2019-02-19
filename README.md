@@ -76,6 +76,7 @@ For more details see __[Storybook](https://dtupalov.github.io/react-material-ui-
 | filterable | boolean | true | Enable filters in toolbar panel |
 | searchable | boolean | true | Enable search bar in toolbar panel |
 | toolbarSelectActions | Function | [defaultToolbarSelectActions](./src/defaultToolbarSelectActions.js) | Function that returns a string or React component. Used as display actions in Toolbar selection. More details you can read [here](#toolbarSelectActions). You can see example in storybook at section [Props -> toolbarSelectActions](https://dtupalov.github.io/react-material-ui-datatable/?selectedKind=ReactMUIDatatable%2FProps&selectedStory=toolbarSelectActions&full=0&addons=1&stories=1&panelRight=0&addonPanel=storybook%2Fstories%2Fstories-panel) |
+| toolbarActions | Function | | Function that returns a string or React component. Used to display custom actions in toolbar panel. | 
 | showSearchBar | boolean | false | Open or close search bar in toolbar panel | 
 | onShowSearchBarChanged | Function | | Function trigger when `showSearchBar` was changed. Signature ```(showSearchBar: boolean) => any``` | 
 | searchValue | string | "" | The value by which the search is performed | 

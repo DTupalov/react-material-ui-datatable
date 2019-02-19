@@ -1,4 +1,5 @@
 import { IconButton } from '@material-ui/core';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 import DeleteIcon from '@material-ui/icons/Delete';
 import SwapHorizIcon from '@material-ui/icons/SwapHoriz';
 import { action } from '@storybook/addon-actions';
@@ -141,6 +142,20 @@ storiesOf('ReactMUIDatatable/Props', module)
           </React.Fragment>
         );
       }}
+    />
+  ))
+  .add('toolbarActions', () => (
+    <ReactMUIDatatable
+      columns={columns}
+      data={data}
+      title={title}
+      toolbarActions={() => (
+        <React.Fragment>
+          <IconButton onClick={action('click Add button')}>
+            <AddCircleIcon />
+          </IconButton>
+        </React.Fragment>
+      )}
     />
   ))
   .add('showSearchBar', () => (
