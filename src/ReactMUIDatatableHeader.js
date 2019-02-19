@@ -42,10 +42,9 @@ const ReactMUIDatatableHeader = props => {
               })
             }
           >
-            {column.sortable && (
+            {column.sortable && column.name === props.sort.columnName && (
               <TableSortLabel
                 active={column.name === props.sort.columnName}
-                hideSortIcon={column.name !== props.sort.columnName}
                 direction={props.sort.direction.toLowerCase()}
               />
             )}

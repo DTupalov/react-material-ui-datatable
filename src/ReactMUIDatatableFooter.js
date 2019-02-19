@@ -1,6 +1,5 @@
 import TableFooter from '@material-ui/core/TableFooter';
 import TablePagination from '@material-ui/core/TablePagination';
-import TablePaginationActions from '@material-ui/core/TablePagination/TablePaginationActions';
 import TableRow from '@material-ui/core/TableRow';
 import React from 'react';
 import fromRenderProps from 'recompose/fromRenderProps';
@@ -23,7 +22,6 @@ const ReactMUIDatatableFooter = props => {
           onChangeRowsPerPage={event =>
             props.changePerPage(Number(event.target.value))
           }
-          ActionsComponent={TablePaginationActions}
           labelDisplayedRows={props.labels.displayedRows}
           labelRowsPerPage={props.labels.rowsPerPage}
         />

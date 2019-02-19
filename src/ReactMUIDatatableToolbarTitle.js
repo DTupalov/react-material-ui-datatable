@@ -8,7 +8,7 @@ const ReactMUIDatatableToolbarTitle = props => {
   return (
     <React.Fragment>
       <Grid item style={{ alignSelf: 'center' }}>
-        <Typography variant="h6">{props.title}</Typography>
+        <Typography variant="title">{props.title}</Typography>
       </Grid>
       <Grid item xs={true} />
     </React.Fragment>
