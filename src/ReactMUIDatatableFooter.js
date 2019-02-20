@@ -15,9 +15,6 @@ const ReactMUIDatatableFooter = props => {
           count={props.computedData.length}
           rowsPerPage={props.perPage}
           page={props.page}
-          SelectProps={{
-            native: true,
-          }}
           onChangePage={(_, page) => props.changePage(page)}
           onChangeRowsPerPage={event =>
             props.changePerPage(Number(event.target.value))
