@@ -57,7 +57,7 @@ const data = [
 For more details see __[Storybook](https://dtupalov.github.io/react-material-ui-datatable/)__ of this component
 
 
-## API
+## `ReactMUIDatatable`'s API
 
 ### Props
 
@@ -165,6 +165,14 @@ For more details see __[Storybook](https://dtupalov.github.io/react-material-ui-
 | filterable | boolean | true | Enable / disable filtering by column. `false` will exclude column from filter panel|
 | searchable | boolean | true | Including / excluding column from search results |
 | customCell | Function | | Function that returns a string or React component. Used as display for body cell. `function (value: string, row: Object) => string \| React.Component`|
+
+## `ReactMUIDatatableProvider` with `ReactMUIDatatableRoot` component
+
+If you have separate screens for editing, creating, detailing items or you have your own screens, and you want to save state of your datatable between pages, you can lift state of the table higher with `ReactMUIDatatableProvider`. It receives all props from description [ReactMUIDatatable's API](#reactmuidatatables-api). To draw table just use `ReactMUIDatableRoot` component. It's already connect to Provider and will receive all props, that was passed into `ReactMUIDatatableProvider`. See example below.
+
+### Example
+Soon here will be link to example. Sorry :(
+
 
 # Thanks
 
