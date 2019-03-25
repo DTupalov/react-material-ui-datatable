@@ -1,12 +1,12 @@
 # React MaterialUI Datatable
 [![Build Status](https://travis-ci.org/DTupalov/react-material-ui-datatable.svg?branch=master)](https://travis-ci.org/DTupalov/react-material-ui-datatable) [![npm version](https://badge.fury.io/js/react-material-ui-datatable.svg)](https://badge.fury.io/js/react-material-ui-datatable) [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
 
-Material UI Datatable build in React way
+__Fully uncontrolled__ and __client-side datatable__ based on __material design__. Designed with React philosophy. Just set your data and receive common manipulations on it: filtering, sorting, pagination and etc.
 
 :book: See __[Storybook](https://dtupalov.github.io/react-material-ui-datatable/)__ of this component
 
-#### :warning: ATTENTION! WIP!
-This library is under the work. At the moment there is only basic functionality
+## :warning: ATTENTION! WIP!
+This library is under the work. It means, that we can do Breaking Changes during one major alpha version. Please, check the [CHANGELOG](./CHANGELOG.md) before update your current version.
 
 ## Install
        
