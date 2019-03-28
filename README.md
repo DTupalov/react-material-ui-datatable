@@ -67,9 +67,7 @@ For more details see __[Storybook](https://dtupalov.github.io/react-material-ui-
 | columns | Object[] | [] | Options for each column. Detailed description see [here](#column-option) |
 | data | Object[] | [] | Your dataset, that you want to display in the table| 
 | page | number | 0 | Current page. Start with 0 |
-| onPageChanged | Function | | Function trigger when `page` was changed. Signature ```(page: number) => any``` |
 | perPage | number | 5 | Quantity of displaying items per page. | 
-| onPerPageChanged | Function | | Function trigger when `perPage` was changed. Signature ```(perPage: number) => any``` | 
 | perPageOption | number[] | [5, 10, 15] | Per page option. Displayed on the paging panel |
 | selectedRows | number[] | [] | Indexes of selected rows |
 | selectable | boolean | true | Enable selections |
@@ -78,14 +76,11 @@ For more details see __[Storybook](https://dtupalov.github.io/react-material-ui-
 | toolbarSelectActions | Function | [defaultToolbarSelectActions](./src/defaultToolbarSelectActions.js) | Function that returns a string or React component. Used as display actions in Toolbar selection. More details you can read [here](#toolbarSelectActions). You can see example in storybook at section [Props -> toolbarSelectActions](https://dtupalov.github.io/react-material-ui-datatable/?selectedKind=ReactMUIDatatable%2FProps&selectedStory=toolbarSelectActions&full=0&addons=1&stories=1&panelRight=0&addonPanel=storybook%2Fstories%2Fstories-panel) |
 | toolbarActions | Function | | Function that returns a string or React component. Used to display custom actions in toolbar panel. | 
 | showSearchBar | boolean | false | Open or close search bar in toolbar panel | 
-| onShowSearchBarChanged | Function | | Function trigger when `showSearchBar` was changed. Signature ```(showSearchBar: boolean) => any``` | 
 | searchValue | string | "" | The value by which the search is performed | 
-| onSearchValueChanged | Function | | Function trigger when `searchValue` was changed. Signature ```(searchValue: string) => any``` | 
 | sort | Object | { [columnName]: null, direction: "ASC" } | Set sorting by column name and set direction for sorting. Direction may be: `ASC` and `DESC` |
-| onSortChanged | Function | | Function trigger when `sort` was changed. Signature ```({ columnName: string, direction: 'ASC' | 'DESC' }) => any``` |
 | filterValues | Object | {} | Set filters for columns |
-| onFilterValuesChanged | Func | | Function trigger when `filterValues` was changed. Signature ```(filterValues: Object) => any``` |
-| localization | Object | [default value](#default-value)  | More details you can read [here](#localization)
+| onStateChanged | Function | | Handler for state changing. Receives event-like object. Signature ```(event: {name: string, value: string, state: Object}) => any```, where `name` - changed state, `value` - new value, `state` - current state of datatable component. Notice, that `state` contains only changeable values. It useful to restore state after reloading page, for example|
+| localization | Object | [default localization](#default-value)  | More details you can read [here](#localization) |
 
 #### `toolbarSelectActions`
 

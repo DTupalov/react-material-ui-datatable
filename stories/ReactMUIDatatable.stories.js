@@ -60,28 +60,12 @@ storiesOf('ReactMUIDatatable/Props', module)
   .add('page', () => (
     <ReactMUIDatatable columns={columns} data={data} title={title} page={10} />
   ))
-  .add('onPageChanged', () => (
-    <ReactMUIDatatable
-      columns={columns}
-      data={data}
-      title={title}
-      onPageChanged={action('onPageChanged called')}
-    />
-  ))
   .add('perPage', () => (
     <ReactMUIDatatable
       columns={columns}
       data={data}
       title={title}
       perPage={15}
-    />
-  ))
-  .add('onPerPageChanged', () => (
-    <ReactMUIDatatable
-      columns={columns}
-      data={data}
-      title={title}
-      onPerPageChanged={action('onPerPageChanged called')}
     />
   ))
   .add('perPageOption', () => (
@@ -166,14 +150,6 @@ storiesOf('ReactMUIDatatable/Props', module)
       showSearchBar={true}
     />
   ))
-  .add('onShowSearchBarChanged', () => (
-    <ReactMUIDatatable
-      columns={columns}
-      data={data}
-      title={title}
-      onShowSearchBarChanged={action('onShowSearchBarChanged called')}
-    />
-  ))
   .add('searchValue', () => (
     <ReactMUIDatatable
       columns={columns}
@@ -181,14 +157,6 @@ storiesOf('ReactMUIDatatable/Props', module)
       title={title}
       showSearchBar={true}
       searchValue={'Jo'}
-    />
-  ))
-  .add('onSearchValueChanged', () => (
-    <ReactMUIDatatable
-      columns={columns}
-      data={data}
-      title={title}
-      onSearchValueChanged={action('onSearchValueChanged called')}
     />
   ))
   .add('sort', () => (
@@ -199,14 +167,6 @@ storiesOf('ReactMUIDatatable/Props', module)
       sort={{ columnName: 'firstName', direction: 'DESC' }}
     />
   ))
-  .add('onSortChanged', () => (
-    <ReactMUIDatatable
-      columns={columns}
-      data={data}
-      title={title}
-      onSortChanged={action('onSortChanged called')}
-    />
-  ))
   .add('filterValues', () => (
     <ReactMUIDatatable
       columns={columns}
@@ -215,12 +175,12 @@ storiesOf('ReactMUIDatatable/Props', module)
       filterValues={{ age: 20 }}
     />
   ))
-  .add('onFilterValuesChanged', () => (
+  .add('onStateChanged', () => (
     <ReactMUIDatatable
       columns={columns}
       data={data}
       title={title}
-      onFilterValuesChanged={action('onFilterValuesChanged called')}
+      onStateChanged={action('onStateChanged')}
     />
   ))
   .add('localization', () => (
