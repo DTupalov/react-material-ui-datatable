@@ -17,6 +17,7 @@ import {
   search,
   sort,
 } from './utils';
+import withStateChanged from './withStateChanged';
 
 export const mapDatatableProps = props => ({
   title: props.title,
@@ -98,13 +99,7 @@ export default compose(
         displayedRows: PropTypes.func,
       }),
     }),
-    onShowSearchBarChanged: PropTypes.func,
-    onSearchValueChanged: PropTypes.func,
-    onSortChanged: PropTypes.func,
-    onPageChanged: PropTypes.func,
-    onPerPageChanged: PropTypes.func,
-    onSelectedRowsChanged: PropTypes.func,
-    onFilterValuesChanged: PropTypes.func,
+    onStateChanged: PropTypes.func,
   }),
   defaultProps({
     data: [],
@@ -140,6 +135,9 @@ export default compose(
         rowsPerPage: 'Rows per page',
         displayedRows: ({ from, to, count }) => `${from}-${to} of ${count}`,
       },
+    },
+    onStateChanged: event => {
+      console.log('state changed', event.name, event.value, event.state);
     },
   }),
   withProps(props => ({
@@ -185,6 +183,7 @@ export default compose(
       displayData,
     };
   }),
+  withStateChanged,
   withHandlers({
     toggleSelectRow: props => rawIndex => {
       const nextSelectedRows = [...props.selectedRows];
@@ -212,20 +211,12 @@ export default compose(
 
       props.setSearchValue(nextSearchValue);
       props.setShowSearchBar(nextShowSearchBar);
-
-      props.onShowSearchBarChanged &&
-        props.onShowSearchBarChanged(nextShowSearchBar);
-      props.onSearchValueChanged && props.onSearchValueChanged(nextSearchValue);
     },
     handleSearchValue: props => searchValue => {
       props.setSearchValue(searchValue);
-
-      props.onSearchValueChanged && props.onSearchValueChanged(searchValue);
     },
     handleSort: props => ({ columnName, direction = 'ASC' }) => {
       props.setSort({ columnName, direction });
-
-      props.onSortChanged && props.onSortChanged({ columnName, direction });
     },
     addFilter: props => ({ columnName, value }) => {
       const nextFilterValues = {
@@ -234,9 +225,6 @@ export default compose(
       };
 
       props.setFilterValues(nextFilterValues);
-
-      props.onFilterValuesChanged &&
-        props.onFilterValuesChanged(nextFilterValues);
     },
     removeFilter: props => ({ columnName }) => {
       const nextFilterValues = Object.keys(props.filterValues).reduce(
@@ -251,27 +239,17 @@ export default compose(
       );
 
       props.setFilterValues(nextFilterValues);
-
-      props.onFilterValuesChanged &&
-        props.onFilterValuesChanged(nextFilterValues);
     },
     resetFilter: props => () => {
       const nextFilterValues = {};
 
       props.setFilterValues(nextFilterValues);
-
-      props.onFilterValuesChanged &&
-        props.onFilterValuesChanged(nextFilterValues);
     },
     changePage: props => page => {
       props.setPage(page);
-
-      props.onPageChanged && props.onPageChanged(page);
     },
     changePerPage: props => count => {
       props.setPerPage(count);
-
-      props.onPerPageChanged && props.onPerPageChanged(count);
     },
     handleSelect: props => selectedRows => props.setSelectedRows(selectedRows),
     handleDelete: props => selectedRows => {

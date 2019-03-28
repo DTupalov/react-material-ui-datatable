@@ -7,13 +7,7 @@ let ReactMUIDatatable;
 let RenderedMockedComponent;
 let data;
 let columns;
-let onShowSearchBarChanged;
-let onSearchValueChanged;
-let onSortChanged;
-let onFilterValuesChanged;
-let onPageChanged;
-let onPerPageChanged;
-
+let onStateChanged;
 class MockedComponent extends React.Component {
   render() {
     // console.log(this.props);
@@ -23,12 +17,7 @@ class MockedComponent extends React.Component {
 
 describe('withReactMUIDatatableModel', () => {
   beforeEach(() => {
-    onShowSearchBarChanged = jest.fn(showSearchBar => {});
-    onSearchValueChanged = jest.fn(searchValue => {});
-    onSortChanged = jest.fn(({ columnName, direction }) => {});
-    onFilterValuesChanged = jest.fn(filterValues => {});
-    onPageChanged = jest.fn(page => {});
-    onPerPageChanged = jest.fn(perPage => {});
+    onStateChanged = jest.fn(event => {});
 
     data = [
       {
@@ -90,12 +79,7 @@ describe('withReactMUIDatatableModel', () => {
         <ReactMUIDatatable
           data={data}
           columns={columns}
-          onShowSearchBarChanged={onShowSearchBarChanged}
-          onSearchValueChanged={onSearchValueChanged}
-          onSortChanged={onSortChanged}
-          onFilterValuesChanged={onFilterValuesChanged}
-          onPageChanged={onPageChanged}
-          onPerPageChanged={onPerPageChanged}
+          onStateChanged={onStateChanged}
         />
       )
       .root.findByType(MockedComponent);
@@ -206,17 +190,6 @@ describe('withReactMUIDatatableModel', () => {
     expect(RenderedMockedComponent.props.computedData).toEqual(expectedData);
   });
 
-  it('should call onSortChanged if sort was changed', () => {
-    const sort = {
-      columnName: 'car.make',
-      direction: 'DESC',
-    };
-
-    RenderedMockedComponent.props.handleSort(sort);
-
-    expect(onSortChanged).toBeCalledWith(sort);
-  });
-
   it('should filter data by column name with dots', () => {
     const expectedData = [
       {
@@ -269,39 +242,6 @@ describe('withReactMUIDatatableModel', () => {
     expect(RenderedMockedComponent.props.computedData).toEqual(expectedData);
   });
 
-  it('should call onFilterValuesChanged if filterValues was changed', () => {
-    const expectedFilterValuesOnAdd = {
-      'car.make': 'Mitsubishi',
-      firstName: 'Dav',
-    };
-    const expectedFilterValuesOnRemove = {
-      firstName: 'Dav',
-    };
-    const expectedFilterValuesOnReset = {};
-
-    RenderedMockedComponent.props.addFilter({
-      columnName: 'car.make',
-      value: 'Mitsubishi',
-    });
-
-    RenderedMockedComponent.props.addFilter({
-      columnName: 'firstName',
-      value: 'Dav',
-    });
-
-    expect(onFilterValuesChanged).toBeCalledWith(expectedFilterValuesOnAdd);
-
-    RenderedMockedComponent.props.removeFilter({
-      columnName: 'car.make',
-    });
-
-    expect(onFilterValuesChanged).toBeCalledWith(expectedFilterValuesOnRemove);
-
-    RenderedMockedComponent.props.resetFilter();
-
-    expect(onFilterValuesChanged).toBeCalledWith(expectedFilterValuesOnReset);
-  });
-
   it('should search all columns', () => {
     const expectedData = [
       {
@@ -340,21 +280,6 @@ describe('withReactMUIDatatableModel', () => {
     RenderedMockedComponent.props.toggleSearchBar();
 
     expect(RenderedMockedComponent.props.computedData).toEqual(expectedData);
-  });
-
-  it('should call onShowSearchBarChanged if search bar was changed', () => {
-    RenderedMockedComponent.props.toggleSearchBar();
-
-    expect(onShowSearchBarChanged.mock.calls.length).toBe(1);
-    expect(onShowSearchBarChanged).toBeCalledWith(true);
-  });
-
-  it('should call onSearchValueChanged if search value was changed', () => {
-    RenderedMockedComponent.props.handleSearchValue('o');
-    expect(onSearchValueChanged).toBeCalledWith('o');
-
-    RenderedMockedComponent.props.toggleSearchBar();
-    expect(onSearchValueChanged).toBeCalledWith('');
   });
 
   it('should display rows by option perPageOption', () => {
@@ -411,12 +336,6 @@ describe('withReactMUIDatatableModel', () => {
     );
   });
 
-  it('should call onPerPageChanged if perPage was changed', () => {
-    RenderedMockedComponent.props.changePerPage(10);
-
-    expect(onPerPageChanged).toBeCalledWith(10);
-  });
-
   it('should paginate', () => {
     const expectedDisplayDataOnSecondPage = [
       {
@@ -433,14 +352,6 @@ describe('withReactMUIDatatableModel', () => {
     expect(RenderedMockedComponent.props.displayData).toEqual(
       expectedDisplayDataOnSecondPage
     );
-  });
-
-  it('should call onPageChanged if page was changed', () => {
-    const expectedPage = 1;
-
-    RenderedMockedComponent.props.changePage(1);
-
-    expect(onPageChanged).toBeCalledWith(1);
   });
 
   it('should delete selected rows', () => {
@@ -657,5 +568,36 @@ describe('withReactMUIDatatableModel', () => {
         count: 10,
       })
     ).toBe('1-5 of 10');
+  });
+
+  it('it should fire onStateChanged event if one of state properties was changed', () => {
+    /**
+     *  Used directly "setState" because we need to check only triggering `onStateChanged`
+     */
+    RenderedMockedComponent.props.setShowSearchBar(true);
+    RenderedMockedComponent.props.setSearchValue('Caz');
+    RenderedMockedComponent.props.setSort({
+      columnName: 'firstName',
+      direction: 'DESC',
+    });
+    RenderedMockedComponent.props.setFilterValues({ firstName: 'Caz' });
+    RenderedMockedComponent.props.setPage(1);
+    RenderedMockedComponent.props.setPerPage(15);
+    RenderedMockedComponent.props.setSelectedRows([0]);
+
+    expect(onStateChanged).toBeCalledTimes(7);
+    expect(onStateChanged).toHaveBeenLastCalledWith({
+      name: 'selectedRows',
+      value: [0],
+      state: {
+        searchValue: 'Caz',
+        showSearchBar: true,
+        sort: { columnName: 'firstName', direction: 'DESC' },
+        filterValues: { firstName: 'Caz' },
+        page: 1,
+        perPage: 15,
+        selectedRows: [0],
+      },
+    });
   });
 });
