@@ -73,7 +73,7 @@ export default compose(
     page: PropTypes.number,
     perPage: PropTypes.number,
     perPageOption: PropTypes.arrayOf(PropTypes.number),
-    selectedData: PropTypes.arrayOf(PropTypes.number),
+    selectedData: PropTypes.arrayOf(PropTypes.object),
     filterValues: PropTypes.object,
     selectable: PropTypes.bool,
     filterable: PropTypes.bool,

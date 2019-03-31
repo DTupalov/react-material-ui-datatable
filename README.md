@@ -10,11 +10,11 @@ This library is under the work. It means, that we can do Breaking Changes during
 
 ## Install
        
-    npm install react-material-ui-datatable@^2.0.0-alpha --save
+    npm install react-material-ui-datatable@2.0.6-alpha --save-exact
 
 or 
 
-    yarn add react-material-ui-datatable@^2.0.0-alpha
+    yarn add react-material-ui-datatable@2.0.6-alpha --exact
 
 ## Demo
 
@@ -69,7 +69,7 @@ For more details see __[Storybook](https://dtupalov.github.io/react-material-ui-
 | page | number | 0 | Current page. Start with 0 |
 | perPage | number | 5 | Quantity of displaying items per page. | 
 | perPageOption | number[] | [5, 10, 15] | Per page option. Displayed on the paging panel |
-| selectedRows | number[] | [] | Indexes of selected rows |
+| selectedData | Object[] | [] | Array of refs of selected data items. For example, `[data[0], data[1]]` will select first and second row. |
 | selectable | boolean | true | Enable selections |
 | filterable | boolean | true | Enable filters in toolbar panel |
 | searchable | boolean | true | Enable search bar in toolbar panel |
@@ -85,15 +85,15 @@ For more details see __[Storybook](https://dtupalov.github.io/react-material-ui-
 #### `toolbarSelectActions`
 
 ```js
-(data: Object, selectedRows: number[], updateSelectedRows: Function, handleDelete: Function) => string | React.Component
+(data: Object, selectedData: Object[], updateSelectedData: Function, handleDelete: Function) => string | React.Component
 ```
 
 | Argument | Type | Description |
 | - | - | - |
 | data | Object | Current dataset in the table (with applying filters and sort) | 
-| selectedRows | number[] | Current selected rows (their indexes). To get selected items from data, you need to import `metaSymbol` from library, and filter data like `data.filter(row => selectedRows.includes(row[metaSymbol].rawIndex))` | 
-| updateSelectedRows | ( number[] ) => void | Function, that apply new selected rows. | 
-| handleDelete | ( number[] ) => void | Function, that delete selected rows. For example, you can call it, when you got successful response from your api | 
+| selectedData | Object[] | Current selected data (their refs) | 
+| updateSelectedData | ( Object[] ) => any | Function, that apply new selected data | 
+| handleDelete | ( Object[] ) => any | Function, that delete selected data. For example, you can call it, when you got successful response from your api | 
 
 #### `localization`
 
@@ -112,7 +112,7 @@ For more details see __[Storybook](https://dtupalov.github.io/react-material-ui-
     reset: 'Reset',
   },
   toolbarSelect: {
-    selectedRows: count => `${count} row(s) selected`,
+    selectedData: count => `${count} row(s) selected`,
   },
   pagination: {
     rowsPerPage: 'Rows per page',
@@ -141,7 +141,7 @@ For more details see __[Storybook](https://dtupalov.github.io/react-material-ui-
 
 | Name | Type | Default | Description
 | - | - | - | - |
-| selectedRows | Function | count => \`${count} row(s) selected\` | Function that receives `count` of selected rows and returns string |
+| selectedData | Function | count => \`${count} row(s) selected\` | Function that receives `count` of selected rows and returns string |
 
 ##### pagination
 

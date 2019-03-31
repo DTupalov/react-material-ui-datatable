@@ -5,7 +5,7 @@ import SwapHorizIcon from '@material-ui/icons/SwapHoriz';
 import { action } from '@storybook/addon-actions';
 import { storiesOf } from '@storybook/react';
 import React from 'react';
-import { metaSymbol, ReactMUIDatatable } from '../src/';
+import { ReactMUIDatatable } from '../src/';
 import users from '../stubs/users.json';
 import usersWithCars from '../stubs/usersWithCars.json';
 
@@ -76,12 +76,12 @@ storiesOf('ReactMUIDatatable/Props', module)
       perPageOption={[5, 15, 50]}
     />
   ))
-  .add('selectedRows', () => (
+  .add('selectedData', () => (
     <ReactMUIDatatable
       columns={columns}
       data={data}
       title={title}
-      selectedRows={[0, 1, 2, 3]}
+      selectedData={[data[0], data[1], data[2], data[3]]}
     />
   ))
   .add('toolbarSelectActions', () => (
@@ -89,36 +89,36 @@ storiesOf('ReactMUIDatatable/Props', module)
       columns={columns}
       data={data}
       title={title}
-      selectedRows={[0, 1, 2, 3]}
+      selectedData={[data[0], data[1], data[2], data[3]]}
       toolbarSelectActions={({
         data,
-        selectedRows,
-        updateSelectedRows,
+        selectedData,
+        updateSelectedData,
         handleDelete,
       }) => {
         return (
           <React.Fragment>
             <IconButton
               onClick={() => {
-                const nextSelectedRows = data.reduce(
-                  (nextSelectedRows, row) => {
-                    if (!selectedRows.includes(row[metaSymbol].rawIndex)) {
-                      nextSelectedRows.push(row[metaSymbol].rawIndex);
+                const nextSelectedData = data.reduce(
+                  (nextSelectedData, row) => {
+                    if (!selectedData.includes(row)) {
+                      nextSelectedData.push(row);
                     }
 
-                    return nextSelectedRows;
+                    return nextSelectedData;
                   },
                   []
                 );
 
-                updateSelectedRows(nextSelectedRows);
+                updateSelectedData(nextSelectedData);
               }}
             >
               <SwapHorizIcon />
             </IconButton>
             <IconButton
               onClick={() => {
-                handleDelete(selectedRows);
+                handleDelete(selectedData);
               }}
             >
               <DeleteIcon />
@@ -200,7 +200,7 @@ storiesOf('ReactMUIDatatable/Props', module)
           reset: 'Сброс',
         },
         toolbarSelect: {
-          selectedRows: count => `Выбрано ${count} элемент(ов)`,
+          selectedData: count => `Выбрано ${count} элемент(ов)`,
         },
         pagination: {
           rowsPerPage: 'Кол-во на стр.',
