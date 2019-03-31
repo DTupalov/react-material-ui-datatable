@@ -17,10 +17,10 @@ const ReactMUIDatatableHeader = props => {
           <TableCell padding="checkbox">
             <Checkbox
               indeterminate={
-                props.selectedRows.length !== 0 &&
-                props.selectedRows.length < props.computedData.length
+                props.selectedData.length !== 0 &&
+                props.selectedData.length < props.computedData.length
               }
-              checked={props.selectedRows.length === props.computedData.length}
+              checked={props.selectedData.length === props.computedData.length}
               onChange={props.toggleSelectAll}
             />
           </TableCell>
@@ -62,7 +62,7 @@ export default compose(
     sort: datatableProps.sort,
     handleSort: datatableProps.handleSort,
     selectable: datatableProps.selectable,
-    selectedRows: datatableProps.selectedRows,
+    selectedData: datatableProps.selectedData,
     computedData: datatableProps.computedData,
     toggleSelectAll: datatableProps.toggleSelectAll,
   })),

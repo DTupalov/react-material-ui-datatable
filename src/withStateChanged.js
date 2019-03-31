@@ -11,7 +11,7 @@ const withStateChanged = Component =>
         'showSearchBar',
         'page',
         'perPage',
-        'selectedRows',
+        'selectedData',
         'searchValue',
         'sort',
         'filterValues',

@@ -71,21 +71,6 @@ export const convertDataToFilterLists = memoizeByArgs((data, columns) =>
   }, {})
 );
 
-export const metaSymbol = Symbol('meta');
-
-export const addMetaRawIndexToData = data =>
-  data.map((row, rawIndex) => {
-    /** add uniq property to data array */
-    Object.defineProperty(row, metaSymbol, {
-      enumerable: false,
-      configurable: true,
-      writable: true,
-      value: { rawIndex },
-    });
-
-    return row;
-  });
-
 export const completeColumnsWithOptions = columns =>
   columns.map(column => ({
     sortable: true,

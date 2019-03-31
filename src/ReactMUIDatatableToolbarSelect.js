@@ -8,24 +8,20 @@ import compose from 'recompose/compose';
 import fromRenderProps from 'recompose/fromRenderProps';
 import { ReactMUIDatatableConsumer } from './ReactMUIDatatableProvider';
 
-/**
- *  `toolbarSelectActions` - pass separate `data` and `selectedRows`
- *  to remove unnecessary filtering `data` array with rerenders
- */
 const ReactMUIDatatableToolbarSelect = props => {
   return (
     <Toolbar className={`${props.classes.root} ${props.classes.highlight}`}>
       <Grid container justify={'space-between'}>
         <Grid item className={props.classes.selected}>
           <Typography color="inherit" variant="subheading">
-            {props.labels.selectedRows(props.selectedRows.length)}
+            {props.labels.selectedData(props.selectedData.length)}
           </Typography>
         </Grid>
         <Grid item>
           {props.toolbarSelectActions({
             data: props.computedData,
-            selectedRows: props.selectedRows,
-            updateSelectedRows: props.handleSelect,
+            selectedData: props.selectedData,
+            updateSelectedData: props.handleSelect,
             handleDelete: props.handleDelete,
           })}
         </Grid>
@@ -38,7 +34,7 @@ export default compose(
   fromRenderProps(ReactMUIDatatableConsumer, ({ ...datatableProps }) => ({
     handleSelect: datatableProps.handleSelect,
     handleDelete: datatableProps.handleDelete,
-    selectedRows: datatableProps.selectedRows,
+    selectedData: datatableProps.selectedData,
     toolbarSelectActions: datatableProps.toolbarSelectActions,
     computedData: datatableProps.computedData,
     labels: datatableProps.localization.toolbarSelect,

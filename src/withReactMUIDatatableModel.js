@@ -7,11 +7,9 @@ import withProps from 'recompose/withProps';
 import withStateHandlers from 'recompose/withStateHandlers';
 import defaultToolbarSelectActions from './defaultToolbarSelectActions';
 import {
-  addMetaRawIndexToData,
   completeColumnsWithOptions,
   convertDataToFilterLists,
   filter,
-  metaSymbol,
   paginate,
   pipe,
   search,
@@ -26,7 +24,7 @@ export const mapDatatableProps = props => ({
   searchValue: props.searchValue,
   sort: props.sort,
   filterValues: props.filterValues,
-  selectedRows: props.selectedRows,
+  selectedData: props.selectedData,
   toolbarSelectActions: props.toolbarSelectActions,
   toolbarActions: props.toolbarActions,
   page: props.page,
@@ -75,7 +73,7 @@ export default compose(
     page: PropTypes.number,
     perPage: PropTypes.number,
     perPageOption: PropTypes.arrayOf(PropTypes.number),
-    selectedRows: PropTypes.arrayOf(PropTypes.number),
+    selectedData: PropTypes.arrayOf(PropTypes.number),
     filterValues: PropTypes.object,
     selectable: PropTypes.bool,
     filterable: PropTypes.bool,
@@ -92,7 +90,7 @@ export default compose(
         reset: PropTypes.string,
       }),
       toolbarSelect: PropTypes.shape({
-        selectedRows: PropTypes.func,
+        selectedData: PropTypes.func,
       }),
       pagination: PropTypes.shape({
         rowsPerPage: PropTypes.string,
@@ -112,7 +110,7 @@ export default compose(
     page: 0,
     perPage: 5,
     perPageOption: [5, 10, 15],
-    selectedRows: [],
+    selectedData: [],
     filterValues: {},
     selectable: true,
     filterable: true,
@@ -129,7 +127,7 @@ export default compose(
         reset: 'Reset',
       },
       toolbarSelect: {
-        selectedRows: count => `${count} row(s) selected`,
+        selectedData: count => `${count} row(s) selected`,
       },
       pagination: {
         rowsPerPage: 'Rows per page',
@@ -141,7 +139,6 @@ export default compose(
     },
   }),
   withProps(props => ({
-    data: addMetaRawIndexToData(props.data),
     columns: completeColumnsWithOptions(props.columns),
   })),
   withStateHandlers(
@@ -153,7 +150,7 @@ export default compose(
       filterValues: props.filterValues,
       page: props.page,
       perPage: props.perPage,
-      selectedRows: props.selectedRows,
+      selectedData: props.selectedData,
     }),
     {
       setData: () => data => ({ data }),
@@ -163,7 +160,7 @@ export default compose(
       setFilterValues: () => filterValues => ({ filterValues }),
       setPage: () => page => ({ page }),
       setPerPage: () => perPage => ({ perPage }),
-      setSelectedRows: () => selectedRows => ({ selectedRows }),
+      setSelectedData: () => selectedData => ({ selectedData }),
     }
   ),
   withProps(props => {
@@ -185,25 +182,27 @@ export default compose(
   }),
   withStateChanged,
   withHandlers({
-    toggleSelectRow: props => rawIndex => {
-      const nextSelectedRows = [...props.selectedRows];
-      const indexOfRow = nextSelectedRows.indexOf(rawIndex);
-
-      if (indexOfRow !== -1) {
-        nextSelectedRows.splice(indexOfRow, 1);
+    toggleSelectRow: props => selectedDataItem => {
+      const nextSelectedData = [...props.selectedData];
+      const dataIndex = nextSelectedData.findIndex(
+        data => data === selectedDataItem
+      );
+      if (dataIndex !== -1) {
+        nextSelectedData.splice(dataIndex, 1);
       } else {
-        nextSelectedRows.push(rawIndex);
+        nextSelectedData.push(selectedDataItem);
       }
 
-      props.setSelectedRows(nextSelectedRows);
+      props.setSelectedData(nextSelectedData);
     },
+
     toggleSelectAll: props => () => {
-      let nextSelectedRows = [];
-      if (!props.selectedRows.length) {
-        nextSelectedRows = props.data.map(row => row[metaSymbol].rawIndex);
+      let nextSelectedData = [];
+      if (!props.selectedData.length) {
+        nextSelectedData = [...props.data];
       }
 
-      props.setSelectedRows(nextSelectedRows);
+      props.setSelectedData(nextSelectedData);
     },
     toggleSearchBar: props => () => {
       const nextShowSearchBar = !props.showSearchBar;
@@ -251,19 +250,18 @@ export default compose(
     changePerPage: props => count => {
       props.setPerPage(count);
     },
-    handleSelect: props => selectedRows => props.setSelectedRows(selectedRows),
-    handleDelete: props => selectedRows => {
+    handleSelect: props => selectedData => props.setSelectedData(selectedData),
+    handleDelete: props => selectedData => {
       const nextData = props.data.filter(
-        row => !selectedRows.includes(row[metaSymbol].rawIndex)
+        dataItem => !selectedData.includes(dataItem)
+      );
+
+      const nextSelectedData = props.selectedData.filter(
+        rawIndex => !selectedData.includes(rawIndex)
       );
 
       props.setData(nextData);
-
-      const nextSelectedRows = props.selectedRows.filter(
-        rawIndex => !selectedRows.includes(rawIndex)
-      );
-
-      props.setSelectedRows(nextSelectedRows);
+      props.setSelectedData(nextSelectedData);
     },
   })
 );

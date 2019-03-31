@@ -13,7 +13,7 @@ import ReactMUIDatatableToolbarSelect from './ReactMUIDatatableToolbarSelect';
 const ReactMUIDatatableRoot = props => {
   return (
     <Paper>
-      {props.selectedRows.length ? (
+      {props.selectedData.length ? (
         <ReactMUIDatatableToolbarSelect />
       ) : (
         <ReactMUIDatatableToolbar />
@@ -30,5 +30,5 @@ const ReactMUIDatatableRoot = props => {
 
 export default fromRenderProps(
   ReactMUIDatatableConsumer,
-  ({ ...datatableProps }) => ({ selectedRows: datatableProps.selectedRows })
+  ({ ...datatableProps }) => ({ selectedData: datatableProps.selectedData })
 )(ReactMUIDatatableRoot);

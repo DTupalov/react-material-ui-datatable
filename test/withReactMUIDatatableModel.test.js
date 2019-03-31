@@ -354,7 +354,7 @@ describe('withReactMUIDatatableModel', () => {
     );
   });
 
-  it('should delete selected rows', () => {
+  it('should delete selected data', () => {
     const expectedData = [
       {
         name: 'Caz',
@@ -365,19 +365,30 @@ describe('withReactMUIDatatableModel', () => {
       },
     ];
 
-    RenderedMockedComponent.props.handleDelete([1, 2, 3, 4, 5]);
+    RenderedMockedComponent.props.handleDelete([
+      data[1],
+      data[2],
+      data[3],
+      data[4],
+      data[5],
+    ]);
 
     expect(RenderedMockedComponent.props.computedData).toEqual(expectedData);
   });
 
-  it('should remove only deleted rows from selected rows', () => {
-    const expectedSelectedRows = [0, 1];
+  it('should remove only deleted data items from selected data', () => {
+    const expectedSelectedData = [data[0], data[1]];
 
-    RenderedMockedComponent.props.handleSelect([0, 1, 2, 3]);
-    RenderedMockedComponent.props.handleDelete([2, 3]);
+    RenderedMockedComponent.props.handleSelect([
+      data[0],
+      data[1],
+      data[2],
+      data[3],
+    ]);
+    RenderedMockedComponent.props.handleDelete([data[2], data[3]]);
 
-    expect(RenderedMockedComponent.props.selectedRows).toEqual(
-      expectedSelectedRows
+    expect(RenderedMockedComponent.props.selectedData).toEqual(
+      expectedSelectedData
     );
   });
 
@@ -421,62 +432,69 @@ describe('withReactMUIDatatableModel', () => {
     ];
 
     RenderedMockedComponent.props.handleSearchValue('a');
-    RenderedMockedComponent.props.handleDelete([0]);
+    RenderedMockedComponent.props.handleDelete([data[0]]);
     RenderedMockedComponent.props.handleSearchValue('');
 
     expect(RenderedMockedComponent.props.computedData).toEqual(expectedData);
   });
 
-  it('should select enumarated rows', () => {
-    const expectedSelectedRows = [1, 3, 5];
+  it('should select enumarated data', () => {
+    const expectedSelectedData = [data[1], data[3], data[5]];
 
-    RenderedMockedComponent.props.handleSelect([1, 3, 5]);
+    RenderedMockedComponent.props.handleSelect([data[1], data[3], data[5]]);
 
-    expect(RenderedMockedComponent.props.selectedRows).toEqual(
-      expectedSelectedRows
+    expect(RenderedMockedComponent.props.selectedData).toEqual(
+      expectedSelectedData
     );
   });
 
-  it('should select all rows if there are no selected rows', () => {
-    const expectedSelectedRows = [0, 1, 2, 3, 4, 5];
+  it('should select all data if there are no selected rows', () => {
+    const expectedSelectedData = [
+      data[0],
+      data[1],
+      data[2],
+      data[3],
+      data[4],
+      data[5],
+    ];
 
     RenderedMockedComponent.props.handleSelect([]);
     RenderedMockedComponent.props.toggleSelectAll();
 
-    expect(RenderedMockedComponent.props.selectedRows).toEqual(
-      expectedSelectedRows
+    expect(RenderedMockedComponent.props.selectedData).toEqual(
+      expectedSelectedData
     );
   });
 
-  it('should deselect all rows if there is at least one selected row', () => {
-    const expectedSelectedRows = [];
+  it('should deselect all data if there is at least one selected data item', () => {
+    const expectedSelectedData = [];
 
-    RenderedMockedComponent.props.handleSelect([4]);
+    RenderedMockedComponent.props.handleSelect([data[4]]);
     RenderedMockedComponent.props.toggleSelectAll();
 
-    expect(RenderedMockedComponent.props.selectedRows).toEqual(
-      expectedSelectedRows
+    expect(RenderedMockedComponent.props.selectedData).toEqual(
+      expectedSelectedData
     );
   });
 
-  it('should select row if it was not selected', () => {
-    const expectedSelectedRows = [0];
+  it('should select data item if it was not selected', () => {
+    const expectedSelectedData = [data[0]];
 
-    RenderedMockedComponent.props.toggleSelectRow(0);
+    RenderedMockedComponent.props.toggleSelectRow(data[0]);
 
-    expect(RenderedMockedComponent.props.selectedRows).toEqual(
-      expectedSelectedRows
+    expect(RenderedMockedComponent.props.selectedData).toEqual(
+      expectedSelectedData
     );
   });
 
-  it('should deselect row if it was selected before', () => {
-    const expectedSelectedRows = [];
+  it('should deselect data item if it was selected before', () => {
+    const expectedSelectedData = [];
 
-    RenderedMockedComponent.props.handleSelect([0]);
-    RenderedMockedComponent.props.toggleSelectRow(0);
+    RenderedMockedComponent.props.handleSelect([data[0]]);
+    RenderedMockedComponent.props.toggleSelectRow(data[0]);
 
-    expect(RenderedMockedComponent.props.selectedRows).toEqual(
-      expectedSelectedRows
+    expect(RenderedMockedComponent.props.selectedData).toEqual(
+      expectedSelectedData
     );
   });
 
@@ -554,9 +572,9 @@ describe('withReactMUIDatatableModel', () => {
     expect(tree).toMatchSnapshot();
   });
 
-  it('should return string for selectedRows localization', () => {
+  it('should return string for selectedData localization', () => {
     expect(
-      RenderedMockedComponent.props.localization.toolbarSelect.selectedRows(2)
+      RenderedMockedComponent.props.localization.toolbarSelect.selectedData(2)
     ).toBe('2 row(s) selected');
   });
 
@@ -583,12 +601,12 @@ describe('withReactMUIDatatableModel', () => {
     RenderedMockedComponent.props.setFilterValues({ firstName: 'Caz' });
     RenderedMockedComponent.props.setPage(1);
     RenderedMockedComponent.props.setPerPage(15);
-    RenderedMockedComponent.props.setSelectedRows([0]);
+    RenderedMockedComponent.props.setSelectedData([data[0]]);
 
     expect(onStateChanged).toBeCalledTimes(7);
     expect(onStateChanged).toHaveBeenLastCalledWith({
-      name: 'selectedRows',
-      value: [0],
+      name: 'selectedData',
+      value: [data[0]],
       state: {
         searchValue: 'Caz',
         showSearchBar: true,
@@ -596,7 +614,7 @@ describe('withReactMUIDatatableModel', () => {
         filterValues: { firstName: 'Caz' },
         page: 1,
         perPage: 15,
-        selectedRows: [0],
+        selectedData: [data[0]],
       },
     });
   });

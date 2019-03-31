@@ -6,7 +6,6 @@ import get from 'lodash.get';
 import React from 'react';
 import fromRenderProps from 'recompose/fromRenderProps';
 import { ReactMUIDatatableConsumer } from './ReactMUIDatatableProvider';
-import { metaSymbol } from './utils';
 
 const ReactDatatableBody = props => {
   return (
@@ -16,8 +15,8 @@ const ReactDatatableBody = props => {
           {props.selectable && (
             <TableCell padding="checkbox">
               <Checkbox
-                checked={props.selectedRows.includes(row[metaSymbol].rawIndex)}
-                onChange={() => props.toggleSelectRow(row[metaSymbol].rawIndex)}
+                checked={props.selectedData.includes(row)}
+                onChange={() => props.toggleSelectRow(row)}
               />
             </TableCell>
           )}
@@ -44,6 +43,6 @@ export default fromRenderProps(
     columns: datatableProps.columns,
     selectable: datatableProps.selectable,
     toggleSelectRow: datatableProps.toggleSelectRow,
-    selectedRows: datatableProps.selectedRows,
+    selectedData: datatableProps.selectedData,
   })
 )(ReactDatatableBody);
