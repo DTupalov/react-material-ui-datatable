@@ -2,28 +2,6 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-<a name="2.0.0-alpha.7"></a>
-# [2.0.0-alpha.7](https://github.com/DTupalov/react-material-ui-datatable/compare/v2.0.0-alpha.6...v2.0.0-alpha.7) (2019-03-31)
-
-
-### Code Refactoring
-
-* add `selectedData` based on data refs ([60858fc](https://github.com/DTupalov/react-material-ui-datatable/commit/60858fc))
-* optimized handler for state changing ([ca1e009](https://github.com/DTupalov/react-material-ui-datatable/commit/ca1e009))
-
-
-### BREAKING CHANGES
-
-* - `selectedRows` now is `selectedData`
-- `localization.toolbarSelect.selectedRows` fn now is `selectedData` fn
-- `selectedData` now receives array of `data`'s objects refs.
-- `toolbarSelectActions` receives `selectedData`, `updateSelectedData`
-instead of `selectedRows` and `updateSelectedRows`
-- deprecate `metaSymbol`
-* Props `onShowSearchBarChanged`, `onSearchValueChanged`, `onSortChanged`, `onFilterValuesChanged`, `onPageChanged`, `onPerPageChanged` were removed. Now need to use `onStateChanged`
-
-
-
 <a name="2.0.0-alpha.6"></a>
 # [2.0.0-alpha.6](https://github.com/DTupalov/react-material-ui-datatable/compare/v2.0.0-alpha.5...v2.0.0-alpha.6) (2019-02-20)
 
