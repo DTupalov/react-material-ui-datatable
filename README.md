@@ -10,11 +10,11 @@ This library is under the work. It means, that we can do Breaking Changes during
 
 ## Install
        
-    npm install react-material-ui-datatable@2.0.6-alpha --save-exact
+    npm install react-material-ui-datatable@2.0.7-alpha --save-exact
 
 or 
 
-    yarn add react-material-ui-datatable@2.0.6-alpha --exact
+    yarn add react-material-ui-datatable@2.0.7-alpha --exact
 
 ## Demo
 
