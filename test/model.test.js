@@ -12,61 +12,51 @@ describe('model', () => {
   beforeEach(() => {
     data = [
       {
-        name: 'Caz',
-        age: 49,
-        car: {
-          make: 'Land Rover',
+        firstColumn: 'f',
+        secondColumn: {
+          nested: 6,
         },
       },
       {
-        name: 'Dav',
-        age: 69,
-        car: {
-          make: 'Mitsubishi',
+        firstColumn: 'a',
+        secondColumn: {
+          nested: 1,
         },
       },
       {
-        name: 'Yule',
-        age: 68,
-        car: {
-          make: 'Ford',
+        firstColumn: 'c',
+        secondColumn: {
+          nested: 3,
         },
       },
       {
-        name: 'Fredra',
-        age: 67,
-        car: {
-          make: 'GMC',
+        firstColumn: 'b',
+        secondColumn: {
+          nested: 2,
         },
       },
       {
-        name: 'Ursula',
-        age: 80,
-        car: {
-          make: 'BMW',
+        firstColumn: 'e',
+        secondColumn: {
+          nested: 5,
         },
       },
       {
-        name: 'Ailsun',
-        age: 41,
-        car: {
-          make: 'Honda',
+        firstColumn: 'd',
+        secondColumn: {
+          nested: 4,
         },
       },
     ];
 
     columns = [
       {
-        name: 'name',
-        label: 'Name',
+        name: 'firstColumn',
+        label: 'First',
       },
       {
-        name: 'age',
-        label: 'Age',
-      },
-      {
-        name: 'car.make',
-        label: 'Car make',
+        name: 'secondColumn.nested',
+        label: 'Second',
       },
     ];
 
@@ -80,49 +70,43 @@ describe('model', () => {
   });
 
   it('should sort data by column name with dots in ASC direction', () => {
-    modelActions.handleSort({ columnName: 'car.make' });
+    modelActions.handleSort({ columnName: 'secondColumn.nested' });
 
     const expectedData = [
       {
-        name: 'Ursula',
-        age: 80,
-        car: {
-          make: 'BMW',
+        firstColumn: 'a',
+        secondColumn: {
+          nested: 1,
         },
       },
       {
-        name: 'Yule',
-        age: 68,
-        car: {
-          make: 'Ford',
+        firstColumn: 'b',
+        secondColumn: {
+          nested: 2,
         },
       },
       {
-        name: 'Fredra',
-        age: 67,
-        car: {
-          make: 'GMC',
+        firstColumn: 'c',
+        secondColumn: {
+          nested: 3,
         },
       },
       {
-        name: 'Ailsun',
-        age: 41,
-        car: {
-          make: 'Honda',
+        firstColumn: 'd',
+        secondColumn: {
+          nested: 4,
         },
       },
       {
-        name: 'Caz',
-        age: 49,
-        car: {
-          make: 'Land Rover',
+        firstColumn: 'e',
+        secondColumn: {
+          nested: 5,
         },
       },
       {
-        name: 'Dav',
-        age: 69,
-        car: {
-          make: 'Mitsubishi',
+        firstColumn: 'f',
+        secondColumn: {
+          nested: 6,
         },
       },
     ];
@@ -132,51 +116,45 @@ describe('model', () => {
 
   it('should sort data by column name with dots in DESC direction', () => {
     modelActions.handleSort({
-      columnName: 'car.make',
+      columnName: 'secondColumn.nested',
       direction: 'DESC',
     });
 
     const expectedData = [
       {
-        name: 'Dav',
-        age: 69,
-        car: {
-          make: 'Mitsubishi',
+        firstColumn: 'f',
+        secondColumn: {
+          nested: 6,
         },
       },
       {
-        name: 'Caz',
-        age: 49,
-        car: {
-          make: 'Land Rover',
+        firstColumn: 'e',
+        secondColumn: {
+          nested: 5,
         },
       },
       {
-        name: 'Ailsun',
-        age: 41,
-        car: {
-          make: 'Honda',
+        firstColumn: 'd',
+        secondColumn: {
+          nested: 4,
         },
       },
       {
-        name: 'Fredra',
-        age: 67,
-        car: {
-          make: 'GMC',
+        firstColumn: 'c',
+        secondColumn: {
+          nested: 3,
         },
       },
       {
-        name: 'Yule',
-        age: 68,
-        car: {
-          make: 'Ford',
+        firstColumn: 'b',
+        secondColumn: {
+          nested: 2,
         },
       },
       {
-        name: 'Ursula',
-        age: 80,
-        car: {
-          make: 'BMW',
+        firstColumn: 'a',
+        secondColumn: {
+          nested: 1,
         },
       },
     ];
@@ -187,18 +165,19 @@ describe('model', () => {
   it('should filter data by column name with dots', () => {
     const expectedData = [
       {
-        name: 'Dav',
-        age: 69,
-        car: {
-          make: 'Mitsubishi',
+        firstColumn: 'c',
+        secondColumn: {
+          nested: 3,
         },
       },
     ];
 
     modelActions.addFilter({
-      columnName: 'car.make',
-      value: 'Mitsubishi',
+      columnName: 'secondColumn.nested',
+      value: 3,
     });
+
+    console.log(modelStore.getState().filterValues);
 
     expect(modelStore.getState().computedData).toEqual(expectedData);
   });
@@ -207,12 +186,12 @@ describe('model', () => {
     const expectedData = cloneDeep(data);
 
     modelActions.addFilter({
-      columnName: 'car.make',
-      value: 'Mitsubishi',
+      columnName: 'firstColumn',
+      value: 'a',
     });
 
     modelActions.removeFilter({
-      columnName: 'car.make',
+      columnName: 'firstColumn',
     });
 
     expect(modelStore.getState().computedData).toEqual(expectedData);
@@ -222,13 +201,13 @@ describe('model', () => {
     const expectedData = cloneDeep(data);
 
     modelActions.addFilter({
-      columnName: 'car.make',
-      value: 'Mitsubishi',
+      columnName: 'firstColumn',
+      value: 'a',
     });
 
     modelActions.addFilter({
-      columnName: 'name',
-      value: 'Dav',
+      columnName: 'secondColumn.nested',
+      value: 1,
     });
 
     modelActions.resetFilter();
@@ -239,29 +218,14 @@ describe('model', () => {
   it('should search all columns', () => {
     const expectedData = [
       {
-        name: 'Caz',
-        age: 49,
-        car: {
-          make: 'Land Rover',
-        },
-      },
-      {
-        name: 'Yule',
-        age: 68,
-        car: {
-          make: 'Ford',
-        },
-      },
-      {
-        name: 'Ailsun',
-        age: 41,
-        car: {
-          make: 'Honda',
+        firstColumn: 'a',
+        secondColumn: {
+          nested: 1,
         },
       },
     ];
 
-    modelActions.handleSearchValue('o');
+    modelActions.handleSearchValue('a');
 
     expect(modelStore.getState().computedData).toEqual(expectedData);
   });
@@ -270,7 +234,7 @@ describe('model', () => {
     const expectedData = cloneDeep(data);
 
     modelActions.toggleSearchBar();
-    modelActions.handleSearchValue('o');
+    modelActions.handleSearchValue('a');
     modelActions.toggleSearchBar();
 
     expect(modelStore.getState().computedData).toEqual(expectedData);
@@ -279,38 +243,33 @@ describe('model', () => {
   it('should display rows by option perPageOption', () => {
     const expectedDisplayDataOnFirstPage = [
       {
-        name: 'Caz',
-        age: 49,
-        car: {
-          make: 'Land Rover',
+        firstColumn: 'f',
+        secondColumn: {
+          nested: 6,
         },
       },
       {
-        name: 'Dav',
-        age: 69,
-        car: {
-          make: 'Mitsubishi',
+        firstColumn: 'a',
+        secondColumn: {
+          nested: 1,
         },
       },
       {
-        name: 'Yule',
-        age: 68,
-        car: {
-          make: 'Ford',
+        firstColumn: 'c',
+        secondColumn: {
+          nested: 3,
         },
       },
       {
-        name: 'Fredra',
-        age: 67,
-        car: {
-          make: 'GMC',
+        firstColumn: 'b',
+        secondColumn: {
+          nested: 2,
         },
       },
       {
-        name: 'Ursula',
-        age: 80,
-        car: {
-          make: 'BMW',
+        firstColumn: 'e',
+        secondColumn: {
+          nested: 5,
         },
       },
     ];
@@ -333,10 +292,9 @@ describe('model', () => {
   it('should paginate', () => {
     const expectedDisplayDataOnSecondPage = [
       {
-        name: 'Ailsun',
-        age: 41,
-        car: {
-          make: 'Honda',
+        firstColumn: 'd',
+        secondColumn: {
+          nested: 4,
         },
       },
     ];
@@ -351,10 +309,9 @@ describe('model', () => {
   it('should delete selected data', () => {
     const expectedData = [
       {
-        name: 'Caz',
-        age: 49,
-        car: {
-          make: 'Land Rover',
+        firstColumn: 'f',
+        secondColumn: {
+          nested: 6,
         },
       },
     ];
@@ -376,38 +333,33 @@ describe('model', () => {
   it('should delete from raw data', () => {
     const expectedData = [
       {
-        name: 'Dav',
-        age: 69,
-        car: {
-          make: 'Mitsubishi',
+        firstColumn: 'a',
+        secondColumn: {
+          nested: 1,
         },
       },
       {
-        name: 'Yule',
-        age: 68,
-        car: {
-          make: 'Ford',
+        firstColumn: 'c',
+        secondColumn: {
+          nested: 3,
         },
       },
       {
-        name: 'Fredra',
-        age: 67,
-        car: {
-          make: 'GMC',
+        firstColumn: 'b',
+        secondColumn: {
+          nested: 2,
         },
       },
       {
-        name: 'Ursula',
-        age: 80,
-        car: {
-          make: 'BMW',
+        firstColumn: 'e',
+        secondColumn: {
+          nested: 5,
         },
       },
       {
-        name: 'Ailsun',
-        age: 41,
-        car: {
-          make: 'Honda',
+        firstColumn: 'd',
+        secondColumn: {
+          nested: 4,
         },
       },
     ];
@@ -471,17 +423,13 @@ describe('model', () => {
 
   it('should construct filter lists for each column and sort lists', () => {
     const expectedFilterLists = {
-      age: {
-        label: 'Age',
-        list: [41, 49, 67, 68, 69, 80],
+      firstColumn: {
+        label: 'First',
+        list: ['a', 'b', 'c', 'd', 'e', 'f'],
       },
-      'car.make': {
-        label: 'Car make',
-        list: ['BMW', 'Ford', 'GMC', 'Honda', 'Land Rover', 'Mitsubishi'],
-      },
-      name: {
-        label: 'Name',
-        list: ['Ailsun', 'Caz', 'Dav', 'Fredra', 'Ursula', 'Yule'],
+      'secondColumn.nested': {
+        label: 'Second',
+        list: [1, 2, 3, 4, 5, 6],
       },
     };
 
@@ -491,25 +439,20 @@ describe('model', () => {
   it('should exclude column from filter lists if option filterable is false', () => {
     const columns = [
       {
-        name: 'name',
-        label: 'Name',
+        name: 'firstColumn',
+        label: 'First',
         filterable: false,
       },
       {
-        name: 'age',
-        label: 'Age',
-        filterable: false,
-      },
-      {
-        name: 'car.make',
-        label: 'Car make',
+        name: 'secondColumn.nested',
+        label: 'Second',
       },
     ];
 
     const expectedFilterLists = {
-      'car.make': {
-        label: 'Car make',
-        list: ['BMW', 'Ford', 'GMC', 'Honda', 'Land Rover', 'Mitsubishi'],
+      'secondColumn.nested': {
+        label: 'Second',
+        list: [1, 2, 3, 4, 5, 6],
       },
     };
 
@@ -524,30 +467,24 @@ describe('model', () => {
   it('should exclude column from search, if option searchable is false', () => {
     const columns = [
       {
-        name: 'name',
-        label: 'Name',
+        name: 'firstColumn',
+        label: 'First',
         searchable: false,
       },
       {
-        name: 'age',
-        label: 'Age',
-      },
-      {
-        name: 'car.make',
-        label: 'Car make',
+        name: 'secondColumn.nested',
+        label: 'Second',
       },
     ];
 
-    const expectedData = [
-      { age: 49, car: { make: 'Land Rover' }, name: 'Caz' },
-    ];
+    const expectedData = [];
 
     const { store: modelStore, actions: modelActions } = createModel({
       data,
       columns: completeColumnsWithOptions(columns),
     });
 
-    modelActions.handleSearchValue('e');
+    modelActions.handleSearchValue('a');
 
     expect(modelStore.getState().computedData).toEqual(expectedData);
   });
