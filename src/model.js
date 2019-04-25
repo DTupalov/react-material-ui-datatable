@@ -1,4 +1,4 @@
-import { combine, createEvent, createStore } from 'effector';
+import { combine, createEvent, createStore, createStoreObject } from 'effector';
 import {
   convertDataToFilterLists,
   filter,
@@ -7,6 +7,32 @@ import {
   search,
   sort as sortFn,
 } from './utils';
+
+const createWatcher = (onChange, store) => name => value => {
+  const {
+    searchValue,
+    showSearchBar,
+    sort,
+    filterValues,
+    page,
+    perPage,
+    selectedData,
+  } = store.getState();
+
+  onChange({
+    name,
+    value,
+    state: {
+      searchValue,
+      showSearchBar,
+      sort,
+      filterValues,
+      page,
+      perPage,
+      selectedData,
+    },
+  });
+};
 
 const createModel = ({
   data: initialData = [],
@@ -149,7 +175,7 @@ const createModel = ({
   );
 
   /** Stores object */
-  const stores = {
+  const store = createStoreObject({
     data,
     columns,
     sort,
@@ -162,7 +188,7 @@ const createModel = ({
     computedData,
     filterLists,
     displayData,
-  };
+  });
 
   /** Actions object */
   const actions = {
@@ -184,9 +210,37 @@ const createModel = ({
     handleDelete,
   };
 
-  const subscribe = subscriber => {};
+  const subscribe = subscriber => {
+    const createStoreWatcher = createWatcher(subscriber, store);
 
-  return { stores, actions };
+    const unwatchShowSearchBar = showSearchBar.watch(
+      createStoreWatcher('showSearchBar')
+    );
+    const unwatchPage = page.watch(createStoreWatcher('page'));
+    const unwatchPerPage = perPage.watch(createStoreWatcher('perPage'));
+    const unwatchSelectedData = selectedData.watch(
+      createStoreWatcher('selectedData')
+    );
+    const unwatchSearchValue = searchValue.watch(
+      createStoreWatcher('searchValue')
+    );
+    const unwatchSort = sort.watch(createStoreWatcher('sort'));
+    const unwatchFilterValues = filterValues.watch(
+      createStoreWatcher('filterValues')
+    );
+
+    return () => {
+      unwatchShowSearchBar();
+      unwatchPage();
+      unwatchPerPage();
+      unwatchSelectedData();
+      unwatchSearchValue();
+      unwatchSort();
+      unwatchFilterValues();
+    };
+  };
+
+  return { store, actions, subscribe };
 };
 
 export default createModel;

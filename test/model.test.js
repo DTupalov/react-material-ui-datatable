@@ -5,7 +5,7 @@ import { completeColumnsWithOptions } from '../src/utils';
 let data;
 let columns;
 
-let modelStores;
+let modelStore;
 let modelActions;
 
 describe('model', () => {
@@ -70,12 +70,12 @@ describe('model', () => {
       },
     ];
 
-    const { stores, actions } = createModel({
+    const { store, actions } = createModel({
       data,
       columns: completeColumnsWithOptions(columns),
     });
 
-    modelStores = stores;
+    modelStore = store;
     modelActions = actions;
   });
 
@@ -127,7 +127,7 @@ describe('model', () => {
       },
     ];
 
-    expect(modelStores.computedData.getState()).toEqual(expectedData);
+    expect(modelStore.getState().computedData).toEqual(expectedData);
   });
 
   it('should sort data by column name with dots in DESC direction', () => {
@@ -181,7 +181,7 @@ describe('model', () => {
       },
     ];
 
-    expect(modelStores.computedData.getState()).toEqual(expectedData);
+    expect(modelStore.getState().computedData).toEqual(expectedData);
   });
 
   it('should filter data by column name with dots', () => {
@@ -200,7 +200,7 @@ describe('model', () => {
       value: 'Mitsubishi',
     });
 
-    expect(modelStores.computedData.getState()).toEqual(expectedData);
+    expect(modelStore.getState().computedData).toEqual(expectedData);
   });
 
   it('should remove filter', () => {
@@ -215,7 +215,7 @@ describe('model', () => {
       columnName: 'car.make',
     });
 
-    expect(modelStores.computedData.getState()).toEqual(expectedData);
+    expect(modelStore.getState().computedData).toEqual(expectedData);
   });
 
   it('should reset all filters', () => {
@@ -233,7 +233,7 @@ describe('model', () => {
 
     modelActions.resetFilter();
 
-    expect(modelStores.computedData.getState()).toEqual(expectedData);
+    expect(modelStore.getState().computedData).toEqual(expectedData);
   });
 
   it('should search all columns', () => {
@@ -263,7 +263,7 @@ describe('model', () => {
 
     modelActions.handleSearchValue('o');
 
-    expect(modelStores.computedData.getState()).toEqual(expectedData);
+    expect(modelStore.getState().computedData).toEqual(expectedData);
   });
 
   it('should reset search value if search bar was closed', () => {
@@ -273,7 +273,7 @@ describe('model', () => {
     modelActions.handleSearchValue('o');
     modelActions.toggleSearchBar();
 
-    expect(modelStores.computedData.getState()).toEqual(expectedData);
+    expect(modelStore.getState().computedData).toEqual(expectedData);
   });
 
   it('should display rows by option perPageOption', () => {
@@ -315,7 +315,7 @@ describe('model', () => {
       },
     ];
 
-    expect(modelStores.displayData.getState()).toEqual(
+    expect(modelStore.getState().displayData).toEqual(
       expectedDisplayDataOnFirstPage
     );
   });
@@ -325,7 +325,7 @@ describe('model', () => {
 
     modelActions.changePerPage(10);
 
-    expect(modelStores.displayData.getState()).toEqual(
+    expect(modelStore.getState().displayData).toEqual(
       expectedDisplayDataOnFirstPage
     );
   });
@@ -343,7 +343,7 @@ describe('model', () => {
 
     modelActions.changePage(1);
 
-    expect(modelStores.displayData.getState()).toEqual(
+    expect(modelStore.getState().displayData).toEqual(
       expectedDisplayDataOnSecondPage
     );
   });
@@ -361,7 +361,7 @@ describe('model', () => {
 
     modelActions.handleDelete([data[1], data[2], data[3], data[4], data[5]]);
 
-    expect(modelStores.computedData.getState()).toEqual(expectedData);
+    expect(modelStore.getState().computedData).toEqual(expectedData);
   });
 
   it('should remove only deleted data items from selected data', () => {
@@ -370,7 +370,7 @@ describe('model', () => {
     modelActions.handleSelect([data[0], data[1], data[2], data[3]]);
     modelActions.handleDelete([data[2], data[3]]);
 
-    expect(modelStores.selectedData.getState()).toEqual(expectedSelectedData);
+    expect(modelStore.getState().selectedData).toEqual(expectedSelectedData);
   });
 
   it('should delete from raw data', () => {
@@ -416,7 +416,7 @@ describe('model', () => {
     modelActions.handleDelete([data[0]]);
     modelActions.handleSearchValue('');
 
-    expect(modelStores.computedData.getState()).toEqual(expectedData);
+    expect(modelStore.getState().computedData).toEqual(expectedData);
   });
 
   it('should select enumarated data', () => {
@@ -424,7 +424,7 @@ describe('model', () => {
 
     modelActions.handleSelect([data[1], data[3], data[5]]);
 
-    expect(modelStores.selectedData.getState()).toEqual(expectedSelectedData);
+    expect(modelStore.getState().selectedData).toEqual(expectedSelectedData);
   });
 
   it('should select all data if there are no selected rows', () => {
@@ -440,7 +440,7 @@ describe('model', () => {
     modelActions.handleSelect([]);
     modelActions.toggleSelectAll();
 
-    expect(modelStores.selectedData.getState()).toEqual(expectedSelectedData);
+    expect(modelStore.getState().selectedData).toEqual(expectedSelectedData);
   });
 
   it('should deselect all data if there is at least one selected data item', () => {
@@ -449,7 +449,7 @@ describe('model', () => {
     modelActions.handleSelect([data[4]]);
     modelActions.toggleSelectAll();
 
-    expect(modelStores.selectedData.getState()).toEqual(expectedSelectedData);
+    expect(modelStore.getState().selectedData).toEqual(expectedSelectedData);
   });
 
   it('should select data item if it was not selected', () => {
@@ -457,7 +457,7 @@ describe('model', () => {
 
     modelActions.toggleSelectRow(data[0]);
 
-    expect(modelStores.selectedData.getState()).toEqual(expectedSelectedData);
+    expect(modelStore.getState().selectedData).toEqual(expectedSelectedData);
   });
 
   it('should deselect data item if it was selected before', () => {
@@ -466,7 +466,7 @@ describe('model', () => {
     modelActions.handleSelect([data[0]]);
     modelActions.toggleSelectRow(data[0]);
 
-    expect(modelStores.selectedData.getState()).toEqual(expectedSelectedData);
+    expect(modelStore.getState().selectedData).toEqual(expectedSelectedData);
   });
 
   it('should construct filter lists for each column and sort lists', () => {
@@ -485,7 +485,7 @@ describe('model', () => {
       },
     };
 
-    expect(modelStores.filterLists.getState()).toEqual(expectedFilterLists);
+    expect(modelStore.getState().filterLists).toEqual(expectedFilterLists);
   });
 
   it('should exclude column from filter lists if option filterable is false', () => {
@@ -513,12 +513,12 @@ describe('model', () => {
       },
     };
 
-    const { stores: modelStores, actions: modelActions } = createModel({
+    const { store: modelStore, actions: modelActions } = createModel({
       data,
       columns: completeColumnsWithOptions(columns),
     });
 
-    expect(modelStores.filterLists.getState()).toEqual(expectedFilterLists);
+    expect(modelStore.getState().filterLists).toEqual(expectedFilterLists);
   });
 
   it('should exclude column from search, if option searchable is false', () => {
@@ -542,13 +542,13 @@ describe('model', () => {
       { age: 49, car: { make: 'Land Rover' }, name: 'Caz' },
     ];
 
-    const { stores: modelStores, actions: modelActions } = createModel({
+    const { store: modelStore, actions: modelActions } = createModel({
       data,
       columns: completeColumnsWithOptions(columns),
     });
 
     modelActions.handleSearchValue('e');
 
-    expect(modelStores.computedData.getState()).toEqual(expectedData);
+    expect(modelStore.getState().computedData).toEqual(expectedData);
   });
 });

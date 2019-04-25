@@ -1,4 +1,3 @@
-import { createStoreObject } from 'effector';
 import { createStoreConsumer } from 'effector-react';
 import React, { createContext } from 'react';
 import defaultToolbarSelectActions from './defaultToolbarSelectActions';
@@ -49,34 +48,8 @@ const mapDatatableHandlers = props => ({
 const { Provider, Consumer } = createContext();
 export const ReactMUIDatatableConsumer = Consumer;
 
-const { stores, actions } = createModel({});
-const store = createStoreObject(stores);
+const { store, actions, subscribe } = createModel({});
 const EffectorStore = createStoreConsumer(store);
-const createWatcher = onChange => (name, value) => {
-  const {
-    searchValue,
-    showSearchBar,
-    sort,
-    filterValues,
-    page,
-    perPage,
-    selectedData,
-  } = store.getState();
-
-  onChange({
-    name,
-    value,
-    state: {
-      searchValue,
-      showSearchBar,
-      sort,
-      filterValues,
-      page,
-      perPage,
-      selectedData,
-    },
-  });
-};
 
 export default class ReactMUIDatatableProvider extends React.Component {
   componentDidMount() {
@@ -90,15 +63,7 @@ export default class ReactMUIDatatableProvider extends React.Component {
     actions.changePage(this.props.page);
     actions.changePerPage(this.props.perPage);
 
-    const stateChangedWatcher = createWatcher(this.props.onStateChanged);
-
-    stores.showSearchBar.watch(stateChangedWatcher.bind(null, 'showSearchBar'));
-    stores.page.watch(stateChangedWatcher.bind(null, 'page'));
-    stores.perPage.watch(stateChangedWatcher.bind(null, 'perPage'));
-    stores.selectedData.watch(stateChangedWatcher.bind(null, 'selectedData'));
-    stores.searchValue.watch(stateChangedWatcher.bind('null, searchValue'));
-    stores.sort.watch(stateChangedWatcher.bind(null, 'sort'));
-    stores.filterValues.watch(stateChangedWatcher.bind(null, 'filterValues'));
+    subscribe(this.props.onStateChanged);
   }
 
   render() {
