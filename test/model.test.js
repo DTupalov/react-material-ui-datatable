@@ -177,8 +177,6 @@ describe('model', () => {
       value: 3,
     });
 
-    console.log(modelStore.getState().filterValues);
-
     expect(modelStore.getState().computedData).toEqual(expectedData);
   });
 
