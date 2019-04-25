@@ -80,6 +80,7 @@ For more details see __[Storybook](https://dtupalov.github.io/react-material-ui-
 | sort | Object | { [columnName]: null, direction: "ASC" } | Set sorting by column name and set direction for sorting. Direction may be: `ASC` and `DESC` |
 | filterValues | Object | {} | Set filters for columns |
 | onStateChanged | Function | | Handler for state changing. Receives event-like object. Signature ```(event: {name: string, value: string, state: Object}) => any```, where `name` - changed state, `value` - new value, `state` - current state of datatable component. Notice, that `state` contains only changeable values. It useful to restore state after reloading page, for example|
+| customCell | Function | | Function that returns a string or React component. Used as display for body cell. `function (cell: {value: string, column: Object, row: Object}) => string \| React.Component`|
 | localization | Object | [default localization](#default-value)  | More details you can read [here](#localization) |
 
 #### `toolbarSelectActions`
@@ -159,7 +160,6 @@ For more details see __[Storybook](https://dtupalov.github.io/react-material-ui-
 | sortable | boolean | true | Enable / disable sorting by column |
 | filterable | boolean | true | Enable / disable filtering by column. `false` will exclude column from filter panel|
 | searchable | boolean | true | Including / excluding column from search results |
-| customCell | Function | | Function that returns a string or React component. Used as display for body cell. `function (value: string, row: Object) => string \| React.Component`|
 
 ## `ReactMUIDatatableProvider` with `ReactMUIDatatableRoot` component
 
