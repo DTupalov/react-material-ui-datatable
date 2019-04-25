@@ -22,9 +22,10 @@ const ReactDatatableBody = props => {
           )}
           {props.columns.map((column, cellIndex) => (
             <TableCell key={cellIndex}>
-              {column.customCell
-                ? column.customCell({
+              {props.customCell
+                ? props.customCell({
                     value: get(props.displayData[rowIndex], column.name),
+                    column,
                     row,
                   })
                 : get(props.displayData[rowIndex], column.name)}
@@ -41,6 +42,7 @@ export default fromRenderProps(
   ({ ...datatableProps }) => ({
     displayData: datatableProps.displayData,
     columns: datatableProps.columns,
+    customCell: datatableProps.customCell,
     selectable: datatableProps.selectable,
     toggleSelectRow: datatableProps.toggleSelectRow,
     selectedData: datatableProps.selectedData,

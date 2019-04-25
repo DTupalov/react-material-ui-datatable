@@ -1,24 +1,15 @@
-import cloneDeep from 'lodash/cloneDeep';
-import React from 'react';
-import renderer from 'react-test-renderer';
-import { default as withReactMUIDatatableModel } from '../src/withReactMUIDatatableModel';
+import cloneDeep from 'lodash.clonedeep';
+import createModel from '../src/model';
+import { completeColumnsWithOptions } from '../src/utils';
 
-let ReactMUIDatatable;
-let RenderedMockedComponent;
 let data;
 let columns;
-let onStateChanged;
-class MockedComponent extends React.Component {
-  render() {
-    // console.log(this.props);
-    return null;
-  }
-}
 
-describe('withReactMUIDatatableModel', () => {
+let modelStores;
+let modelActions;
+
+describe('model', () => {
   beforeEach(() => {
-    onStateChanged = jest.fn(event => {});
-
     data = [
       {
         name: 'Caz',
@@ -65,28 +56,31 @@ describe('withReactMUIDatatableModel', () => {
     ];
 
     columns = [
-      { name: 'name', label: 'Name' },
-      { name: 'age', label: 'Age' },
-      { name: 'car.make', label: 'Car make' },
+      {
+        name: 'name',
+        label: 'Name',
+      },
+      {
+        name: 'age',
+        label: 'Age',
+      },
+      {
+        name: 'car.make',
+        label: 'Car make',
+      },
     ];
 
-    ReactMUIDatatable = withReactMUIDatatableModel(
-      jest.fn(props => <MockedComponent {...props} />)
-    );
+    const { stores, actions } = createModel({
+      data,
+      columns: completeColumnsWithOptions(columns),
+    });
 
-    RenderedMockedComponent = renderer
-      .create(
-        <ReactMUIDatatable
-          data={data}
-          columns={columns}
-          onStateChanged={onStateChanged}
-        />
-      )
-      .root.findByType(MockedComponent);
+    modelStores = stores;
+    modelActions = actions;
   });
 
   it('should sort data by column name with dots in ASC direction', () => {
-    RenderedMockedComponent.props.handleSort({ columnName: 'car.make' });
+    modelActions.handleSort({ columnName: 'car.make' });
 
     const expectedData = [
       {
@@ -133,11 +127,11 @@ describe('withReactMUIDatatableModel', () => {
       },
     ];
 
-    expect(RenderedMockedComponent.props.computedData).toEqual(expectedData);
+    expect(modelStores.computedData.getState()).toEqual(expectedData);
   });
 
   it('should sort data by column name with dots in DESC direction', () => {
-    RenderedMockedComponent.props.handleSort({
+    modelActions.handleSort({
       columnName: 'car.make',
       direction: 'DESC',
     });
@@ -187,7 +181,7 @@ describe('withReactMUIDatatableModel', () => {
       },
     ];
 
-    expect(RenderedMockedComponent.props.computedData).toEqual(expectedData);
+    expect(modelStores.computedData.getState()).toEqual(expectedData);
   });
 
   it('should filter data by column name with dots', () => {
@@ -201,45 +195,45 @@ describe('withReactMUIDatatableModel', () => {
       },
     ];
 
-    RenderedMockedComponent.props.addFilter({
+    modelActions.addFilter({
       columnName: 'car.make',
       value: 'Mitsubishi',
     });
 
-    expect(RenderedMockedComponent.props.computedData).toEqual(expectedData);
+    expect(modelStores.computedData.getState()).toEqual(expectedData);
   });
 
   it('should remove filter', () => {
     const expectedData = cloneDeep(data);
 
-    RenderedMockedComponent.props.addFilter({
+    modelActions.addFilter({
       columnName: 'car.make',
       value: 'Mitsubishi',
     });
 
-    RenderedMockedComponent.props.removeFilter({
+    modelActions.removeFilter({
       columnName: 'car.make',
     });
 
-    expect(RenderedMockedComponent.props.computedData).toEqual(expectedData);
+    expect(modelStores.computedData.getState()).toEqual(expectedData);
   });
 
   it('should reset all filters', () => {
     const expectedData = cloneDeep(data);
 
-    RenderedMockedComponent.props.addFilter({
+    modelActions.addFilter({
       columnName: 'car.make',
       value: 'Mitsubishi',
     });
 
-    RenderedMockedComponent.props.addFilter({
+    modelActions.addFilter({
       columnName: 'name',
       value: 'Dav',
     });
 
-    RenderedMockedComponent.props.resetFilter();
+    modelActions.resetFilter();
 
-    expect(RenderedMockedComponent.props.computedData).toEqual(expectedData);
+    expect(modelStores.computedData.getState()).toEqual(expectedData);
   });
 
   it('should search all columns', () => {
@@ -267,19 +261,19 @@ describe('withReactMUIDatatableModel', () => {
       },
     ];
 
-    RenderedMockedComponent.props.handleSearchValue('o');
+    modelActions.handleSearchValue('o');
 
-    expect(RenderedMockedComponent.props.computedData).toEqual(expectedData);
+    expect(modelStores.computedData.getState()).toEqual(expectedData);
   });
 
   it('should reset search value if search bar was closed', () => {
     const expectedData = cloneDeep(data);
 
-    RenderedMockedComponent.props.toggleSearchBar();
-    RenderedMockedComponent.props.handleSearchValue('o');
-    RenderedMockedComponent.props.toggleSearchBar();
+    modelActions.toggleSearchBar();
+    modelActions.handleSearchValue('o');
+    modelActions.toggleSearchBar();
 
-    expect(RenderedMockedComponent.props.computedData).toEqual(expectedData);
+    expect(modelStores.computedData.getState()).toEqual(expectedData);
   });
 
   it('should display rows by option perPageOption', () => {
@@ -321,7 +315,7 @@ describe('withReactMUIDatatableModel', () => {
       },
     ];
 
-    expect(RenderedMockedComponent.props.displayData).toEqual(
+    expect(modelStores.displayData.getState()).toEqual(
       expectedDisplayDataOnFirstPage
     );
   });
@@ -329,9 +323,9 @@ describe('withReactMUIDatatableModel', () => {
   it('should change count of displayed rows', () => {
     const expectedDisplayDataOnFirstPage = cloneDeep(data);
 
-    RenderedMockedComponent.props.changePerPage(10);
+    modelActions.changePerPage(10);
 
-    expect(RenderedMockedComponent.props.displayData).toEqual(
+    expect(modelStores.displayData.getState()).toEqual(
       expectedDisplayDataOnFirstPage
     );
   });
@@ -347,9 +341,9 @@ describe('withReactMUIDatatableModel', () => {
       },
     ];
 
-    RenderedMockedComponent.props.changePage(1);
+    modelActions.changePage(1);
 
-    expect(RenderedMockedComponent.props.displayData).toEqual(
+    expect(modelStores.displayData.getState()).toEqual(
       expectedDisplayDataOnSecondPage
     );
   });
@@ -365,31 +359,18 @@ describe('withReactMUIDatatableModel', () => {
       },
     ];
 
-    RenderedMockedComponent.props.handleDelete([
-      data[1],
-      data[2],
-      data[3],
-      data[4],
-      data[5],
-    ]);
+    modelActions.handleDelete([data[1], data[2], data[3], data[4], data[5]]);
 
-    expect(RenderedMockedComponent.props.computedData).toEqual(expectedData);
+    expect(modelStores.computedData.getState()).toEqual(expectedData);
   });
 
   it('should remove only deleted data items from selected data', () => {
     const expectedSelectedData = [data[0], data[1]];
 
-    RenderedMockedComponent.props.handleSelect([
-      data[0],
-      data[1],
-      data[2],
-      data[3],
-    ]);
-    RenderedMockedComponent.props.handleDelete([data[2], data[3]]);
+    modelActions.handleSelect([data[0], data[1], data[2], data[3]]);
+    modelActions.handleDelete([data[2], data[3]]);
 
-    expect(RenderedMockedComponent.props.selectedData).toEqual(
-      expectedSelectedData
-    );
+    expect(modelStores.selectedData.getState()).toEqual(expectedSelectedData);
   });
 
   it('should delete from raw data', () => {
@@ -431,21 +412,19 @@ describe('withReactMUIDatatableModel', () => {
       },
     ];
 
-    RenderedMockedComponent.props.handleSearchValue('a');
-    RenderedMockedComponent.props.handleDelete([data[0]]);
-    RenderedMockedComponent.props.handleSearchValue('');
+    modelActions.handleSearchValue('a');
+    modelActions.handleDelete([data[0]]);
+    modelActions.handleSearchValue('');
 
-    expect(RenderedMockedComponent.props.computedData).toEqual(expectedData);
+    expect(modelStores.computedData.getState()).toEqual(expectedData);
   });
 
   it('should select enumarated data', () => {
     const expectedSelectedData = [data[1], data[3], data[5]];
 
-    RenderedMockedComponent.props.handleSelect([data[1], data[3], data[5]]);
+    modelActions.handleSelect([data[1], data[3], data[5]]);
 
-    expect(RenderedMockedComponent.props.selectedData).toEqual(
-      expectedSelectedData
-    );
+    expect(modelStores.selectedData.getState()).toEqual(expectedSelectedData);
   });
 
   it('should select all data if there are no selected rows', () => {
@@ -458,44 +437,36 @@ describe('withReactMUIDatatableModel', () => {
       data[5],
     ];
 
-    RenderedMockedComponent.props.handleSelect([]);
-    RenderedMockedComponent.props.toggleSelectAll();
+    modelActions.handleSelect([]);
+    modelActions.toggleSelectAll();
 
-    expect(RenderedMockedComponent.props.selectedData).toEqual(
-      expectedSelectedData
-    );
+    expect(modelStores.selectedData.getState()).toEqual(expectedSelectedData);
   });
 
   it('should deselect all data if there is at least one selected data item', () => {
     const expectedSelectedData = [];
 
-    RenderedMockedComponent.props.handleSelect([data[4]]);
-    RenderedMockedComponent.props.toggleSelectAll();
+    modelActions.handleSelect([data[4]]);
+    modelActions.toggleSelectAll();
 
-    expect(RenderedMockedComponent.props.selectedData).toEqual(
-      expectedSelectedData
-    );
+    expect(modelStores.selectedData.getState()).toEqual(expectedSelectedData);
   });
 
   it('should select data item if it was not selected', () => {
     const expectedSelectedData = [data[0]];
 
-    RenderedMockedComponent.props.toggleSelectRow(data[0]);
+    modelActions.toggleSelectRow(data[0]);
 
-    expect(RenderedMockedComponent.props.selectedData).toEqual(
-      expectedSelectedData
-    );
+    expect(modelStores.selectedData.getState()).toEqual(expectedSelectedData);
   });
 
   it('should deselect data item if it was selected before', () => {
     const expectedSelectedData = [];
 
-    RenderedMockedComponent.props.handleSelect([data[0]]);
-    RenderedMockedComponent.props.toggleSelectRow(data[0]);
+    modelActions.handleSelect([data[0]]);
+    modelActions.toggleSelectRow(data[0]);
 
-    expect(RenderedMockedComponent.props.selectedData).toEqual(
-      expectedSelectedData
-    );
+    expect(modelStores.selectedData.getState()).toEqual(expectedSelectedData);
   });
 
   it('should construct filter lists for each column and sort lists', () => {
@@ -514,16 +485,25 @@ describe('withReactMUIDatatableModel', () => {
       },
     };
 
-    expect(RenderedMockedComponent.props.filterLists).toEqual(
-      expectedFilterLists
-    );
+    expect(modelStores.filterLists.getState()).toEqual(expectedFilterLists);
   });
 
   it('should exclude column from filter lists if option filterable is false', () => {
     const columns = [
-      { name: 'name', label: 'Name', filterable: false },
-      { name: 'age', label: 'Age', filterable: false },
-      { name: 'car.make', label: 'Car make' },
+      {
+        name: 'name',
+        label: 'Name',
+        filterable: false,
+      },
+      {
+        name: 'age',
+        label: 'Age',
+        filterable: false,
+      },
+      {
+        name: 'car.make',
+        label: 'Car make',
+      },
     ];
 
     const expectedFilterLists = {
@@ -533,89 +513,42 @@ describe('withReactMUIDatatableModel', () => {
       },
     };
 
-    const RenderedMockedComponent = renderer
-      .create(<ReactMUIDatatable data={data} columns={columns} />)
-      .root.findByType(MockedComponent);
+    const { stores: modelStores, actions: modelActions } = createModel({
+      data,
+      columns: completeColumnsWithOptions(columns),
+    });
 
-    expect(RenderedMockedComponent.props.filterLists).toEqual(
-      expectedFilterLists
-    );
+    expect(modelStores.filterLists.getState()).toEqual(expectedFilterLists);
   });
 
   it('should exclude column from search, if option searchable is false', () => {
     const columns = [
-      { name: 'name', label: 'Name', searchable: false },
-      { name: 'age', label: 'Age' },
-      { name: 'car.make', label: 'Car make' },
+      {
+        name: 'name',
+        label: 'Name',
+        searchable: false,
+      },
+      {
+        name: 'age',
+        label: 'Age',
+      },
+      {
+        name: 'car.make',
+        label: 'Car make',
+      },
     ];
 
     const expectedData = [
       { age: 49, car: { make: 'Land Rover' }, name: 'Caz' },
     ];
 
-    const RenderedMockedComponent = renderer
-      .create(<ReactMUIDatatable data={data} columns={columns} />)
-      .root.findByType(MockedComponent);
-
-    RenderedMockedComponent.props.handleSearchValue('e');
-
-    expect(RenderedMockedComponent.props.computedData).toEqual(expectedData);
-  });
-
-  it('should return default toolbarSelectActions with delete icon if this prop was not received', () => {
-    const ToolbarSelectActions = RenderedMockedComponent.props.toolbarSelectActions(
-      {}
-    );
-
-    const tree = renderer.create(ToolbarSelectActions);
-
-    expect(tree).toMatchSnapshot();
-  });
-
-  it('should return string for selectedData localization', () => {
-    expect(
-      RenderedMockedComponent.props.localization.toolbarSelect.selectedData(2)
-    ).toBe('2 row(s) selected');
-  });
-
-  it('should return string for displayedRows localization', () => {
-    expect(
-      RenderedMockedComponent.props.localization.pagination.displayedRows({
-        from: 1,
-        to: 5,
-        count: 10,
-      })
-    ).toBe('1-5 of 10');
-  });
-
-  it('it should fire onStateChanged event if one of state properties was changed', () => {
-    /**
-     *  Used directly "setState" because we need to check only triggering `onStateChanged`
-     */
-    RenderedMockedComponent.props.setShowSearchBar(true);
-    RenderedMockedComponent.props.setSearchValue('Caz');
-    RenderedMockedComponent.props.setSort({
-      columnName: 'firstName',
-      direction: 'DESC',
+    const { stores: modelStores, actions: modelActions } = createModel({
+      data,
+      columns: completeColumnsWithOptions(columns),
     });
-    RenderedMockedComponent.props.setFilterValues({ firstName: 'Caz' });
-    RenderedMockedComponent.props.setPage(1);
-    RenderedMockedComponent.props.setPerPage(15);
-    RenderedMockedComponent.props.setSelectedData([data[0]]);
 
-    expect(onStateChanged).toBeCalledTimes(7);
-    expect(onStateChanged).toHaveBeenLastCalledWith({
-      name: 'selectedData',
-      value: [data[0]],
-      state: {
-        searchValue: 'Caz',
-        showSearchBar: true,
-        sort: { columnName: 'firstName', direction: 'DESC' },
-        filterValues: { firstName: 'Caz' },
-        page: 1,
-        perPage: 15,
-        selectedData: [data[0]],
-      },
-    });
+    modelActions.handleSearchValue('e');
+
+    expect(modelStores.computedData.getState()).toEqual(expectedData);
   });
 });

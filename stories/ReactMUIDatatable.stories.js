@@ -208,7 +208,23 @@ storiesOf('ReactMUIDatatable/Props', module)
         },
       }}
     />
-  ));
+  ))
+  .add('custom cell', props => {
+    return (
+      <ReactMUIDatatable
+        columns={columns}
+        data={data}
+        title={title}
+        customCell={({ value, column }) => {
+          if (column.name === 'firstName') {
+            return <div style={{ color: 'red' }}>{value.toUpperCase()}</div>;
+          }
+
+          return value;
+        }}
+      />
+    );
+  });
 
 storiesOf('ReactMUIDatatable/Props/columns', module)
   .add('name with dots', () => {
@@ -339,27 +355,6 @@ storiesOf('ReactMUIDatatable/Props/columns', module)
     ];
 
     const data = usersWithCars;
-
-    return <ReactMUIDatatable columns={columns} data={data} title={title} />;
-  })
-  .add('custom cell', props => {
-    const columns = [
-      {
-        name: 'firstName',
-        label: 'First Name',
-        customCell: ({ value }) => {
-          return <div style={{ color: 'red' }}>{value.toUpperCase()}</div>;
-        },
-      },
-      {
-        name: 'lastName',
-        label: 'Last Name',
-      },
-      {
-        name: 'age',
-        label: 'Age',
-      },
-    ];
 
     return <ReactMUIDatatable columns={columns} data={data} title={title} />;
   });
