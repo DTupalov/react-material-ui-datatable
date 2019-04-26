@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.0.0-alpha.13"></a>
+# [2.0.0-alpha.13](https://github.com/DTupalov/react-material-ui-datatable/compare/v2.0.0-alpha.12...v2.0.0-alpha.13) (2019-04-26)
+
+
+### Features
+
+* add actions for each row ([1d2d214](https://github.com/DTupalov/react-material-ui-datatable/commit/1d2d214))
+
+
+
 <a name="2.0.0-alpha.12"></a>
 # [2.0.0-alpha.12](https://github.com/DTupalov/react-material-ui-datatable/compare/v2.0.0-alpha.8...v2.0.0-alpha.12) (2019-04-26)
 
