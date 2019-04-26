@@ -1,4 +1,5 @@
 import { createStoreConsumer } from 'effector-react';
+import PropTypes from 'prop-types';
 import React, { createContext } from 'react';
 import defaultToolbarSelectActions from './defaultToolbarSelectActions';
 import createModel from './model';
@@ -87,6 +88,49 @@ export default class ReactMUIDatatableProvider extends React.Component {
     );
   }
 }
+
+ReactMUIDatatableProvider.propTypes = {
+  data: PropTypes.array.isRequired,
+  columns: PropTypes.array.isRequired,
+  customCell: PropTypes.func,
+  title: PropTypes.string.isRequired,
+  showSearchBar: PropTypes.bool,
+  searchValue: PropTypes.string,
+  sort: PropTypes.shape({
+    columnName: PropTypes.string,
+    direction: PropTypes.oneOf[('ASC', 'DESC')],
+  }),
+  toolbarSelectActions: PropTypes.func,
+  toolbarActions: PropTypes.func,
+  page: PropTypes.number,
+  perPage: PropTypes.number,
+  perPageOption: PropTypes.arrayOf(PropTypes.number),
+  selectedData: PropTypes.arrayOf(PropTypes.object),
+  filterValues: PropTypes.object,
+  selectable: PropTypes.bool,
+  filterable: PropTypes.bool,
+  searchable: PropTypes.bool,
+  localization: PropTypes.shape({
+    toolbar: PropTypes.shape({
+      searchAction: PropTypes.string,
+      filterAction: PropTypes.string,
+      closeSearch: PropTypes.string,
+    }),
+    filterLists: PropTypes.shape({
+      title: PropTypes.string,
+      allOption: PropTypes.string,
+      reset: PropTypes.string,
+    }),
+    toolbarSelect: PropTypes.shape({
+      selectedData: PropTypes.func,
+    }),
+    pagination: PropTypes.shape({
+      rowsPerPage: PropTypes.string,
+      displayedRows: PropTypes.func,
+    }),
+  }),
+  onStateChanged: PropTypes.func,
+};
 
 ReactMUIDatatableProvider.defaultProps = {
   data: [],
