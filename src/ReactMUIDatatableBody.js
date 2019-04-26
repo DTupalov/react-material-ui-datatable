@@ -31,6 +31,9 @@ const ReactDatatableBody = props => {
                 : get(props.displayData[rowIndex], column.name)}
             </TableCell>
           ))}
+          {Boolean(props.rowActions) && (
+            <TableCell>{props.rowActions({ row, rowIndex })}</TableCell>
+          )}
         </TableRow>
       ))}
     </TableBody>
@@ -46,5 +49,6 @@ export default fromRenderProps(
     selectable: datatableProps.selectable,
     toggleSelectRow: datatableProps.toggleSelectRow,
     selectedData: datatableProps.selectedData,
+    rowActions: datatableProps.rowActions,
   })
 )(ReactDatatableBody);

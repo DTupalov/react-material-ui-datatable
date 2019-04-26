@@ -6,12 +6,15 @@ import fromRenderProps from 'recompose/fromRenderProps';
 import { ReactMUIDatatableConsumer } from './ReactMUIDatatableProvider';
 
 const ReactMUIDatatableFooter = props => {
+  const extraColSpanLenght =
+    Number(Boolean(props.selectable)) + Number(Boolean(props.rowActions));
+
   return (
     <TableFooter>
       <TableRow>
         <TablePagination
           rowsPerPageOptions={props.perPageOption}
-          colSpan={props.columns.length + (props.selectable ? 1 : 0)}
+          colSpan={props.columns.length + extraColSpanLenght}
           count={props.computedData.length}
           rowsPerPage={props.perPage}
           page={props.page}
@@ -39,5 +42,6 @@ export default fromRenderProps(
     columns: datatableProps.columns,
     selectable: datatableProps.selectable,
     labels: datatableProps.localization.pagination,
+    rowActions: datatableProps.rowActions,
   })
 )(ReactMUIDatatableFooter);

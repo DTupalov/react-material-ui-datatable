@@ -65,6 +65,7 @@ For more details see __[Storybook](https://dtupalov.github.io/react-material-ui-
 | --- | --- | --- | --- |
 | title | string | "" | Title of your table |
 | columns | Object[] | [] | Options for each column. Detailed description see [here](#column-option) |
+| customCell | Function | | Function that returns a string or React component. Used as display for body cell. `({value: string, column: Object, row: Object}) => string \| React.Component`|
 | data | Object[] | [] | Your dataset, that you want to display in the table| 
 | page | number | 0 | Current page. Start with 0 |
 | perPage | number | 5 | Quantity of displaying items per page. | 
@@ -75,12 +76,12 @@ For more details see __[Storybook](https://dtupalov.github.io/react-material-ui-
 | searchable | boolean | true | Enable search bar in toolbar panel |
 | toolbarSelectActions | Function | [defaultToolbarSelectActions](./src/defaultToolbarSelectActions.js) | Function that returns a string or React component. Used as display actions in Toolbar selection. More details you can read [here](#toolbarSelectActions). You can see example in storybook at section [Props -> toolbarSelectActions](https://dtupalov.github.io/react-material-ui-datatable/?selectedKind=ReactMUIDatatable%2FProps&selectedStory=toolbarSelectActions&full=0&addons=1&stories=1&panelRight=0&addonPanel=storybook%2Fstories%2Fstories-panel) |
 | toolbarActions | Function | | Function that returns a string or React component. Used to display custom actions in toolbar panel. | 
+| rowActions | Function | | Function that returns a string or React component. Used to display custom actions in each row. Signature `({row: Object, rowIndex: number}) => string \| React.Component`| 
 | showSearchBar | boolean | false | Open or close search bar in toolbar panel | 
 | searchValue | string | "" | The value by which the search is performed | 
 | sort | Object | { [columnName]: null, direction: "ASC" } | Set sorting by column name and set direction for sorting. Direction may be: `ASC` and `DESC` |
 | filterValues | Object | {} | Set filters for columns |
 | onStateChanged | Function | | Handler for state changing. Receives event-like object. Signature ```(event: {name: string, value: string, state: Object}) => any```, where `name` - changed state, `value` - new value, `state` - current state of datatable component. Notice, that `state` contains only changeable values. It useful to restore state after reloading page, for example|
-| customCell | Function | | Function that returns a string or React component. Used as display for body cell. `function (cell: {value: string, column: Object, row: Object}) => string \| React.Component`|
 | localization | Object | [default localization](#default-value)  | More details you can read [here](#localization) |
 
 #### `toolbarSelectActions`

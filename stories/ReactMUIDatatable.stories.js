@@ -1,7 +1,9 @@
 import { IconButton } from '@material-ui/core';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 import SwapHorizIcon from '@material-ui/icons/SwapHoriz';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 import { action } from '@storybook/addon-actions';
 import { storiesOf } from '@storybook/react';
 import React from 'react';
@@ -137,6 +139,35 @@ storiesOf('ReactMUIDatatable/Props', module)
         <React.Fragment>
           <IconButton onClick={action('click Add button')}>
             <AddCircleIcon />
+          </IconButton>
+        </React.Fragment>
+      )}
+    />
+  ))
+  .add('rowActions', () => (
+    <ReactMUIDatatable
+      columns={columns}
+      data={data}
+      title={title}
+      rowActions={({ row, rowIndex }) => (
+        <React.Fragment>
+          <IconButton
+            onClick={action(
+              `click Edit button at row ${rowIndex} for ${row.firstName} ${
+                row.lastName
+              }, ${row.age} years old`
+            )}
+          >
+            <EditIcon />
+          </IconButton>
+          <IconButton
+            onClick={action(
+              `click View button at row ${rowIndex} for ${row.firstName} ${
+                row.lastName
+              }, ${row.age} years old`
+            )}
+          >
+            <VisibilityIcon />
           </IconButton>
         </React.Fragment>
       )}

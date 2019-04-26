@@ -51,6 +51,9 @@ const ReactMUIDatatableHeader = props => {
             {column.label}
           </TableCell>
         ))}
+        {Boolean(props.rowActions) && (
+          <TableCell className={props.classes.head} />
+        )}
       </TableRow>
     </TableHead>
   );
@@ -65,6 +68,7 @@ export default compose(
     selectedData: datatableProps.selectedData,
     computedData: datatableProps.computedData,
     toggleSelectAll: datatableProps.toggleSelectAll,
+    rowActions: datatableProps.rowActions,
   })),
   withStyles(() => ({
     head: {
