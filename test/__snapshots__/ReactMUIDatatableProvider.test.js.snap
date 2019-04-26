@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`withReactMUIDatatableModel should return default toolbarSelectActions with delete icon if this prop was not received 1`] = `
+exports[`ReactMUIDatatableProvider should return default toolbarSelectActions with delete icon if this prop was not received 1`] = `
 <button
   className="MuiButtonBase-root-7 MuiIconButton-root-1"
   disabled={false}

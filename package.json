@@ -35,6 +35,8 @@
     "react-dom": "^16.0.0"
   },
   "dependencies": {
+    "effector": "^0.18.4",
+    "effector-react": "^0.18.7",
     "lodash.get": "^4.4.2",
     "prop-types": "^15.7.2",
     "recompose": "^0.30.0"
@@ -54,6 +56,7 @@
     "babel-loader": "^8.0.4",
     "cross-env": "^5.2.0",
     "jest": "^23.6.0",
+    "lodash.clonedeep": "^4.5.0",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-test-renderer": "^16.7.0",
