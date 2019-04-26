@@ -2,21 +2,6 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-<a name="2.0.0-alpha.11"></a>
-# [2.0.0-alpha.11](https://github.com/DTupalov/react-material-ui-datatable/compare/v2.0.0-alpha.8...v2.0.0-alpha.11) (2019-04-26)
-
-
-### Code Refactoring
-
-* move to state manager effector ([647b358](https://github.com/DTupalov/react-material-ui-datatable/commit/647b358))
-
-
-### BREAKING CHANGES
-
-* `customCell` moved from `columns` to generic props and change function signature. See documentation at README.md
-
-
-
 <a name="2.0.0-alpha.8"></a>
 # [2.0.0-alpha.8](https://github.com/DTupalov/react-material-ui-datatable/compare/v2.0.0-alpha.6...v2.0.0-alpha.8) (2019-03-31)
 
