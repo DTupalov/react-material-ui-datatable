@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.0.0-alpha.14"></a>
+# [2.0.0-alpha.14](https://github.com/DTupalov/react-material-ui-datatable/compare/v2.0.0-alpha.13...v2.0.0-alpha.14) (2019-04-28)
+
+
+### Bug Fixes
+
+* add unsub in cwun + recreating model binding in Provider ([6a13d47](https://github.com/DTupalov/react-material-ui-datatable/commit/6a13d47))
+
+
+
 <a name="2.0.0-alpha.13"></a>
 # [2.0.0-alpha.13](https://github.com/DTupalov/react-material-ui-datatable/compare/v2.0.0-alpha.12...v2.0.0-alpha.13) (2019-04-26)
 
