@@ -50,11 +50,34 @@ const mapDatatableHandlers = props => ({
 const { Provider, Consumer } = createContext();
 export const ReactMUIDatatableConsumer = Consumer;
 
-const { store, actions, subscribe } = createModel({});
-const EffectorStore = createStoreConsumer(store);
-
 export default class ReactMUIDatatableProvider extends React.Component {
+  constructor(props) {
+    super(props);
+
+    const { actions, subscribe, EffectorStore } = this._createEffectorBinding();
+
+    this._EffectorStore = EffectorStore;
+    this._actions = actions;
+  }
+
+  _createEffectorBinding() {
+    const { store, actions, subscribe } = createModel({});
+    const EffectorStore = createStoreConsumer(store);
+
+    return {
+      store,
+      actions,
+      subscribe,
+      EffectorStore,
+    };
+  }
+
   componentDidMount() {
+    const { actions, subscribe, EffectorStore } = this._createEffectorBinding();
+
+    this._EffectorStore = EffectorStore;
+    this._actions = actions;
+
     actions.changeData(this.props.data);
     actions.changeColumns(completeColumnsWithOptions(this.props.columns));
     actions.handleSort(this.props.sort);
@@ -65,10 +88,20 @@ export default class ReactMUIDatatableProvider extends React.Component {
     actions.changePage(this.props.page);
     actions.changePerPage(this.props.perPage);
 
-    subscribe(this.props.onStateChanged);
+    this._unsubscribe =
+      (this.props.onStateChanged && subscribe(this.props.onStateChanged)) ||
+      (() => {});
+
+    this.setState({});
+  }
+
+  componentWillUnmount() {
+    this._unsubscribe();
   }
 
   render() {
+    const { _EffectorStore: EffectorStore, _actions: actions } = this;
+
     return (
       <EffectorStore>
         {state => (
