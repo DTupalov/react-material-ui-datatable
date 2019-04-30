@@ -8,6 +8,7 @@ import { ReactMUIDatatableConsumer } from './ReactMUIDatatableProvider';
 import ReactMUIDatatableToolbarActionsFilterAction from './ReactMUIDatatableToolbarActionsFilterAction';
 
 const ReactMUIDatatableToolbarActions = props => {
+  const { data, computedData, displayData } = props;
   return (
     <Grid item>
       {props.searchable && (
@@ -21,7 +22,8 @@ const ReactMUIDatatableToolbarActions = props => {
         </Tooltip>
       )}
       {props.filterable && <ReactMUIDatatableToolbarActionsFilterAction />}
-      {props.toolbarActions && props.toolbarActions()}
+      {Boolean(props.toolbarActions) &&
+        props.toolbarActions({ data, computedData, displayData })}
     </Grid>
   );
 };
@@ -34,5 +36,8 @@ export default fromRenderProps(
     searchable: datatableProps.searchable,
     filterable: datatableProps.filterable,
     toolbarActions: datatableProps.toolbarActions,
+    data: datatableProps.data,
+    computedData: datatableProps.computedData,
+    displayData: datatableProps.displayData,
   })
 )(ReactMUIDatatableToolbarActions);
