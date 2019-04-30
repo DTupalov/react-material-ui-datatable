@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.0.0-alpha.16"></a>
+# [2.0.0-alpha.16](https://github.com/DTupalov/react-material-ui-datatable/compare/v2.0.0-alpha.15...v2.0.0-alpha.16) (2019-04-30)
+
+
+### Features
+
+* **toolbarActions:** now receives data, computedData and displayData ([8797e09](https://github.com/DTupalov/react-material-ui-datatable/commit/8797e09))
+
+
+
 <a name="2.0.0-alpha.15"></a>
 # [2.0.0-alpha.15](https://github.com/DTupalov/react-material-ui-datatable/compare/v2.0.0-alpha.14...v2.0.0-alpha.15) (2019-04-28)
 
