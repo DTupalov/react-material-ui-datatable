@@ -1,5 +1,5 @@
 import cloneDeep from 'lodash.clonedeep';
-import createModel from '../src/model';
+import { createModel } from '../src/model/index.js';
 import { completeColumnsWithOptions } from '../src/utils';
 
 let data;
@@ -60,12 +60,12 @@ describe('model', () => {
       },
     ];
 
-    const { store, actions } = createModel({
+    const { $store, actions } = createModel({
       data,
       columns: completeColumnsWithOptions(columns),
     });
 
-    modelStore = store;
+    modelStore = $store;
     modelActions = actions;
   });
 
@@ -454,7 +454,7 @@ describe('model', () => {
       },
     };
 
-    const { store: modelStore, actions: modelActions } = createModel({
+    const { $store: modelStore, actions: modelActions } = createModel({
       data,
       columns: completeColumnsWithOptions(columns),
     });
@@ -477,7 +477,7 @@ describe('model', () => {
 
     const expectedData = [];
 
-    const { store: modelStore, actions: modelActions } = createModel({
+    const { $store: modelStore, actions: modelActions } = createModel({
       data,
       columns: completeColumnsWithOptions(columns),
     });
