@@ -24,8 +24,10 @@ export const search = memoizeByArgs((value, columns) =>
       columns.some(column =>
         column.searchable
           ? get(row, column.name)
-              .toString()
-              .includes(value)
+            ? get(row, column.name)
+                .toString()
+                .includes(value)
+            : false
           : false
       )
     )
