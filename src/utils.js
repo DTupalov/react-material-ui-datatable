@@ -27,7 +27,9 @@ export const search = memoizeByArgs((value, columns) =>
             ? get(row, column.name)
                 .toString()
                 .includes(value)
-            : false
+            : value
+            ? false
+            : true
           : false
       )
     )
