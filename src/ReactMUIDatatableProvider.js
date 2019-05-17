@@ -2,7 +2,7 @@ import { createStoreConsumer } from 'effector-react';
 import PropTypes from 'prop-types';
 import React, { createContext } from 'react';
 import defaultToolbarSelectActions from './defaultToolbarSelectActions';
-import createModel from './model';
+import { createModel } from './model/index.js';
 import { completeColumnsWithOptions } from './utils';
 
 const mapDatatableProps = props => ({
@@ -54,8 +54,8 @@ export default class ReactMUIDatatableProvider extends React.Component {
   constructor(props) {
     super(props);
 
-    const { store, actions, subscribe } = createModel({});
-    this._EffectorStore = createStoreConsumer(store);
+    const { $store, actions, subscribe } = createModel({});
+    this._EffectorStore = createStoreConsumer($store);
     this._actions = actions;
 
     actions.changeData(this.props.data);
