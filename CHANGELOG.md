@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.0.0-alpha.17"></a>
+# [2.0.0-alpha.17](https://github.com/DTupalov/react-material-ui-datatable/compare/v2.0.0-alpha.16...v2.0.0-alpha.17) (2019-05-17)
+
+
+### Bug Fixes
+
+* **search:** omit unattainable path in object ([881280a](https://github.com/DTupalov/react-material-ui-datatable/commit/881280a))
+
+
+
 <a name="2.0.0-alpha.16"></a>
 # [2.0.0-alpha.16](https://github.com/DTupalov/react-material-ui-datatable/compare/v2.0.0-alpha.15...v2.0.0-alpha.16) (2019-04-30)
 
