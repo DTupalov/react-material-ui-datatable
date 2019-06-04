@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.0.0-alpha.19"></a>
+# [2.0.0-alpha.19](https://github.com/DTupalov/react-material-ui-datatable/compare/v2.0.0-alpha.18...v2.0.0-alpha.19) (2019-06-04)
+
+
+### Features
+
+* **sort:** Add sort for multiple columns ([03b96a2](https://github.com/DTupalov/react-material-ui-datatable/commit/03b96a2))
+
+
+### BREAKING CHANGES
+
+* **sort:** Now prop `sort` receives array of sorting options for columns
+
+
+
 <a name="2.0.0-alpha.18"></a>
 # [2.0.0-alpha.18](https://github.com/DTupalov/react-material-ui-datatable/compare/v2.0.0-alpha.17...v2.0.0-alpha.18) (2019-05-17)
 
