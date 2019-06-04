@@ -38,6 +38,7 @@
     "effector": "^0.18.4",
     "effector-react": "^0.18.7",
     "lodash.get": "^4.4.2",
+    "lodash.orderby": "^4.6.0",
     "prop-types": "^15.7.2",
     "recompose": "^0.30.0"
   },

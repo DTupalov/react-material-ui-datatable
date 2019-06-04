@@ -54,19 +54,19 @@ export default class ReactMUIDatatableProvider extends React.Component {
   constructor(props) {
     super(props);
 
-    const { $store, actions, subscribe } = createModel({});
+    const { $store, actions, subscribe } = createModel({
+      data: this.props.data,
+      columns: completeColumnsWithOptions(this.props.columns),
+      sort: this.props.sort,
+      showSearchBar: this.props.showSearchBar,
+      filterValues: this.props.filterValues,
+      searchValue: this.props.searchValue,
+      selectedData: this.props.selectedData,
+      page: this.props.page,
+      perPage: this.props.perPage,
+    });
     this._EffectorStore = createStoreConsumer($store);
     this._actions = actions;
-
-    actions.changeData(this.props.data);
-    actions.changeColumns(completeColumnsWithOptions(this.props.columns));
-    actions.handleSort(this.props.sort);
-    actions.changeShowSearchBar(this.props.showSearchBar);
-    actions.changeFilterValues(this.props.filterValues);
-    actions.handleSearchValue(this.props.searchValue);
-    actions.handleSelect(this.props.selectedData);
-    actions.changePage(this.props.page);
-    actions.changePerPage(this.props.perPage);
 
     this._unsubscribe =
       (this.props.onStateChanged && subscribe(this.props.onStateChanged)) ||
@@ -108,10 +108,12 @@ ReactMUIDatatableProvider.propTypes = {
   title: PropTypes.string.isRequired,
   showSearchBar: PropTypes.bool,
   searchValue: PropTypes.string,
-  sort: PropTypes.shape({
-    columnName: PropTypes.string,
-    direction: PropTypes.oneOf[('ASC', 'DESC')],
-  }),
+  sort: PropTypes.arrayOf(
+    PropTypes.shape({
+      columnName: PropTypes.string,
+      direction: PropTypes.oneOf[('ASC', 'DESC')],
+    })
+  ),
   toolbarSelectActions: PropTypes.func,
   toolbarActions: PropTypes.func,
   rowActions: PropTypes.func,
@@ -151,7 +153,7 @@ ReactMUIDatatableProvider.defaultProps = {
   title: '',
   showSearchBar: false,
   searchValue: '',
-  sort: { columnName: null, direction: 'ASC' },
+  sort: [],
   toolbarSelectActions: defaultToolbarSelectActions,
   page: 0,
   perPage: 5,

@@ -25,32 +25,35 @@ const ReactMUIDatatableHeader = props => {
             />
           </TableCell>
         )}
-        {props.columns.map((column, index) => (
-          <TableCell
-            key={index}
-            className={props.classes.head}
-            onClick={() =>
-              column.sortable &&
-              props.handleSort({
-                columnName: column.name,
-                direction:
-                  props.sort.columnName === column.name
-                    ? props.sort.direction === 'ASC'
-                      ? 'DESC'
-                      : 'ASC'
-                    : 'ASC',
-              })
-            }
-          >
-            {column.sortable && column.name === props.sort.columnName && (
-              <TableSortLabel
-                active={column.name === props.sort.columnName}
-                direction={props.sort.direction.toLowerCase()}
-              />
-            )}
-            {column.label}
-          </TableCell>
-        ))}
+        {props.columns.map((column, index) => {
+          const columnSortOptions =
+            props.sort.find(
+              columnSortOptions => columnSortOptions.columnName === column.name
+            ) || {};
+
+          return (
+            <TableCell
+              key={index}
+              className={props.classes.head}
+              onClick={event =>
+                column.sortable &&
+                props.handleSort({
+                  columnName: column.name,
+                  withMultiSorting: event.shiftKey,
+                })
+              }
+            >
+              {column.sortable &&
+                column.name === columnSortOptions.columnName && (
+                  <TableSortLabel
+                    active={column.name === columnSortOptions.columnName}
+                    direction={columnSortOptions.direction.toLowerCase()}
+                  />
+                )}
+              {column.label}
+            </TableCell>
+          );
+        })}
         {Boolean(props.rowActions) && (
           <TableCell className={props.classes.head} />
         )}

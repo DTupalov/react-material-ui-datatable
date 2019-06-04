@@ -10,11 +10,11 @@ This library is under the work. It means, that we can do Breaking Changes during
 
 ## Install
        
-    npm install react-material-ui-datatable@2.0.0-alpha.18 --save-exact
+    npm install react-material-ui-datatable@2.0.0-alpha.19 --save-exact
 
 or 
 
-    yarn add react-material-ui-datatable@2.0.0-alpha.18 --exact
+    yarn add react-material-ui-datatable@2.0.0-alpha.19 --exact
 
 ## Demo
 
@@ -79,7 +79,7 @@ For more details see __[Storybook](https://dtupalov.github.io/react-material-ui-
 | rowActions | Function | | Function that returns a string or React component. Used to display custom actions in each row. Signature `({row: Object, rowIndex: number}) => string \| React.Component`| 
 | showSearchBar | boolean | false | Open or close search bar in toolbar panel | 
 | searchValue | string | "" | The value by which the search is performed | 
-| sort | Object | { columnName: '', direction: "ASC" } | Set sorting by column name and set direction for sorting. Direction may be: `ASC` and `DESC` |
+| sort | Array | [{ columnName: '', direction: "ASC" }] | Set sorting by column name and set direction for sorting. Can be set sort with multiple columns. Direction may be: `ASC` and `DESC` |
 | filterValues | Object | {} | Set filters for columns |
 | onStateChanged | Function | | Handler for state changing. Receives event-like object. Signature ```(event: {name: string, value: string, state: Object}) => any```, where `name` - changed state, `value` - new value, `state` - current state of datatable component. Notice, that `state` contains only changeable values. It useful to restore state after reloading page, for example|
 | localization | Object | [default localization](#default-value)  | More details you can read [here](#localization) |

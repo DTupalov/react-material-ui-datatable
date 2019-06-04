@@ -195,7 +195,10 @@ storiesOf('ReactMUIDatatable/Props', module)
       columns={columns}
       data={data}
       title={title}
-      sort={{ columnName: 'firstName', direction: 'DESC' }}
+      sort={[
+        { columnName: 'firstName', direction: 'DESC' },
+        { columnName: 'age', direction: 'ASC' },
+      ]}
     />
   ))
   .add('filterValues', () => (

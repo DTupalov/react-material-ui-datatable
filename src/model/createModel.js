@@ -17,7 +17,7 @@ export default ({
   columns: initialColumns = [],
   showSearchBar: initialShowSearchBar = false,
   searchValue: initialSearchValue = '',
-  sort: initialSort = { columnName: null, direction: 'ASC' },
+  sort: initialSort = [],
   page: initialPage = 0,
   perPage: initialPerPage = 5,
   selectedData: initialSelectedData = [],

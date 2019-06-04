@@ -1,20 +1,16 @@
 import get from 'lodash.get';
+import orderBy from 'lodash.orderby';
 import memoizeByArgs from './memoizeByArgs';
 
 export const pipe = (...fns) => x => fns.reduce((v, f) => f(v), x);
 
-export const sort = memoizeByArgs((columnName, direction) =>
+export const sort = memoizeByArgs(columnsSortOptions =>
   memoizeByArgs(data =>
-    // `concat()` for returning new array
-    data.concat().sort((a, b) => {
-      if (get(a, columnName) > get(b, columnName)) {
-        return direction === 'ASC' ? 1 : -1;
-      }
-      if (get(a, columnName) < get(b, columnName)) {
-        return direction === 'DESC' ? 1 : -1;
-      }
-      return 0;
-    })
+    orderBy(
+      data,
+      columnsSortOptions.map(option => option.columnName),
+      columnsSortOptions.map(option => option.direction.toLowerCase())
+    )
   )
 );
 

@@ -10,7 +10,7 @@ export default ($data, $columns, $sort, $searchValue, $filterValues) => {
     $filterValues,
     (data, columns, sort, searchValue, filterValues) =>
       pipe(
-        sortFn(sort.columnName, sort.direction),
+        sortFn(sort),
         search(searchValue, columns),
         filter(filterValues, columns)
       )(data)

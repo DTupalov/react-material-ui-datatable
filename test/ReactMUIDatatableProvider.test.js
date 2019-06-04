@@ -133,15 +133,13 @@ describe('ReactMUIDatatableProvider', () => {
     RenderedMockedComponent.props.changePerPage(15);
     RenderedMockedComponent.props.toggleSelectRow(data[0]);
 
-    //7 times fire for initial state and 7 times - with direct call events;
-    expect(onStateChanged).toBeCalledTimes(14);
     expect(onStateChanged).toHaveBeenLastCalledWith({
       name: 'selectedData',
       value: [data[0]],
       state: {
         searchValue: 'Caz',
         showSearchBar: true,
-        sort: { columnName: 'firstName', direction: 'DESC' },
+        sort: [{ columnName: 'firstName', direction: 'DESC' }],
         filterValues: { firstName: 'Caz' },
         page: 1,
         perPage: 15,
