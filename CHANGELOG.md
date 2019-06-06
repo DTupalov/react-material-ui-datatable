@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.0.0-alpha.20"></a>
+# [2.0.0-alpha.20](https://github.com/DTupalov/react-material-ui-datatable/compare/v2.0.0-alpha.19...v2.0.0-alpha.20) (2019-06-06)
+
+
+### Bug Fixes
+
+* **dependencies:** fix vulnerabilities ([55a4f91](https://github.com/DTupalov/react-material-ui-datatable/commit/55a4f91))
+
+
+
 <a name="2.0.0-alpha.19"></a>
 # [2.0.0-alpha.19](https://github.com/DTupalov/react-material-ui-datatable/compare/v2.0.0-alpha.18...v2.0.0-alpha.19) (2019-06-04)
 
