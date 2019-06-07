@@ -13,7 +13,7 @@ const ReactMUIDatatableToolbarSelect = props => {
     <Toolbar className={`${props.classes.root} ${props.classes.highlight}`}>
       <Grid container justify={'space-between'}>
         <Grid item className={props.classes.selected}>
-          <Typography color="inherit" variant="subheading">
+          <Typography color="inherit" variant="subtitle1">
             {props.labels.selectedData(props.selectedData.length)}
           </Typography>
         </Grid>

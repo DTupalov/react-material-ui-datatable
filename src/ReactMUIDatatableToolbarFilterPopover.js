@@ -29,7 +29,7 @@ const ReactMUIDatatableToolbarFilterPopover = props => {
     >
       <Grid container spacing={24} className={props.classes.root}>
         <Grid item xs={12}>
-          <Typography variant={'title'}>{props.labels.title}</Typography>
+          <Typography variant={'h6'}>{props.labels.title}</Typography>
         </Grid>
         {Object.keys(props.filterLists).map((columnName, columnIndex) => (
           <Grid item xs={6} key={columnIndex}>
@@ -57,7 +57,7 @@ const ReactMUIDatatableToolbarFilterPopover = props => {
         ))}
         <Grid item xs={12}>
           <Button color={'primary'} onClick={props.resetFilter} fullWidth>
-            <Typography variant={'subheading'}>{props.labels.reset}</Typography>
+            <Typography variant={'subtitle1'}>{props.labels.reset}</Typography>
           </Button>
         </Grid>
       </Grid>
