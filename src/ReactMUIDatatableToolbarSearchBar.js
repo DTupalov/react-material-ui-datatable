@@ -3,25 +3,31 @@ import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
 import Tooltip from '@material-ui/core/Tooltip';
 import CloseIcon from '@material-ui/icons/Close';
-import React from 'react';
-import fromRenderProps from 'recompose/fromRenderProps';
-import { ReactMUIDatatableConsumer } from './ReactMUIDatatableProvider';
+import React, { useContext } from 'react';
+import { ReactMUIDatatableContext } from './ReactMUIDatatableProvider';
 
 const ReactMUIDatatableToolbarSearchBar = props => {
+  const {
+    searchValue,
+    handleSearchValue,
+    toggleSearchBar,
+    localization,
+  } = useContext(ReactMUIDatatableContext);
+
   return (
     <React.Fragment>
       <Grid item xs={true}>
         <TextField
-          value={props.searchValue}
-          onChange={event => props.handleSearchValue(event.target.value)}
+          value={searchValue}
+          onChange={event => handleSearchValue(event.target.value)}
           fullWidth
         />
       </Grid>
       <Grid item>
-        <Tooltip title={props.labels.closeSearch}>
+        <Tooltip title={localization.toolbar.closeSearch}>
           <IconButton
-            aria-label={props.labels.closeSearch}
-            onClick={props.toggleSearchBar}
+            aria-label={localization.toolbar.closeSearch}
+            onClick={toggleSearchBar}
           >
             <CloseIcon />
           </IconButton>
@@ -31,12 +37,4 @@ const ReactMUIDatatableToolbarSearchBar = props => {
   );
 };
 
-export default fromRenderProps(
-  ReactMUIDatatableConsumer,
-  ({ ...datatableProps }) => ({
-    searchValue: datatableProps.searchValue,
-    handleSearchValue: datatableProps.handleSearchValue,
-    toggleSearchBar: datatableProps.toggleSearchBar,
-    labels: datatableProps.localization.toolbar,
-  })
-)(ReactMUIDatatableToolbarSearchBar);
+export default ReactMUIDatatableToolbarSearchBar;

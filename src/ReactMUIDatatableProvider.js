@@ -1,6 +1,6 @@
 import { createStoreConsumer } from 'effector-react';
 import PropTypes from 'prop-types';
-import React, { createContext } from 'react';
+import React, { createContext, useEffect, useMemo } from 'react';
 import defaultToolbarSelectActions from './defaultToolbarSelectActions';
 import { createModel } from './model/index.js';
 import { completeColumnsWithOptions } from './utils';
@@ -47,59 +47,48 @@ const mapDatatableHandlers = props => ({
   handleDelete: props.handleDelete,
 });
 
-const { Provider, Consumer } = createContext();
-export const ReactMUIDatatableConsumer = Consumer;
+export const ReactMUIDatatableContext = createContext();
 
-export default class ReactMUIDatatableProvider extends React.Component {
-  constructor(props) {
-    super(props);
+const ReactMUIDatatableProvider = props => {
+  const { $store, actions, subscribe } = useMemo(
+    () =>
+      createModel({
+        data: props.data,
+        columns: completeColumnsWithOptions(props.columns),
+        sort: props.sort,
+        showSearchBar: props.showSearchBar,
+        filterValues: props.filterValues,
+        searchValue: props.searchValue,
+        selectedData: props.selectedData,
+        page: props.page,
+        perPage: props.perPage,
+      }),
+    []
+  );
 
-    const { $store, actions, subscribe } = createModel({
-      data: this.props.data,
-      columns: completeColumnsWithOptions(this.props.columns),
-      sort: this.props.sort,
-      showSearchBar: this.props.showSearchBar,
-      filterValues: this.props.filterValues,
-      searchValue: this.props.searchValue,
-      selectedData: this.props.selectedData,
-      page: this.props.page,
-      perPage: this.props.perPage,
-    });
-    this._EffectorStore = createStoreConsumer($store);
-    this._actions = actions;
+  const EffectorStore = useMemo(() => createStoreConsumer($store), []);
 
-    this._unsubscribe =
-      (this.props.onStateChanged && subscribe(this.props.onStateChanged)) ||
-      (() => {});
-  }
+  useEffect(() => subscribe(props.onStateChanged), []);
 
-  componentWillUnmount() {
-    this._unsubscribe();
-  }
-
-  render() {
-    const { _EffectorStore: EffectorStore, _actions: actions } = this;
-
-    return (
-      <EffectorStore>
-        {state => (
-          <Provider
-            value={{
-              ...mapDatatableProps({
-                ...this.props,
-                ...state,
-              }),
-              ...mapDatatableCalculatedProps({ ...state }),
-              ...mapDatatableHandlers({ ...actions }),
-            }}
-          >
-            {this.props.children}
-          </Provider>
-        )}
-      </EffectorStore>
-    );
-  }
-}
+  return (
+    <EffectorStore>
+      {state => (
+        <ReactMUIDatatableContext.Provider
+          value={{
+            ...mapDatatableProps({
+              ...props,
+              ...state,
+            }),
+            ...mapDatatableCalculatedProps({ ...state }),
+            ...mapDatatableHandlers({ ...actions }),
+          }}
+        >
+          {props.children}
+        </ReactMUIDatatableContext.Provider>
+      )}
+    </EffectorStore>
+  );
+};
 
 ReactMUIDatatableProvider.propTypes = {
   data: PropTypes.array.isRequired,
@@ -184,3 +173,5 @@ ReactMUIDatatableProvider.defaultProps = {
   },
   onStateChanged: () => {},
 };
+
+export default ReactMUIDatatableProvider;

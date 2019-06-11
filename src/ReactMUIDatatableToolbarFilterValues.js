@@ -1,21 +1,21 @@
 import Chip from '@material-ui/core/Chip';
 import Grid from '@material-ui/core/Grid';
 import withStyles from '@material-ui/core/styles/withStyles';
-import React from 'react';
-import compose from 'recompose/compose';
-import fromRenderProps from 'recompose/fromRenderProps';
-import { ReactMUIDatatableConsumer } from './ReactMUIDatatableProvider';
+import React, { useContext } from 'react';
+import { ReactMUIDatatableContext } from './ReactMUIDatatableProvider';
 
 const ReactMUIDatatableToolbarFilterValues = props => {
+  const { filterValues, removeFilter } = useContext(ReactMUIDatatableContext);
+
   return (
     <Grid container className={props.classes.root} spacing={8}>
-      {Object.keys(props.filterValues).map(
+      {Object.keys(filterValues).map(
         (columnName, index) =>
-          props.filterValues[columnName] && (
+          filterValues[columnName] && (
             <Grid item key={index}>
               <Chip
-                label={props.filterValues[columnName]}
-                onDelete={() => props.removeFilter({ columnName })}
+                label={filterValues[columnName]}
+                onDelete={() => removeFilter({ columnName })}
               />
             </Grid>
           )
@@ -24,15 +24,9 @@ const ReactMUIDatatableToolbarFilterValues = props => {
   );
 };
 
-export default compose(
-  fromRenderProps(ReactMUIDatatableConsumer, ({ ...datatableProps }) => ({
-    filterValues: datatableProps.filterValues,
-    removeFilter: datatableProps.removeFilter,
-  })),
-  withStyles(theme => ({
-    root: {
-      paddingLeft: theme.spacing.unit * 2,
-      paddingTop: theme.spacing.unit * 2,
-    },
-  }))
-)(ReactMUIDatatableToolbarFilterValues);
+export default withStyles(theme => ({
+  root: {
+    paddingLeft: theme.spacing.unit * 2,
+    paddingTop: theme.spacing.unit * 2,
+  },
+}))(ReactMUIDatatableToolbarFilterValues);

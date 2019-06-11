@@ -4,30 +4,39 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
-import React from 'react';
-import compose from 'recompose/compose';
-import fromRenderProps from 'recompose/fromRenderProps';
-import { ReactMUIDatatableConsumer } from './ReactMUIDatatableProvider';
+import React, { useContext } from 'react';
+import { ReactMUIDatatableContext } from './ReactMUIDatatableProvider';
 
 const ReactMUIDatatableHeader = props => {
+  const {
+    columns,
+    sort,
+    handleSort,
+    selectable,
+    selectedData,
+    computedData,
+    toggleSelectAll,
+    rowActions,
+  } = useContext(ReactMUIDatatableContext);
+
   return (
     <TableHead>
       <TableRow>
-        {props.selectable && (
+        {selectable && (
           <TableCell padding="checkbox">
             <Checkbox
               indeterminate={
-                props.selectedData.length !== 0 &&
-                props.selectedData.length < props.computedData.length
+                selectedData.length !== 0 &&
+                selectedData.length < computedData.length
               }
-              checked={props.selectedData.length === props.computedData.length}
-              onChange={props.toggleSelectAll}
+              checked={selectedData.length === computedData.length}
+              onChange={toggleSelectAll}
             />
           </TableCell>
         )}
-        {props.columns.map((column, index) => {
+        {columns.map((column, index) => {
           const columnSortOptions =
-            props.sort.find(
+            sort.find(
               columnSortOptions => columnSortOptions.columnName === column.name
             ) || {};
 
@@ -37,7 +46,7 @@ const ReactMUIDatatableHeader = props => {
               className={props.classes.head}
               onClick={event =>
                 column.sortable &&
-                props.handleSort({
+                handleSort({
                   columnName: column.name,
                   withMultiSorting: event.shiftKey,
                 })
@@ -54,28 +63,14 @@ const ReactMUIDatatableHeader = props => {
             </TableCell>
           );
         })}
-        {Boolean(props.rowActions) && (
-          <TableCell className={props.classes.head} />
-        )}
+        {Boolean(rowActions) && <TableCell className={props.classes.head} />}
       </TableRow>
     </TableHead>
   );
 };
 
-export default compose(
-  fromRenderProps(ReactMUIDatatableConsumer, ({ ...datatableProps }) => ({
-    columns: datatableProps.columns,
-    sort: datatableProps.sort,
-    handleSort: datatableProps.handleSort,
-    selectable: datatableProps.selectable,
-    selectedData: datatableProps.selectedData,
-    computedData: datatableProps.computedData,
-    toggleSelectAll: datatableProps.toggleSelectAll,
-    rowActions: datatableProps.rowActions,
-  })),
-  withStyles(() => ({
-    head: {
-      cursor: 'pointer',
-    },
-  }))
-)(ReactMUIDatatableHeader);
+export default withStyles(() => ({
+  head: {
+    cursor: 'pointer',
+  },
+}))(ReactMUIDatatableHeader);

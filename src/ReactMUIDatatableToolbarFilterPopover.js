@@ -5,12 +5,19 @@ import Popover from '@material-ui/core/Popover';
 import withStyles from '@material-ui/core/styles/withStyles';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import React from 'react';
-import compose from 'recompose/compose';
-import fromRenderProps from 'recompose/fromRenderProps';
-import { ReactMUIDatatableConsumer } from './ReactMUIDatatableProvider';
+import React, { useContext } from 'react';
+import { ReactMUIDatatableContext } from './ReactMUIDatatableProvider';
 
 const ReactMUIDatatableToolbarFilterPopover = props => {
+  const {
+    filterLists,
+    filterValues,
+    addFilter,
+    resetFilter,
+    columns,
+    localization,
+  } = useContext(ReactMUIDatatableContext);
+
   return (
     <Popover
       open={Boolean(props.anchorEl)}
@@ -29,25 +36,25 @@ const ReactMUIDatatableToolbarFilterPopover = props => {
     >
       <Grid container spacing={24} className={props.classes.root}>
         <Grid item xs={12}>
-          <Typography variant={'h6'}>{props.labels.title}</Typography>
+          <Typography variant={'h6'}>
+            {localization.filterLists.title}
+          </Typography>
         </Grid>
-        {Object.keys(props.filterLists).map((columnName, columnIndex) => (
+        {Object.keys(filterLists).map((columnName, columnIndex) => (
           <Grid item xs={6} key={columnIndex}>
             <TextField
               select
               SelectProps={{ displayEmpty: true }}
               InputLabelProps={{ shrink: true }}
-              value={props.filterValues[columnName] || ''}
-              label={props.filterLists[columnName].label}
-              onChange={e =>
-                props.addFilter({ columnName, value: e.target.value })
-              }
+              value={filterValues[columnName] || ''}
+              label={filterLists[columnName].label}
+              onChange={e => addFilter({ columnName, value: e.target.value })}
               fullWidth
             >
               <MenuItem value={''} defaultChecked>
-                {props.labels.allOption}
+                {localization.filterLists.allOption}
               </MenuItem>
-              {props.filterLists[columnName].list.map((value, valueIndex) => (
+              {filterLists[columnName].list.map((value, valueIndex) => (
                 <MenuItem value={value} key={valueIndex}>
                   {value}
                 </MenuItem>
@@ -56,8 +63,10 @@ const ReactMUIDatatableToolbarFilterPopover = props => {
           </Grid>
         ))}
         <Grid item xs={12}>
-          <Button color={'primary'} onClick={props.resetFilter} fullWidth>
-            <Typography variant={'subtitle1'}>{props.labels.reset}</Typography>
+          <Button color={'primary'} onClick={resetFilter} fullWidth>
+            <Typography variant={'subtitle1'}>
+              {localization.filterLists.reset}
+            </Typography>
           </Button>
         </Grid>
       </Grid>
@@ -65,16 +74,6 @@ const ReactMUIDatatableToolbarFilterPopover = props => {
   );
 };
 
-export default compose(
-  fromRenderProps(ReactMUIDatatableConsumer, ({ ...datatableProps }) => ({
-    filterLists: datatableProps.filterLists,
-    filterValues: datatableProps.filterValues,
-    addFilter: datatableProps.addFilter,
-    resetFilter: datatableProps.resetFilter,
-    columns: datatableProps.columns,
-    labels: datatableProps.localization.filterLists,
-  })),
-  withStyles(theme => ({
-    root: { padding: theme.spacing.unit * 2 },
-  }))
-)(ReactMUIDatatableToolbarFilterPopover);
+export default withStyles(theme => ({
+  root: { padding: theme.spacing.unit * 2 },
+}))(ReactMUIDatatableToolbarFilterPopover);

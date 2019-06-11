@@ -3,36 +3,45 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import get from 'lodash.get';
-import React from 'react';
-import fromRenderProps from 'recompose/fromRenderProps';
-import { ReactMUIDatatableConsumer } from './ReactMUIDatatableProvider';
+import React, { useContext } from 'react';
+import { ReactMUIDatatableContext } from './ReactMUIDatatableProvider';
 
 const ReactDatatableBody = props => {
+  const {
+    displayData,
+    columns,
+    customCell,
+    selectable,
+    toggleSelectRow,
+    selectedData,
+    rowActions,
+  } = useContext(ReactMUIDatatableContext);
+
   return (
     <TableBody>
-      {props.displayData.map((row, rowIndex) => (
+      {displayData.map((row, rowIndex) => (
         <TableRow key={rowIndex}>
-          {props.selectable && (
+          {selectable && (
             <TableCell padding="checkbox">
               <Checkbox
-                checked={props.selectedData.includes(row)}
-                onChange={() => props.toggleSelectRow(row)}
+                checked={selectedData.includes(row)}
+                onChange={() => toggleSelectRow(row)}
               />
             </TableCell>
           )}
-          {props.columns.map((column, cellIndex) => (
+          {columns.map((column, cellIndex) => (
             <TableCell key={cellIndex}>
-              {props.customCell
-                ? props.customCell({
-                    value: get(props.displayData[rowIndex], column.name),
+              {customCell
+                ? customCell({
+                    value: get(displayData[rowIndex], column.name),
                     column,
                     row,
                   })
-                : get(props.displayData[rowIndex], column.name)}
+                : get(displayData[rowIndex], column.name)}
             </TableCell>
           ))}
-          {Boolean(props.rowActions) && (
-            <TableCell>{props.rowActions({ row, rowIndex })}</TableCell>
+          {Boolean(rowActions) && (
+            <TableCell>{rowActions({ row, rowIndex })}</TableCell>
           )}
         </TableRow>
       ))}
@@ -40,15 +49,4 @@ const ReactDatatableBody = props => {
   );
 };
 
-export default fromRenderProps(
-  ReactMUIDatatableConsumer,
-  ({ ...datatableProps }) => ({
-    displayData: datatableProps.displayData,
-    columns: datatableProps.columns,
-    customCell: datatableProps.customCell,
-    selectable: datatableProps.selectable,
-    toggleSelectRow: datatableProps.toggleSelectRow,
-    selectedData: datatableProps.selectedData,
-    rowActions: datatableProps.rowActions,
-  })
-)(ReactDatatableBody);
+export default ReactDatatableBody;

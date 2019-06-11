@@ -1,7 +1,7 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import ReactMUIDatatableProvider, {
-  ReactMUIDatatableConsumer,
+  ReactMUIDatatableContext,
 } from '../src/ReactMUIDatatableProvider';
 
 let ReactMUIDatatable;
@@ -72,9 +72,9 @@ describe('ReactMUIDatatableProvider', () => {
 
     ReactMUIDatatable = props => (
       <ReactMUIDatatableProvider {...props}>
-        <ReactMUIDatatableConsumer>
+        <ReactMUIDatatableContext.Consumer>
           {datatableProps => <MockedComponent {...datatableProps} />}
-        </ReactMUIDatatableConsumer>
+        </ReactMUIDatatableContext.Consumer>
       </ReactMUIDatatableProvider>
     );
 

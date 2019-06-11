@@ -1,47 +1,45 @@
 import TableFooter from '@material-ui/core/TableFooter';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
-import React from 'react';
-import fromRenderProps from 'recompose/fromRenderProps';
-import { ReactMUIDatatableConsumer } from './ReactMUIDatatableProvider';
+import React, { useContext } from 'react';
+import { ReactMUIDatatableContext } from './ReactMUIDatatableProvider';
 
 const ReactMUIDatatableFooter = props => {
+  const {
+    page,
+    perPage,
+    perPageOption,
+    computedData,
+    changePage,
+    changePerPage,
+    columns,
+    selectable,
+    localization,
+    rowActions,
+  } = useContext(ReactMUIDatatableContext);
+
   const extraColSpanLenght =
-    Number(Boolean(props.selectable)) + Number(Boolean(props.rowActions));
+    Number(Boolean(selectable)) + Number(Boolean(rowActions));
 
   return (
     <TableFooter>
       <TableRow>
         <TablePagination
-          rowsPerPageOptions={props.perPageOption}
-          colSpan={props.columns.length + extraColSpanLenght}
-          count={props.computedData.length}
-          rowsPerPage={props.perPage}
-          page={props.page}
-          onChangePage={(_, page) => props.changePage(page)}
+          rowsPerPageOptions={perPageOption}
+          colSpan={columns.length + extraColSpanLenght}
+          count={computedData.length}
+          rowsPerPage={perPage}
+          page={page}
+          onChangePage={(_, page) => changePage(page)}
           onChangeRowsPerPage={event =>
-            props.changePerPage(Number(event.target.value))
+            changePerPage(Number(event.target.value))
           }
-          labelDisplayedRows={props.labels.displayedRows}
-          labelRowsPerPage={props.labels.rowsPerPage}
+          labelDisplayedRows={localization.pagination.displayedRows}
+          labelRowsPerPage={localization.pagination.rowsPerPage}
         />
       </TableRow>
     </TableFooter>
   );
 };
 
-export default fromRenderProps(
-  ReactMUIDatatableConsumer,
-  ({ ...datatableProps }) => ({
-    page: datatableProps.page,
-    perPage: datatableProps.perPage,
-    perPageOption: datatableProps.perPageOption,
-    computedData: datatableProps.computedData,
-    changePage: datatableProps.changePage,
-    changePerPage: datatableProps.changePerPage,
-    columns: datatableProps.columns,
-    selectable: datatableProps.selectable,
-    labels: datatableProps.localization.pagination,
-    rowActions: datatableProps.rowActions,
-  })
-)(ReactMUIDatatableFooter);
+export default ReactMUIDatatableFooter;
