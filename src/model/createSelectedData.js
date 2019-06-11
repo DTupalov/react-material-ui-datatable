@@ -1,4 +1,4 @@
-import { createEvent, createStore } from 'effector';
+import { createEvent, createStore, sample } from 'effector';
 
 export default (initialSelectedData, $data, handleDelete) => {
   const $selectedData = createStore(initialSelectedData);
@@ -20,8 +20,8 @@ export default (initialSelectedData, $data, handleDelete) => {
       }
       return nextSelectedData;
     })
-    .on(toggleSelectAll, selectedData =>
-      selectedData.length ? [] : [...$data.getState()]
+    .on(sample($data, toggleSelectAll), (selectedData, data) =>
+      selectedData.length ? [] : [...data]
     )
     .on(handleDelete, (selectedData, deletedData) =>
       selectedData.filter(dataIndex => !deletedData.includes(dataIndex))
