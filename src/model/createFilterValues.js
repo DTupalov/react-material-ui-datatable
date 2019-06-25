@@ -19,7 +19,7 @@ export default initialFilterValues => {
         return nextFilterValues;
       }, {})
     )
-    .reset(resetFilter);
+    .on(resetFilter, filterValues => ({}));
 
   return {
     $filterValues,
