@@ -23,14 +23,12 @@ export default ({
   selectedData: initialSelectedData = [],
   filterValues: initialFilterValues = {},
 }) => {
-  const { $data, changeData, handleDelete } = createData(initialData);
-  const { $columns, changeColumns } = createColumns(initialColumns);
+  const { $data, handleDelete } = createData(initialData);
+  const { $columns } = createColumns(initialColumns);
   const { $sort, handleSort } = createSort(initialSort);
-  const {
-    $showSearchBar,
-    changeShowSearchBar,
-    toggleSearchBar,
-  } = createShowSearchBar(initialShowSearchBar);
+  const { $showSearchBar, toggleSearchBar } = createShowSearchBar(
+    initialShowSearchBar
+  );
   const { $searchValue, handleSearchValue } = createSearchValue(
     initialSearchValue,
     toggleSearchBar
@@ -43,7 +41,6 @@ export default ({
   } = createSelectedData(initialSelectedData, $data, handleDelete);
   const {
     $filterValues,
-    changeFilterValues,
     addFilter,
     removeFilter,
     resetFilter,
@@ -76,10 +73,6 @@ export default ({
   });
 
   const actions = {
-    changeData,
-    changeColumns,
-    changeShowSearchBar,
-    changeFilterValues,
     toggleSelectRow,
     toggleSelectAll,
     toggleSearchBar,
