@@ -1,10 +1,10 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
+import { act, create } from 'react-test-renderer';
 import ReactMUIDatatableProvider, {
   ReactMUIDatatableContext,
 } from '../src/ReactMUIDatatableProvider';
 
-let ReactMUIDatatable;
+let ReactMUIDatatableTestRendererInstance;
 let RenderedMockedComponent;
 let data;
 let columns;
@@ -70,7 +70,7 @@ describe('ReactMUIDatatableProvider', () => {
       { name: 'car.make', label: 'Car make' },
     ];
 
-    ReactMUIDatatable = props => (
+    const ReactMUIDatatable = props => (
       <ReactMUIDatatableProvider {...props}>
         <ReactMUIDatatableContext.Consumer>
           {datatableProps => <MockedComponent {...datatableProps} />}
@@ -78,15 +78,19 @@ describe('ReactMUIDatatableProvider', () => {
       </ReactMUIDatatableProvider>
     );
 
-    RenderedMockedComponent = renderer
-      .create(
+    act(() => {
+      ReactMUIDatatableTestRendererInstance = create(
         <ReactMUIDatatable
           data={data}
           columns={columns}
           onStateChanged={onStateChanged}
         />
-      )
-      .root.findByType(MockedComponent);
+      );
+    });
+
+    RenderedMockedComponent = ReactMUIDatatableTestRendererInstance.root.findByType(
+      MockedComponent
+    );
   });
 
   it('should return default toolbarSelectActions with delete icon if this prop was not received', () => {
@@ -94,9 +98,11 @@ describe('ReactMUIDatatableProvider', () => {
       {}
     );
 
-    const tree = renderer.create(ToolbarSelectActions);
+    const ToolbarSelectActionsTestRendererInstance = create(
+      ToolbarSelectActions
+    );
 
-    expect(tree).toMatchSnapshot();
+    expect(ToolbarSelectActionsTestRendererInstance).toMatchSnapshot();
   });
 
   it('should return string for selectedData localization', () => {
@@ -119,19 +125,21 @@ describe('ReactMUIDatatableProvider', () => {
     /**
      *  Used directly "setState" because we need to check only triggering `onStateChanged`
      */
-    RenderedMockedComponent.props.toggleSearchBar();
-    RenderedMockedComponent.props.handleSearchValue('Caz');
-    RenderedMockedComponent.props.handleSort({
-      columnName: 'firstName',
-      direction: 'DESC',
+    act(() => {
+      RenderedMockedComponent.props.toggleSearchBar();
+      RenderedMockedComponent.props.handleSearchValue('Caz');
+      RenderedMockedComponent.props.handleSort({
+        columnName: 'firstName',
+        direction: 'DESC',
+      });
+      RenderedMockedComponent.props.addFilter({
+        columnName: 'firstName',
+        value: 'Caz',
+      });
+      RenderedMockedComponent.props.changePage(1);
+      RenderedMockedComponent.props.changePerPage(15);
+      RenderedMockedComponent.props.toggleSelectRow(data[0]);
     });
-    RenderedMockedComponent.props.addFilter({
-      columnName: 'firstName',
-      value: 'Caz',
-    });
-    RenderedMockedComponent.props.changePage(1);
-    RenderedMockedComponent.props.changePerPage(15);
-    RenderedMockedComponent.props.toggleSelectRow(data[0]);
 
     expect(onStateChanged).toHaveBeenLastCalledWith({
       name: 'selectedData',

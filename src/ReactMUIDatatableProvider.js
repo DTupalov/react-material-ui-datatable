@@ -1,4 +1,4 @@
-import { createStoreConsumer } from 'effector-react';
+import { useStore } from 'effector-react';
 import PropTypes from 'prop-types';
 import React, { createContext, useEffect, useMemo } from 'react';
 import defaultToolbarSelectActions from './defaultToolbarSelectActions';
@@ -66,27 +66,23 @@ const ReactMUIDatatableProvider = props => {
     []
   );
 
-  const EffectorStore = useMemo(() => createStoreConsumer($store), []);
+  const state = useStore($store);
 
   useEffect(() => subscribe(props.onStateChanged), []);
 
   return (
-    <EffectorStore>
-      {state => (
-        <ReactMUIDatatableContext.Provider
-          value={{
-            ...mapDatatableProps({
-              ...props,
-              ...state,
-            }),
-            ...mapDatatableCalculatedProps({ ...state }),
-            ...mapDatatableHandlers({ ...actions }),
-          }}
-        >
-          {props.children}
-        </ReactMUIDatatableContext.Provider>
-      )}
-    </EffectorStore>
+    <ReactMUIDatatableContext.Provider
+      value={{
+        ...mapDatatableProps({
+          ...props,
+          ...state,
+        }),
+        ...mapDatatableCalculatedProps({ ...state }),
+        ...mapDatatableHandlers({ ...actions }),
+      }}
+    >
+      {props.children}
+    </ReactMUIDatatableContext.Provider>
   );
 };
 
