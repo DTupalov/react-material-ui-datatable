@@ -1,12 +1,8 @@
 import { combine } from 'effector';
 import { convertDataToFilterLists } from '../utils';
 
-export default ($computedData, $columns) => {
-  const $filterLists = combine(
-    $computedData,
-    $columns,
-    (computedData, columns) => convertDataToFilterLists(computedData, columns)
-  );
+export default ($data, $columns) => {
+  const $filterLists = combine($data, $columns, convertDataToFilterLists);
 
   return { $filterLists };
 };

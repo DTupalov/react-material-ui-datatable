@@ -35,11 +35,13 @@
     "react-dom": "^16.0.0"
   },
   "dependencies": {
+    "downshift": "^3.2.10",
     "effector": "^19.1.0",
     "effector-react": "^19.0.0",
     "lodash.get": "^4.4.2",
     "lodash.orderby": "^4.6.0",
-    "prop-types": "^15.7.2"
+    "prop-types": "^15.7.2",
+    "react-window": "^1.8.3"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",

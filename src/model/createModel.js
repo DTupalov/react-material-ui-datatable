@@ -54,7 +54,7 @@ export default ({
     $searchValue,
     $filterValues
   );
-  const { $filterLists } = createFilterLists($computedData, $columns);
+  const { $filterLists } = createFilterLists($data, $columns);
   const { $displayData } = createDisplayData($computedData, $page, $perPage);
 
   const $store = createStoreObject({

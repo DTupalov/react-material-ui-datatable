@@ -1,11 +1,10 @@
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-import MenuItem from '@material-ui/core/MenuItem';
 import Popover from '@material-ui/core/Popover';
 import withStyles from '@material-ui/core/styles/withStyles';
-import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import React, { useContext } from 'react';
+import { MUIAutocomplete } from './MUIAutocomplete';
 import { ReactMUIDatatableContext } from './ReactMUIDatatableProvider';
 
 const ReactMUIDatatableToolbarFilterPopover = props => {
@@ -17,6 +16,8 @@ const ReactMUIDatatableToolbarFilterPopover = props => {
     columns,
     localization,
   } = useContext(ReactMUIDatatableContext);
+
+  const filterListsKeys = Object.keys(filterLists);
 
   return (
     <Popover
@@ -40,28 +41,22 @@ const ReactMUIDatatableToolbarFilterPopover = props => {
             {localization.filterLists.title}
           </Typography>
         </Grid>
-        {Object.keys(filterLists).map((columnName, columnIndex) => (
-          <Grid item xs={6} key={columnIndex}>
-            <TextField
-              select
-              SelectProps={{ displayEmpty: true }}
-              InputLabelProps={{ shrink: true }}
-              value={filterValues[columnName] || ''}
-              label={filterLists[columnName].label}
-              onChange={e => addFilter({ columnName, value: e.target.value })}
-              fullWidth
-            >
-              <MenuItem value={''} defaultChecked>
-                {localization.filterLists.allOption}
-              </MenuItem>
-              {filterLists[columnName].list.map((value, valueIndex) => (
-                <MenuItem value={value} key={valueIndex}>
-                  {value}
-                </MenuItem>
-              ))}
-            </TextField>
-          </Grid>
-        ))}
+        {filterListsKeys.map((columnName, columnIndex) => {
+          const isLastRecord = filterListsKeys.length - 1 === columnIndex;
+          const isOddLength = filterListsKeys.length % 2 !== 0;
+          const isOnlyInRow = isLastRecord && isOddLength;
+          return (
+            <Grid item xs={isOnlyInRow ? 12 : 6} key={columnIndex}>
+              <MUIAutocomplete
+                listItems={filterLists[columnName].list}
+                label={filterLists[columnName].label}
+                initialInputValue={filterValues[columnName]}
+                initialSelectedItem={filterValues[columnName]}
+                onChange={value => addFilter({ columnName, value })}
+              />
+            </Grid>
+          );
+        })}
         <Grid item xs={12}>
           <Button color={'primary'} onClick={resetFilter} fullWidth>
             <Typography variant={'subtitle1'}>
@@ -75,5 +70,5 @@ const ReactMUIDatatableToolbarFilterPopover = props => {
 };
 
 export default withStyles(theme => ({
-  root: { padding: theme.spacing.unit * 2 },
+  root: { padding: theme.spacing.unit * 2, maxWidth: 600 },
 }))(ReactMUIDatatableToolbarFilterPopover);
