@@ -419,6 +419,13 @@ describe('model', () => {
     expect(modelStore.getState().selectedData).toEqual(expectedSelectedData);
   });
 
+  it('should select all only computed data', () => {
+    modelActions.addFilter({ columnName: 'firstColumn', value: 'c' });
+    modelActions.toggleSelectAll();
+
+    expect(modelStore.getState().selectedData.length).toEqual(1);
+  });
+
   it('should construct filter lists for each column and sort lists', () => {
     const expectedFilterLists = {
       firstColumn: {

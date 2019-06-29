@@ -34,12 +34,6 @@ export default ({
     toggleSearchBar
   );
   const {
-    $selectedData,
-    toggleSelectRow,
-    toggleSelectAll,
-    handleSelect,
-  } = createSelectedData(initialSelectedData, $data, handleDelete);
-  const {
     $filterValues,
     addFilter,
     removeFilter,
@@ -56,6 +50,12 @@ export default ({
   );
   const { $filterLists } = createFilterLists($data, $columns);
   const { $displayData } = createDisplayData($computedData, $page, $perPage);
+  const {
+    $selectedData,
+    toggleSelectRow,
+    toggleSelectAll,
+    handleSelect,
+  } = createSelectedData(initialSelectedData, $computedData, handleDelete);
 
   const $store = createStoreObject({
     data: $data,
