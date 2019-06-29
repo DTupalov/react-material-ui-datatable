@@ -47,6 +47,7 @@ storiesOf('MUIAutocomplete', module).add('common', () => (
       label={'Countries'}
       initialInputValue={''}
       initialSelectedItem={''}
+      placeholder={'Start typing...'}
     />
   </React.Fragment>
 ));

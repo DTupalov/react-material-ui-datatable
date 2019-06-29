@@ -14,7 +14,7 @@ const ROW_SIZE = 46;
 const MAX_MENU_SIZE = 460;
 
 const MUIAutocomplete = React.memo(props => {
-  const { classes, listItems, label } = props;
+  const { classes, listItems, label, placeholder } = props;
   const inputRef = useMemo(() => React.createRef(), []);
   const onChange = useMemo(
     () =>
@@ -58,7 +58,7 @@ const MUIAutocomplete = React.memo(props => {
               <TextField
                 InputProps={{
                   ...getInputProps({
-                    placeholder: 'All',
+                    placeholder,
                   }),
                   endAdornment: (
                     <IconButton onClick={clearSelection}>
@@ -137,6 +137,7 @@ const MUIAutocomplete = React.memo(props => {
 MUIAutocomplete.defaultProps = {
   initialInputValue: '',
   initialSelectedItem: '',
+  placeholder: 'All',
 };
 
 MUIAutocomplete.propTypes = {
