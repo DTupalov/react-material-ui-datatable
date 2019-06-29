@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0-alpha.23](https://github.com/DTupalov/react-material-ui-datatable/compare/v2.0.0-alpha.22...v2.0.0-alpha.23) (2019-06-29)
+
+
+### Bug Fixes
+
+* reset filterValues to empty list, instead of initial value ([bd82108](https://github.com/DTupalov/react-material-ui-datatable/commit/bd82108))
+* select all check only computed data ([e190a2c](https://github.com/DTupalov/react-material-ui-datatable/commit/e190a2c))
+
+
+### Documentation
+
+* add description about alternative library ([4039c24](https://github.com/DTupalov/react-material-ui-datatable/commit/4039c24))
+
+
+### Features
+
+* **filter:** add autocomplete to filter input ([4636ec2](https://github.com/DTupalov/react-material-ui-datatable/commit/4636ec2))
+
+
+### Refactoring
+
+* createStoreConsumer replace with hook useStore ([3ac47ef](https://github.com/DTupalov/react-material-ui-datatable/commit/3ac47ef))
+
+
+
 ## [2.0.0-alpha.22](https://github.com/DTupalov/react-material-ui-datatable/compare/v2.0.0-alpha.21...v2.0.0-alpha.22) (2019-06-14)
 
 
