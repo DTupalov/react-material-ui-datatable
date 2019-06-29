@@ -1,12 +1,16 @@
 import babel from 'rollup-plugin-babel';
+import nodeResolve from 'rollup-plugin-node-resolve';
 import { uglify } from 'rollup-plugin-uglify';
 
+const external = id => !id.startsWith('.') && !id.startsWith('/');
+
 export default {
-  input: 'src/index.js',
+  input: './src/index.js',
   output: {
-    file: 'dist/index.js',
+    file: './dist/index.js',
     format: 'cjs',
   },
+  external,
   plugins: [
     babel({
       presets: [
@@ -41,5 +45,6 @@ export default {
         comments: false,
       },
     }),
+    nodeResolve(),
   ],
 };
