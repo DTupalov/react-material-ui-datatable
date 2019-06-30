@@ -33,6 +33,7 @@ const MUIAutocomplete = React.memo(props => {
       initialInputValue={props.initialInputValue.toString()}
       initialSelectedItem={props.initialSelectedItem.toString()}
       onChange={onChange}
+      scrollIntoView={() => {}}
     >
       {({
         openMenu,
@@ -94,6 +95,7 @@ const MUIAutocomplete = React.memo(props => {
                   marginTop: 8,
                   width: inputRef.current ? inputRef.current.clientWidth : null,
                   maxHeight: MAX_MENU_SIZE,
+                  minWidth: 150,
                   overflow: 'auto',
                 }}
               >
