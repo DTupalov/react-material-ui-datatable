@@ -59,11 +59,17 @@ export const convertDataToFilterLists = memoizeByArgs((data, columns) =>
       label: column.label,
     };
 
-    data.forEach(
-      row =>
-        !filter[column.name].list.includes(get(row, column.name)) &&
-        filter[column.name].list.push(get(row, column.name))
-    );
+    data.forEach(row => {
+      const value = get(row, column.name);
+      const isStringOrNumber = ['string', 'number'].includes(typeof value);
+      const isAlreadyInList = filter[column.name].list.includes(value);
+
+      return (
+        isStringOrNumber &&
+        !isAlreadyInList &&
+        filter[column.name].list.push(value)
+      );
+    });
 
     filter[column.name].list.sort();
 
