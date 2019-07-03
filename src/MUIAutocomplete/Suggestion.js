@@ -1,6 +1,7 @@
 import { ListItem, ListItemText } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 const Suggestion = ({
   suggestion,
@@ -13,6 +14,21 @@ const Suggestion = ({
   selectedItem = (selectedItem && selectedItem.toString()) || '';
   const isHighlighted = highlightedIndex === index;
   const isSelected = selectedItem.includes(suggestion);
+  const listItemRef = React.createRef();
+
+  // Auto resize font for fixed height virtualized list item, until DynamicSizeList would be merged
+  // https://github.com/bvaughn/react-window/pull/102
+  React.useLayoutEffect(() => {
+    let fontSize = 1;
+    const listItemSpanNode = ReactDOM.findDOMNode(
+      listItemRef.current
+    ).querySelector('span');
+
+    while (listItemSpanNode.clientHeight > 48 && fontSize > 0) {
+      fontSize = fontSize - 0.1;
+      listItemSpanNode.style.fontSize = `${fontSize}rem`;
+    }
+  }, []);
 
   return (
     <ListItem
@@ -28,6 +44,7 @@ const Suggestion = ({
           },
         }}
         primary={suggestion}
+        ref={listItemRef}
       />
     </ListItem>
   );
