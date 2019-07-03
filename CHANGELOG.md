@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0-alpha.26](https://github.com/DTupalov/react-material-ui-datatable/compare/v2.0.0-alpha.25...v2.0.0-alpha.26) (2019-07-03)
+
+
+### Bug Fixes
+
+* **filter:** autosizing font in virtualized list ([a40663c](https://github.com/DTupalov/react-material-ui-datatable/commit/a40663c))
+* **filter:** filter list fill only with number and string values ([c95a45a](https://github.com/DTupalov/react-material-ui-datatable/commit/c95a45a))
+
+
+
 ## [2.0.0-alpha.25](https://github.com/DTupalov/react-material-ui-datatable/compare/v2.0.0-alpha.24...v2.0.0-alpha.25) (2019-06-30)
 
 
