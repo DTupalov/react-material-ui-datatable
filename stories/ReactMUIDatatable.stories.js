@@ -232,6 +232,7 @@ storiesOf('ReactMUIDatatable/Props', module)
           title: 'Фильтр',
           allOption: 'Все',
           reset: 'Сброс',
+          noMatchesText: 'Нет совпадений',
         },
         toolbarSelect: {
           selectedData: count => `Выбрано ${count} элемент(ов)`,

@@ -5,9 +5,7 @@ import React from 'react';
 const NoMatches = props => {
   return (
     <div className={props.classes.noMatchesContainer}>
-      <Typography variant={'body1'}>
-        No matches for "{props.inputValue}"
-      </Typography>
+      <Typography variant={'body1'}>{props.text}</Typography>
     </div>
   );
 };
@@ -15,6 +13,7 @@ const NoMatches = props => {
 NoMatches.propTypes = {
   classes: PropTypes.object.isRequired,
   inputValue: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
 };
 
 export default withStyles(theme => ({

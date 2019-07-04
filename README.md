@@ -138,6 +138,7 @@ For more details see __[Storybook](https://dtupalov.github.io/react-material-ui-
 | title | string | 'Filter' | Label for title of filter menu | 
 | allOption | string | 'All' | Label for option 'All' of select controls | 
 | reset | string | 'Reset' | Label for reset button of filters | 
+| noMatchesText | string | 'No matches' | Text if no matches in autocomplete | 
 
 ##### toolbarSelect
 

@@ -20,7 +20,7 @@ const ROW_SIZE = 46;
 const MAX_MENU_SIZE = 460;
 
 const MUIAutocomplete = React.memo(props => {
-  const { classes, listItems, label, placeholder } = props;
+  const { classes, listItems, label, placeholder, noMatchesText } = props;
   const inputRef = useMemo(() => React.createRef(), []);
   const onChange = useMemo(
     () =>
@@ -133,7 +133,7 @@ const MUIAutocomplete = React.memo(props => {
                     }}
                   </FixedSizeList>
                 ) : (
-                  <NoMatches inputValue={inputValue} />
+                  <NoMatches inputValue={inputValue} text={noMatchesText} />
                 )}
               </Paper>
             </Popper>
@@ -148,6 +148,7 @@ MUIAutocomplete.defaultProps = {
   initialInputValue: '',
   initialSelectedItem: '',
   placeholder: 'All',
+  noMatchesText: 'No matches',
 };
 
 MUIAutocomplete.propTypes = {

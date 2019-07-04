@@ -63,6 +63,7 @@ const ReactMUIDatatableToolbarFilterPopover = props => {
                   initialSelectedItem={filterValues[columnName]}
                   onChange={value => addFilter({ columnName, value })}
                   placeholder={localization.filterLists.allOption}
+                  noMatchesText={localization.filterLists.noMatchesText}
                 />
               </Grid>
             );

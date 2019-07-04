@@ -158,6 +158,7 @@ ReactMUIDatatableProvider.defaultProps = {
       title: 'Filter',
       allOption: 'All',
       reset: 'Reset',
+      noMatchesText: 'No matches',
     },
     toolbarSelect: {
       selectedData: count => `${count} row(s) selected`,
