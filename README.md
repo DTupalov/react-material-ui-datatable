@@ -112,6 +112,7 @@ For more details see __[Storybook](https://dtupalov.github.io/react-material-ui-
     title: 'Filter',
     allOption: 'All',
     reset: 'Reset',
+    noMatchesText: 'No matches',
   },
   toolbarSelect: {
     selectedData: count => `${count} row(s) selected`,
