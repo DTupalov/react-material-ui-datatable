@@ -1,4 +1,10 @@
-import { IconButton, Paper, Popper, TextField } from '@material-ui/core';
+import {
+  IconButton,
+  InputAdornment,
+  Paper,
+  Popper,
+  TextField,
+} from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import CloseIcon from '@material-ui/icons/Close';
 import Downshift from 'downshift';
@@ -62,9 +68,11 @@ const MUIAutocomplete = React.memo(props => {
                     placeholder,
                   }),
                   endAdornment: (
-                    <IconButton onClick={clearSelection}>
-                      <CloseIcon />
-                    </IconButton>
+                    <InputAdornment position={'end'}>
+                      <IconButton onClick={clearSelection}>
+                        <CloseIcon />
+                      </IconButton>
+                    </InputAdornment>
                   ),
                   classes: {
                     input: classes.inputInput,
@@ -165,7 +173,7 @@ const styles = theme => ({
     overflow: 'auto',
   },
   inputInput: {
-    width: 'auto',
+    width: '100%',
     flexGrow: 1,
   },
 });
