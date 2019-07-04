@@ -1,3 +1,4 @@
+import { withStyles } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import React, { useContext } from 'react';
@@ -8,6 +9,10 @@ import { ReactMUIDatatableContext } from './ReactMUIDatatableProvider';
 import ReactMUIDatatableToolbar from './ReactMUIDatatableToolbar';
 import ReactMUIDatatableToolbarFilterValues from './ReactMUIDatatableToolbarFilterValues';
 import ReactMUIDatatableToolbarSelect from './ReactMUIDatatableToolbarSelect';
+
+const styles = {
+  tableWrapper: { overflowX: 'auto' },
+};
 
 const ReactMUIDatatableRoot = props => {
   const { selectedData } = useContext(ReactMUIDatatableContext);
@@ -20,13 +25,15 @@ const ReactMUIDatatableRoot = props => {
         <ReactMUIDatatableToolbar />
       )}
       <ReactMUIDatatableToolbarFilterValues />
-      <Table>
-        <ReactMUIDatatableHeader />
-        <ReactMUIDatatableBody />
-        <ReactMUIDatatableFooter />
-      </Table>
+      <div className={props.classes.tableWrapper}>
+        <Table>
+          <ReactMUIDatatableHeader />
+          <ReactMUIDatatableBody />
+        </Table>
+      </div>
+      <ReactMUIDatatableFooter />
     </Paper>
   );
 };
 
-export default ReactMUIDatatableRoot;
+export default withStyles(styles)(ReactMUIDatatableRoot);

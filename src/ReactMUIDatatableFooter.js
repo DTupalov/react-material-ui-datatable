@@ -1,6 +1,4 @@
-import TableFooter from '@material-ui/core/TableFooter';
 import TablePagination from '@material-ui/core/TablePagination';
-import TableRow from '@material-ui/core/TableRow';
 import React, { useContext } from 'react';
 import { ReactMUIDatatableContext } from './ReactMUIDatatableProvider';
 
@@ -22,23 +20,18 @@ const ReactMUIDatatableFooter = props => {
     Number(Boolean(selectable)) + Number(Boolean(rowActions));
 
   return (
-    <TableFooter>
-      <TableRow>
-        <TablePagination
-          rowsPerPageOptions={perPageOption}
-          colSpan={columns.length + extraColSpanLenght}
-          count={computedData.length}
-          rowsPerPage={perPage}
-          page={page}
-          onChangePage={(_, page) => changePage(page)}
-          onChangeRowsPerPage={event =>
-            changePerPage(Number(event.target.value))
-          }
-          labelDisplayedRows={localization.pagination.displayedRows}
-          labelRowsPerPage={localization.pagination.rowsPerPage}
-        />
-      </TableRow>
-    </TableFooter>
+    <TablePagination
+      rowsPerPageOptions={perPageOption}
+      colSpan={columns.length + extraColSpanLenght}
+      count={computedData.length}
+      rowsPerPage={perPage}
+      page={page}
+      onChangePage={(_, page) => changePage(page)}
+      onChangeRowsPerPage={event => changePerPage(Number(event.target.value))}
+      labelDisplayedRows={localization.pagination.displayedRows}
+      labelRowsPerPage={localization.pagination.rowsPerPage}
+      component={'div'}
+    />
   );
 };
 
