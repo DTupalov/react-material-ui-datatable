@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0-alpha.28](https://github.com/DTupalov/react-material-ui-datatable/compare/v2.0.0-alpha.27...v2.0.0-alpha.28) (2019-07-05)
+
+
+### Bug Fixes
+
+* **filter:** remove native delete button for IE11 ([d805978](https://github.com/DTupalov/react-material-ui-datatable/commit/d805978))
+
+
+
 ## [2.0.0-alpha.27](https://github.com/DTupalov/react-material-ui-datatable/compare/v2.0.0-alpha.26...v2.0.0-alpha.27) (2019-07-04)
 
 
