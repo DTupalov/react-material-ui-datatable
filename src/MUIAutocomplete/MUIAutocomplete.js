@@ -176,6 +176,9 @@ const styles = theme => ({
   inputInput: {
     width: '100%',
     flexGrow: 1,
+    '&:-ms-clear': {
+      display: 'none',
+    },
   },
 });
 
