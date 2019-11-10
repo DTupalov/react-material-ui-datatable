@@ -24,6 +24,7 @@ const mapDatatableProps = props => ({
   filterable: props.filterable,
   searchable: props.searchable,
   localization: props.localization,
+  customNoMatches: props.customNoMatches,
 });
 
 const mapDatatableCalculatedProps = props => ({
@@ -166,6 +167,9 @@ ReactMUIDatatableProvider.defaultProps = {
     pagination: {
       rowsPerPage: 'Rows per page',
       displayedRows: ({ from, to, count }) => `${from}-${to} of ${count}`,
+    },
+    body: {
+      noMatchesText: 'No matches',
     },
   },
   onStateChanged: () => {},

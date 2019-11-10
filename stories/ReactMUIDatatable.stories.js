@@ -1,4 +1,4 @@
-import { IconButton } from '@material-ui/core';
+import { IconButton, Typography } from '@material-ui/core';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
@@ -153,18 +153,14 @@ storiesOf('ReactMUIDatatable/Props', module)
         <React.Fragment>
           <IconButton
             onClick={action(
-              `click Edit button at row ${rowIndex} for ${row.firstName} ${
-                row.lastName
-              }, ${row.age} years old`
+              `click Edit button at row ${rowIndex} for ${row.firstName} ${row.lastName}, ${row.age} years old`
             )}
           >
             <EditIcon />
           </IconButton>
           <IconButton
             onClick={action(
-              `click View button at row ${rowIndex} for ${row.firstName} ${
-                row.lastName
-              }, ${row.age} years old`
+              `click View button at row ${rowIndex} for ${row.firstName} ${row.lastName}, ${row.age} years old`
             )}
           >
             <VisibilityIcon />
@@ -241,21 +237,44 @@ storiesOf('ReactMUIDatatable/Props', module)
           rowsPerPage: 'Кол-во на стр.',
           displayedRows: ({ from, to, count }) => `${from}-${to} из ${count}`,
         },
+        body: {
+          noMatchesText: 'Нет совпадений',
+        },
       }}
     />
   ))
-  .add('custom cell', props => {
+  .add('custom cell', props => (
+    <ReactMUIDatatable
+      columns={columns}
+      data={data}
+      title={title}
+      customCell={({ value, column }) => {
+        if (column.name === 'firstName') {
+          return <div style={{ color: 'red' }}>{value.toUpperCase()}</div>;
+        }
+
+        return value;
+      }}
+    />
+  ))
+  .add('custom noMatches', props => {
     return (
       <ReactMUIDatatable
         columns={columns}
         data={data}
         title={title}
-        customCell={({ value, column }) => {
-          if (column.name === 'firstName') {
-            return <div style={{ color: 'red' }}>{value.toUpperCase()}</div>;
-          }
-
-          return value;
+        searchValue={'asd'}
+        showSearchBar={true}
+        customNoMatches={localization => {
+          return (
+            <Typography
+              variant={'h5'}
+              color={'error'}
+              style={{ textAlign: 'center' }}
+            >
+              {localization}
+            </Typography>
+          );
         }}
       />
     );

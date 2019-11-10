@@ -10,11 +10,11 @@ This library is under the work. It means, that we can do Breaking Changes during
 
 ## Install
        
-    npm install react-material-ui-datatable@2.0.0-alpha.29 --save-exact
+    npm install react-material-ui-datatable@2.0.0-alpha.30 --save-exact
 
 or 
 
-    yarn add react-material-ui-datatable@2.0.0-alpha.29 --exact
+    yarn add react-material-ui-datatable@2.0.0-alpha.30 --exact
 
 ## Demo
 
@@ -83,6 +83,8 @@ For more details see __[Storybook](https://dtupalov.github.io/react-material-ui-
 | filterValues | Object | {} | Set filters for columns |
 | onStateChanged | Function | | Handler for state changing. Receives event-like object. Signature ```(event: {name: string, value: string, state: Object}) => any```, where `name` - changed state, `value` - new value, `state` - current state of datatable component. Notice, that `state` contains only changeable values. It useful to restore state after reloading page, for example|
 | localization | Object | [default localization](#default-value)  | More details you can read [here](#localization) |
+| customNoMatches | Function | | Function that returns a string or React component. Used as display text if was no matches after applying filters. `(localization: string) => string \| React.Component` |
+
 
 #### `toolbarSelectActions`
 
@@ -120,6 +122,9 @@ For more details see __[Storybook](https://dtupalov.github.io/react-material-ui-
   pagination: {
     rowsPerPage: 'Rows per page',
     displayedRows: ({ from, to, count }) => `${from}-${to} of ${count}`,
+  },
+  body: {
+    noMatchesText: 'No matches',
   },
 }
 ```

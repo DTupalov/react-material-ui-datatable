@@ -6,7 +6,7 @@ export default (initialSearchValue, toggleSearchBar) => {
 
   $searchValue
     .on(handleSearchValue, (_, nextSearchValue) => nextSearchValue)
-    .reset(toggleSearchBar);
+    .on(toggleSearchBar, () => '');
 
   return { $searchValue, handleSearchValue };
 };
